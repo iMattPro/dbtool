@@ -1,0 +1,224 @@
+<!-- INCLUDE overall_header.html -->
+
+<script type="text/javascript">
+// <![CDATA[
+
+/**
+ * The following javascripts are derived from phpMyAdmin's methods
+ */
+
+/**
+ * This array is used to remember mark status of rows in browse mode
+ */
+var marked_row = new Array;
+
+/**
+ * enables highlight and marking of rows in data tables
+ *
+ */
+function mark_rows_init()
+{
+	// for every table row ...
+	var rows = document.getElementsByTagName('tr');
+	for ( var i = 0; i < rows.length; i++ )
+	{
+		// ... with the class 'odd' or 'even' ...
+		if ( 'row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4) )
+		{
+			continue;
+		}
+		// ... add event listeners ...
+		// ... to highlight the row on mouseover ...
+		rows[i].onmouseover = function() {
+			this.className += ' row3';
+		}
+		rows[i].onmouseout = function() {
+			this.className = this.className.replace( ' row3', '' );
+		}
+		// ... and to mark the row on click ...
+		rows[i].onmousedown = function() {
+			var unique_id;
+			var checkbox;
+
+			checkbox = this.getElementsByTagName( 'input' )[0];
+			if ( checkbox && checkbox.type == 'checkbox' )
+			{
+				unique_id = checkbox.name + checkbox.value;
+			}
+			else if ( this.id.length > 0 )
+			{
+				unique_id = this.id;
+			}
+			else
+			{
+				return;
+			}
+
+			if ( typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id] )
+			{
+				marked_row[unique_id] = true;
+			}
+			else
+			{
+				marked_row[unique_id] = false;
+			}
+
+			if ( checkbox && checkbox.disabled == false )
+			{
+				checkbox.checked = marked_row[unique_id];
+			}
+		}
+
+		// .. and checkbox clicks
+		var checkbox = rows[i].getElementsByTagName('input')[0];
+		if ( checkbox )
+		{
+			checkbox.onclick = function() {
+				// opera does not recognize return false;
+				this.checked = ! this.checked;
+			}
+		}
+	}
+}
+
+window.onload = mark_rows_init;
+
+/**
+ * We must use phpMyAdmin derived mark all, unmark all rows 
+ * for compatability with the table row clicking function above
+ */
+
+function mark_all_rows(container_id, overhead)
+{
+	var rows = (!overhead) ? document.getElementById(container_id).getElementsByTagName('tr') : document.getElementById(container_id).getElementsByClassName('overhead');
+
+	var unique_id;
+	var checkbox;
+
+	for ( var i = 0; i < rows.length; i++ )
+	{
+		checkbox = rows[i].getElementsByTagName( 'input' )[0];
+
+		if ( checkbox && checkbox.type == 'checkbox' )
+		{
+			unique_id = checkbox.name + checkbox.value;
+			if ( checkbox.disabled == false )
+			{
+				checkbox.checked = true;
+				if ( typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id] )
+				{
+					marked_row[unique_id] = true;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+function unmark_all_rows(container_id)
+{
+	var rows = document.getElementById(container_id).getElementsByTagName('tr');
+	var unique_id;
+	var checkbox;
+
+	for ( var i = 0; i < rows.length; i++ )
+	{
+		checkbox = rows[i].getElementsByTagName( 'input' )[0];
+
+		if ( checkbox && checkbox.type == 'checkbox' )
+		{
+			unique_id = checkbox.name + checkbox.value;
+			checkbox.checked = false;
+			marked_row[unique_id] = false;
+		}
+	}
+
+	return true;
+}
+
+// ]]>
+</script>
+
+<a name="maincontent"></a>
+
+	<h1>{L_ACP_OPTIMIZE_REPAIR}</h1>
+
+	<p>{L_ACP_OPTIMIZE_REPAIR_EXPLAIN}</p>
+
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{L_WARNING_EXPLAIN}</p>
+	</div>
+
+	<form id="tables" method="post" action="{U_ACTION}">
+
+	<fieldset>
+		<legend>{L_OPTIMIZE_REPAIR_OPTIONS}</legend>
+	<dl>
+		<dt><label for="type">{L_DISABLE_BOARD}:</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
+		<dd>
+			<label><input type="radio" class="radio" name="disable_board" value="1" checked="checked" /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="disable_board" value="0" /> {L_NO}</label>
+		</dd>
+	</dl>
+	<dl>
+		<dt><label for="type">{L_ACTION}:</label></dt>
+		<dd>
+			<label><input id="type" type="radio" class="radio" name="type" value="optimize" checked="checked" /> {L_OPTIMIZE}</label>
+			<label><input type="radio" class="radio" name="type" value="repair" /> {L_REPAIR}</label>
+			<label><input type="radio" class="radio" name="type" value="check" /> {L_CHECK}</label>
+		</dd>
+	</dl>
+
+	<table cellspacing="1" id="table_data">
+	<thead>
+	<tr>
+		<th>{L_TH_NAME}</th>
+		<th>{L_TH_TYPE}</th>
+		<th style="text-align:right;">{L_TH_SIZE}</th>
+		<th style="text-align:right;">{L_TH_OVERHEAD}</th>
+		<th style="text-align:center;">{L_MARK}</th>
+	</tr>
+	</thead>
+	<tbody>
+<!-- IF .tables -->
+	<!-- BEGIN tables -->
+	<!-- IF tables.S_ROW_COUNT is even --><tr class="row1{tables.HAS_OVERHEAD}"><!-- ELSE --><tr class="row2{tables.HAS_OVERHEAD}"><!-- ENDIF -->
+		<td>{tables.TABLE_NAME}</td>
+		<td>{tables.TABLE_TYPE}</td>
+		<td style="text-align:right;">{tables.DATA_SIZE}</td>
+		<td style="text-align:right;">{tables.DATA_FREE}</td>
+		<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{tables.TABLE_NAME}" id="{tables.TABLE_NAME}" />&nbsp;</td>
+	</tr>
+	<!-- END tables -->
+	<tr>
+		<th>{L_TH_TOTAL}</th>
+		<th>&nbsp;</th>
+		<th style="text-align:right;">{TOTAL_DATA_SIZE}</th>
+		<th style="text-align:right;">{TOTAL_DATA_FREE}</th>
+		<th>&nbsp;</th>
+	</tr>
+<!-- ELSE -->
+	<tr><td colspan="5">{L_TABLE_EMPTY}</td></tr>
+<!-- ENDIF -->
+	</tbody>
+	</table>
+
+	<fieldset class="quick">
+		<p class="small"><a href="#" onclick="mark_all_rows('table_data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmark_all_rows('table_data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmark_all_rows('table_data'); mark_all_rows('table_data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
+	</fieldset>
+
+	<p id="buttons" class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="JavaScript:document.getElementById('buttons').style.display='none';document.getElementById('processing').style.display='block';" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+	<p id="processing" class="submit-buttons" style="display:none;">
+		<input class="button1" type="button" value="{L_PROCESSING}" disabled="disabled" />
+	</p>
+	{S_FORM_TOKEN}
+
+	</fieldset>
+	</form>
+
+<!-- INCLUDE overall_footer.html -->
