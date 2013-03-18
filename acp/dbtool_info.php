@@ -25,7 +25,7 @@ class phpbb_ext_vse_dbtool_acp_dbtool_info
 		return array(
 			'filename'	=> 'dbtool_module',
 			'title'		=> 'ACP_OPTIMIZE_REPAIR',
-			'version'	=> '1.1.0b1',
+			'version'	=> '1.1.0',
 			'modes'		=> array(
 				'view'	=> array('title' => 'ACP_OPTIMIZE_REPAIR', 'auth' => 'acl_a_backup', 'cat' => array('ACP_CAT_DATABASE')),
 			),

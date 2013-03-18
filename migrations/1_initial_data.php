@@ -33,7 +33,7 @@ class phpbb_ext_vse_dbtool_migrations_1_initial_data extends phpbb_db_migration
 			)),
 
 			// Keep track of the extension version in the DB
-			array('config.add', array('dbtool_version', '1.1.0b1')),
+			array('config.add', array('dbtool_version', '1.1.0')),
 
 			// Add ACP module
 			array('module.add', array('acp', 'ACP_CAT_DATABASE', array(
