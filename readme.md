@@ -1,4 +1,4 @@
-Database Optimize & Repair Tool (for phpBB3)
+![alt text](http://orcamx.vlexofree.com/forum/images/database_check_1.png "DB Tool") Database Optimize & Repair Tool (for phpBB3)
 
 © 2013 - Matt Friedman (VSE)
 
