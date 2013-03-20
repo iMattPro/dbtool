@@ -110,7 +110,8 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 
 		while ($table = $db->sql_fetchrow($tables))
 		{
-			/* Only MyISAM, InnoDB and Archive storage engines can be used
+			/**
+			 * NOTE: Only MyISAM, InnoDB and Archive storage engines can be used
 			 * Check    supports MyISAM, InnoDB and Archive
 			 * Optimize supports MyISAM, InnoDB and (as of MySQL 5.0.16) Archive
 			 * Repair   supports MyISAM, Archive
@@ -147,13 +148,13 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 	}
 
 	/**
-	* Perform table SQL query and return any messages
-	* @param string $query	should either be OPTIMIZE TABLE, REPAIR TABLE, or CHECK TABLE
-	* @param string $tables comma delinieated string of all tables to be processed
-	* @param bool $disable_board the users option to disable the board during run time
-	*
-	* $message returns any errors or status information
-	*/
+	 * Perform table SQL query and return any messages
+	 *
+	 * @param string $query	should either be OPTIMIZE TABLE, REPAIR TABLE, or CHECK TABLE
+	 * @param string $tables comma delinieated string of all tables to be processed
+	 * @param bool $disable_board the users option to disable the board during run time
+	 * @return string $message any errors or status information
+	 */
 	function table_maintenance($query, $tables, $disable_board = 0)
 	{
 		global $cache, $db;
@@ -192,15 +193,15 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 	}
 
 	/**
-	* Display filesize in the proper units
-	* @param int $size number representing bytes
-	*
-	* returns $size converted to the correct units as a string
-	*/
+	 * Display filesize in the proper units
+	 *
+	 * @param int $size number representing bytes
+	 * @return string $size with the correct units symbol appended
+	 */
 	function file_size($size)
 	{
-		$filesizename = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
-		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $filesizename[$i] : '0 B';
+		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
+		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[$i] : '0 B';
 	}
 
 }
