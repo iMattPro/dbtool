@@ -23,7 +23,7 @@ class phpbb_ext_vse_dbtool_acp_dbtool_info
 	function module()
 	{
 		return array(
-			'filename'	=> 'dbtool_module',
+			'filename'	=> 'phpbb_ext_vse_dbtool_acp_dbtool_module',
 			'title'		=> 'ACP_OPTIMIZE_REPAIR',
 			'version'	=> '1.1.0',
 			'modes'		=> array(
