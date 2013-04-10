@@ -16,7 +16,7 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
- * Main extension class for dbtool extension.
+ * Main extension class for this extension.
  */
 class phpbb_ext_vse_dbtool_ext extends phpbb_extension_base
 {
