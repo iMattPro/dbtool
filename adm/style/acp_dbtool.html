@@ -4,18 +4,18 @@
 // <![CDATA[
 
 /**
- * The following javascripts are derived from phpMyAdmin's methods
- */
+* The following javascripts are derived from phpMyAdmin's methods
+*/
 
 /**
- * This array is used to remember mark status of rows in browse mode
- */
+* This array is used to remember mark status of rows in browse mode
+*/
 var marked_row = new Array;
 
 /**
- * enables highlight and marking of rows in data tables
- *
- */
+* enables highlight and marking of rows in data tables
+*
+*/
 function mark_rows_init()
 {
 	// for every table row ...
@@ -84,9 +84,9 @@ function mark_rows_init()
 window.onload = mark_rows_init;
 
 /**
- * We must use phpMyAdmin derived mark all, unmark all rows 
- * for compatability with the table row clicking function above
- */
+* We must use phpMyAdmin derived mark all, unmark all rows 
+* for compatability with the table row clicking function above
+*/
 
 function mark_all_rows(container_id, overhead)
 {

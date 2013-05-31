@@ -1,23 +1,23 @@
 <?php
 /**
- *
- * @package Database Optimize & Repair Tool
- * @copyright (c) 2013 Matt Friedman
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Database Optimize & Repair Tool
+* @copyright (c) 2013 Matt Friedman
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
 /**
- * @package module_install
- */
+* @package module_install
+*/
 class phpbb_ext_vse_dbtool_acp_dbtool_info
 {
 	function module()

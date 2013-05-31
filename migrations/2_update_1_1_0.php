@@ -1,11 +1,11 @@
 <?php
 /**
- *
- * @package Database Optimize & Repair Tool
- * @copyright (c) 2013 Matt Friedman
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Database Optimize & Repair Tool
+* @copyright (c) 2013 Matt Friedman
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
 
 class phpbb_ext_vse_dbtool_migrations_2_update_1_1_0 extends phpbb_db_migration
 {

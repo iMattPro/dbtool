@@ -1,23 +1,23 @@
 <?php
 /**
- *
- * @package Database Optimize & Repair Tool
- * @copyright (c) 2013 Matt Friedman
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* @package Database Optimize & Repair Tool
+* @copyright (c) 2013 Matt Friedman
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
 
 /**
- * @ignore
- */
+* @ignore
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
 /**
- * @package acp
- */
+* @package acp
+*/
 class phpbb_ext_vse_dbtool_acp_dbtool_module
 {
 	var $u_action;
@@ -111,11 +111,11 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 		while ($table = $db->sql_fetchrow($tables))
 		{
 			/**
-			 * NOTE: Only MyISAM, InnoDB and Archive storage engines can be used
-			 * Check    supports MyISAM, InnoDB and Archive
-			 * Optimize supports MyISAM, InnoDB and (as of MySQL 5.0.16) Archive
-			 * Repair   supports MyISAM, Archive
-			 */
+			* NOTE: Only MyISAM, InnoDB and Archive storage engines can be used
+			* Check    supports MyISAM, InnoDB and Archive
+			* Optimize supports MyISAM, InnoDB and (as of MySQL 5.0.16) Archive
+			* Repair   supports MyISAM, Archive
+			*/
 			$table['Engine'] = (!empty($table['Type']) ? $table['Type'] : $table['Engine']);
 			if (in_array(strtolower($table['Engine']), array('myisam', 'innodb', 'archive')))
 			{
@@ -148,13 +148,13 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 	}
 
 	/**
-	 * Perform table SQL query and return any messages
-	 *
-	 * @param string $query	should either be OPTIMIZE TABLE, REPAIR TABLE, or CHECK TABLE
-	 * @param string $tables comma delinieated string of all tables to be processed
-	 * @param bool $disable_board the users option to disable the board during run time
-	 * @return string $message any errors or status information
-	 */
+	* Perform table SQL query and return any messages
+	*
+	* @param string $query	should either be OPTIMIZE TABLE, REPAIR TABLE, or CHECK TABLE
+	* @param string $tables comma delinieated string of all tables to be processed
+	* @param bool $disable_board the users option to disable the board during run time
+	* @return string $message any errors or status information
+	*/
 	function table_maintenance($query, $tables, $disable_board = 0)
 	{
 		global $cache, $db;
@@ -193,11 +193,11 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 	}
 
 	/**
-	 * Display filesize in the proper units
-	 *
-	 * @param int $size number representing bytes
-	 * @return string $size with the correct units symbol appended
-	 */
+	* Display filesize in the proper units
+	*
+	* @param int $size number representing bytes
+	* @return string $size with the correct units symbol appended
+	*/
 	function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
