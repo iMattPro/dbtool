@@ -156,14 +156,14 @@ function unmark_all_rows(container_id)
 	<fieldset>
 		<legend>{L_OPTIMIZE_REPAIR_OPTIONS}</legend>
 	<dl>
-		<dt><label for="type">{L_DISABLE_BOARD}:</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
+		<dt><label for="type">{L_DISABLE_BOARD}{L_COLON}</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
 		<dd>
 			<label><input type="radio" class="radio" name="disable_board" value="1" checked="checked" /> {L_YES}</label>
 			<label><input type="radio" class="radio" name="disable_board" value="0" /> {L_NO}</label>
 		</dd>
 	</dl>
 	<dl>
-		<dt><label for="type">{L_ACTION}:</label></dt>
+		<dt><label for="type">{L_ACTION}{L_COLON}</label></dt>
 		<dd>
 			<label><input id="type" type="radio" class="radio" name="type" value="optimize" checked="checked" /> {L_OPTIMIZE}</label>
 			<label><input type="radio" class="radio" name="type" value="repair" /> {L_REPAIR}</label>
