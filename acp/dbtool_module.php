@@ -159,7 +159,7 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 	{
 		global $cache, $db;
 
-		// Disbale the board if user selected this option
+		// Disable the board if admin selected this option
 		if ($disable_board)
 		{
 			set_config('board_disable', 1);
@@ -167,17 +167,17 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 
 		$message = '';
 		$result = $db->sql_query($query . ' ' . $db->sql_escape($tables));
-		while ($msg = $db->sql_fetchrow($result))
+		while ($row = $db->sql_fetchrow($result))
 		{
 			// Build a message only for optimize/repair errors, or if check table is run
-			if ((in_array(strtolower($msg['Msg_type']), array('error', 'info', 'note', 'warning'))) || $query == 'CHECK TABLE')
+			if ((in_array(strtolower($row['Msg_type']), array('error', 'info', 'note', 'warning'))) || $query == 'CHECK TABLE')
 			{
-				$message .= '<br />' . substr($msg['Table'], (strpos($msg['Table'], '.') + 1)) . ' ... ' . $msg['Msg_type'] . ': ' . $msg['Msg_text'];
+				$message .= '<br />' . substr($row['Table'], (strpos($row['Table'], '.') + 1)) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
 			}
 		}
 		$db->sql_freeresult($result);
 
-		// Enable the board again if user selected this option
+		// Enable the board again if admin selected this option
 		if ($disable_board)
 		{
 			set_config('board_disable', 0);
@@ -186,7 +186,7 @@ class phpbb_ext_vse_dbtool_acp_dbtool_module
 		// Clear cache to ensure board is re-enabled for all users
 		$cache->purge();
 
-		// Let's add an extra linebreak if there are messages, it looks better.
+		// Let's add an extra line break if there are messages, it looks better
 		$message = !empty($message) ? '<br />' . $message : '';
 
 		return $message;
