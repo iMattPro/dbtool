@@ -7,7 +7,9 @@
 *
 */
 
-class phpbb_ext_vse_dbtool_migrations_1_base extends phpbb_db_migration
+namespace vse\dbtool\migrations;
+
+class install_1_base extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
@@ -21,7 +23,7 @@ class phpbb_ext_vse_dbtool_migrations_1_base extends phpbb_db_migration
 				'acp',
 				'ACP_CAT_DATABASE',
 				array(
-					'module_basename'	=> 'phpbb_ext_vse_dbtool_acp_dbtool_module',
+					'module_basename'	=> '\vse\dbtool\acp\dbtool_module',
 					'module_langname'	=> 'ACP_OPTIMIZE_REPAIR',
 					'module_mode'		=> 'view',
 					'module_auth'		=> 'acl_a_backup',

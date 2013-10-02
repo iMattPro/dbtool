@@ -7,7 +7,9 @@
 *
 */
 
-class phpbb_ext_vse_dbtool_migrations_2_update_1_1_0 extends phpbb_db_migration
+namespace vse\dbtool\migrations;
+
+class install_2_update_1_1_0 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
@@ -16,7 +18,7 @@ class phpbb_ext_vse_dbtool_migrations_2_update_1_1_0 extends phpbb_db_migration
 
 	static public function depends_on()
 	{
-		return array('phpbb_ext_vse_dbtool_migrations_1_base');
+		return array('\vse\dbtool\migrations\install_1_base');
 	}
 
 	public function update_data()
@@ -36,7 +38,7 @@ class phpbb_ext_vse_dbtool_migrations_2_update_1_1_0 extends phpbb_db_migration
 	public function update_module()
 	{
 		$sql = 'UPDATE ' . $this->table_prefix . "modules
-			SET module_basename = 'phpbb_ext_vse_dbtool_acp_dbtool_module', module_langname = 'ACP_OPTIMIZE_REPAIR'
+			SET module_basename = '\vse\dbtool\acp\dbtool_module', module_langname = 'ACP_OPTIMIZE_REPAIR'
 			WHERE module_class = 'acp'
 				AND module_basename = 'acp_database_or'
 				AND module_langname = 'ACP_DATABASE_OR'";

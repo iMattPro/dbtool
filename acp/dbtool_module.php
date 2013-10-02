@@ -7,6 +7,8 @@
 *
 */
 
+namespace vse\dbtool\acp;
+
 /**
 * @ignore
 */
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 /**
 * @package acp
 */
-class phpbb_ext_vse_dbtool_acp_dbtool_module
+class dbtool_module
 {
 	var $u_action;
 

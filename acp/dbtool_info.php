@@ -7,6 +7,8 @@
 *
 */
 
+namespace vse\dbtool\acp;
+
 /**
 * @ignore
 */
@@ -18,12 +20,12 @@ if (!defined('IN_PHPBB'))
 /**
 * @package module_install
 */
-class phpbb_ext_vse_dbtool_acp_dbtool_info
+class dbtool_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> 'phpbb_ext_vse_dbtool_acp_dbtool_module',
+			'filename'	=> '\vse\dbtool\acp\dbtool_module',
 			'title'		=> 'ACP_OPTIMIZE_REPAIR',
 			'version'	=> '1.1.0',
 			'modes'		=> array(
