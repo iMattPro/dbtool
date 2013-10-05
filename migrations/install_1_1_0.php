@@ -9,11 +9,16 @@
 
 namespace vse\dbtool\migrations;
 
-class install_1_base extends \phpbb\db\migration\migration
+class install_1_1_0 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['database_or_version']) && version_compare($this->config['database_or_version'], '1.0.2', '>=');
+		return isset($this->config['dbtool_version']) && version_compare($this->config['dbtool_version'], '1.1.0', '>=');
+	}
+
+	static public function depends_on()
+	{
+		return array('\vse\dbtool\migrations\remove_database_or');
 	}
 
 	public function update_data()
@@ -30,6 +35,8 @@ class install_1_base extends \phpbb\db\migration\migration
 					'after'				=> 'ACP_RESTORE', // Will be placed after ACP_RESTORE
 				)
 			)),
+
+			array('config.add', array('dbtool_version', '1.1.0')),
 		);
 	}
 }
