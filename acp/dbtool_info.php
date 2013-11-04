@@ -10,14 +10,6 @@
 namespace vse\dbtool\acp;
 
 /**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
-/**
 * @package module_install
 */
 class dbtool_info

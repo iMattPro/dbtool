@@ -10,14 +10,6 @@
 namespace vse\dbtool\acp;
 
 /**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
-/**
 * @package acp
 */
 class dbtool_module
@@ -205,5 +197,4 @@ class dbtool_module
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
 		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[$i] : '0 B';
 	}
-
 }
