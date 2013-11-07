@@ -3,6 +3,8 @@
 
 This is an extension for phpBB 3.1 that will allow you to check, optimize and repair phpBB's database tables from a phpMyAdmin-like interface in the Administration Control Panel.
 
+[![Build Status](https://travis-ci.org/phpbb-extensions/boardrules.png)](https://travis-ci.org/phpbb-extensions/boardrules)
+
 ##Features
 - Optimize, Repair and Check tables directly from the ACP
 - Select individual or all tables independently
