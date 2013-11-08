@@ -35,6 +35,7 @@ Note: InnoDB table types do not support the Repair option.
 
 ##Uninstallation
 Navigate in the ACP to `Customise -> Extension Management -> Extensions` and click `Disable`.
+
 To permanently uninstall, click `Delete Data` and then you can safely delete the `/ext/vse/dbtool` folder.
 
 ## License
