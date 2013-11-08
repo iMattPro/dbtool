@@ -34,7 +34,8 @@ After installation, you can find the Optimize & Repair Tool in `ACP -> Maintenan
 Note: InnoDB table types do not support the Repair option.
 
 ##Uninstallation
-Navigate in the ACP to `Customise -> Extension Management -> Extensions` and click `Purge`.
+Navigate in the ACP to `Customise -> Extension Management -> Extensions` and click `Disable`.
+To permanently uninstall, click `Delete Data` and then you can safely delete the `/ext/vse/dbtool` folder.
 
 ## License
 [GNU General Public License v2](http://opensource.org/licenses/GPL-2.0)
