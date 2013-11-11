@@ -14,11 +14,25 @@ namespace vse\dbtool\acp;
 */
 class dbtool_module
 {
-	var $u_action;
+	public $u_action;
 
-	function main($id, $mode)
+	protected $db;
+	protected $cache;
+	protected $user;
+	protected $template;
+	protected $request;
+	protected $config;
+
+	public function main($id, $mode)
 	{
-		global $config, $db, $user, $template;
+		global $db, $cache, $user, $template, $request, $config;
+
+		$this->db = $db;
+		$this->cache = $cache;
+		$this->user = $user;
+		$this->template = $template;
+		$this->request = $request;
+		$this->config = $config;
 
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
@@ -27,19 +41,18 @@ class dbtool_module
 		add_form_key($form_name);
 
 		// Check to make sure only MySQL users can proceed
-		if ($db->sql_layer != 'mysql4' && $db->sql_layer != 'mysqli')
+		if ($this->db->sql_layer != 'mysql4' && $this->db->sql_layer != 'mysqli')
 		{
-			trigger_error($user->lang['WARNING_MYSQL'], E_USER_WARNING);
+			trigger_error($this->user->lang['WARNING_MYSQL'], E_USER_WARNING);
 		}
 
 		// Get vars from the form
-		$action			= request_var('action', '');
-		$submit			= (isset($_POST['submit'])) ? true : false;
-		$type			= request_var('type', '');
-		$table_ary		= request_var('mark', array(''));
-		$disable_board	= !$config['board_disable'] ? request_var('disable_board', 0) : 0;
+		$action = $this->request->variable('action', '');
+		$type = $this->request->variable('type', '');
+		$table_ary = $this->request->variable('mark', array(''));
+		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
 
-		if ($submit)
+		if ($request->is_set_post('submit'))
 		{
 			if (!check_form_key($form_name))
 			{
@@ -48,7 +61,7 @@ class dbtool_module
 
 			if (!sizeof($table_ary))
 			{
-				trigger_error($user->lang['TABLE_ERROR'] . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($this->user->lang['TABLE_ERROR'] . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			// Make sure Safe Mode is disabled during this script execution
@@ -72,7 +85,7 @@ class dbtool_module
 
 					add_log('admin', 'OPTIMIZE_LOG', $tables);
 
-					trigger_error($user->lang['OPTIMIZE_SUCCESS'] . $optimize . adm_back_link($this->u_action));
+					trigger_error($this->user->lang['OPTIMIZE_SUCCESS'] . $optimize . adm_back_link($this->u_action));
 
 				break;
 
@@ -82,7 +95,7 @@ class dbtool_module
 
 					add_log('admin', 'REPAIR_LOG', $tables);
 
-					trigger_error($user->lang['REPAIR_SUCCESS'] . $repair . adm_back_link($this->u_action));
+					trigger_error($this->user->lang['REPAIR_SUCCESS'] . $repair . adm_back_link($this->u_action));
 
 				break;
 
@@ -90,7 +103,7 @@ class dbtool_module
 
 					$check = $this->table_maintenance('CHECK TABLE', $tables, $disable_board);
 
-					trigger_error($user->lang['CHECK_SUCCESS'] . $check . adm_back_link($this->u_action));
+					trigger_error($this->user->lang['CHECK_SUCCESS'] . $check . adm_back_link($this->u_action));
 
 				break;
 			}
@@ -100,9 +113,9 @@ class dbtool_module
 		$total_data_size = $total_data_free = 0;
 		$overhead = '';
 
-		$tables = $db->sql_query('SHOW TABLE STATUS');
+		$tables = $this->db->sql_query('SHOW TABLE STATUS');
 
-		while ($table = $db->sql_fetchrow($tables))
+		while ($table = $this->db->sql_fetchrow($tables))
 		{
 			/**
 			* NOTE: Only MyISAM, InnoDB and Archive storage engines can be used
@@ -123,7 +136,7 @@ class dbtool_module
 				$total_data_size = $total_data_size + $data_size;
 				$total_data_free = $total_data_free + $table['Data_free'];
 
-				$template->assign_block_vars('tables', array(
+				$this->template->assign_block_vars('tables', array(
 					'TABLE_NAME'	=> $table['Name'],
 					'TABLE_TYPE'	=> $table['Engine'],
 					'DATA_SIZE'		=> $this->file_size($data_size),
@@ -132,9 +145,9 @@ class dbtool_module
 				));
 			}
 		}
-		$db->sql_freeresult($tables);
+		$this->db->sql_freeresult($tables);
 
-		$template->assign_vars(array(
+		$this->template->assign_vars(array(
 			'TOTAL_DATA_SIZE' => $this->file_size($total_data_size),
 			'TOTAL_DATA_FREE' => $this->file_size($total_data_free),
 			'U_ACTION' => $this->u_action,
@@ -148,20 +161,19 @@ class dbtool_module
 	* @param string $tables comma delinieated string of all tables to be processed
 	* @param bool $disable_board the users option to disable the board during run time
 	* @return string $message any errors or status information
+	* @access private
 	*/
-	function table_maintenance($query, $tables, $disable_board = 0)
+	private function table_maintenance($query, $tables, $disable_board = 0)
 	{
-		global $cache, $db;
-
 		// Disable the board if admin selected this option
 		if ($disable_board)
 		{
-			set_config('board_disable', 1);
+			$this->config->set('board_disable', 1);
 		}
 
 		$message = '';
-		$result = $db->sql_query($query . ' ' . $db->sql_escape($tables));
-		while ($row = $db->sql_fetchrow($result))
+		$result = $this->db->sql_query($query . ' ' . $this->db->sql_escape($tables));
+		while ($row = $this->db->sql_fetchrow($result))
 		{
 			// Build a message only for optimize/repair errors, or if check table is run
 			if ((in_array(strtolower($row['Msg_type']), array('error', 'info', 'note', 'warning'))) || $query == 'CHECK TABLE')
@@ -169,16 +181,16 @@ class dbtool_module
 				$message .= '<br />' . substr($row['Table'], (strpos($row['Table'], '.') + 1)) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
 			}
 		}
-		$db->sql_freeresult($result);
+		$this->db->sql_freeresult($result);
 
 		// Enable the board again if admin selected this option
 		if ($disable_board)
 		{
-			set_config('board_disable', 0);
+			$this->config->set('board_disable', 0);
 		}
 
 		// Clear cache to ensure board is re-enabled for all users
-		$cache->purge();
+		$this->cache->purge();
 
 		// Let's add an extra line break if there are messages, it looks better
 		$message = !empty($message) ? '<br />' . $message : '';
@@ -191,8 +203,9 @@ class dbtool_module
 	*
 	* @param int $size number representing bytes
 	* @return string $size with the correct units symbol appended
+	* @access private
 	*/
-	function file_size($size)
+	private function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
 		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[$i] : '0 B';
