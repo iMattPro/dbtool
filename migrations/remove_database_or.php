@@ -25,13 +25,10 @@ class remove_database_or extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('if', array(
-				($this->config['database_or_version']),
-				array('module.remove', array(
-					'acp',
-					false,
-					'ACP_DATABASE_OR',
-				)),
+				array('module.exists', array('acp', false, 'ACP_DATABASE_OR')),
+				array('module.remove', array('acp', false, 'ACP_DATABASE_OR')),
 			)),
+
 			array('if', array(
 				($this->config['database_or_version']),
 				array('config.remove', array('database_or_version')),
