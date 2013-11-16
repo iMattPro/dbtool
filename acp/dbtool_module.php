@@ -52,7 +52,7 @@ class dbtool_module
 		$table_ary = $this->request->variable('mark', array(''));
 		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
 
-		if ($request->is_set_post('submit'))
+		if ($this->request->is_set_post('submit'))
 		{
 			if (!check_form_key($form_name))
 			{
