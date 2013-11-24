@@ -1,7 +1,7 @@
 {
     "name": "vse/dbtool",
     "type": "phpbb-extension",
-    "description": "An extension for phpBB 3.1 that will allow you to check, optimize and repair phpBB's database tables from a phpMyAdmin-like interface in the Administration Control Panel.",
+    "description": "Allows you to check, optimize and repair phpBB's database tables from a phpMyAdmin-like interface in the Administration Control Panel.",
     "homepage": "https://github.com/VSEphpbb/dbtool",
     "version": "1.1.0",
     "time": "2013-10-04",
