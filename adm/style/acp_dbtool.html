@@ -134,7 +134,7 @@ function unmark_all_rows(container_id)
 // ]]>
 </script>
 
-<a name="maincontent"></a>
+	<a name="maincontent"></a>
 
 	<h1>{L_ACP_OPTIMIZE_REPAIR}</h1>
 
@@ -147,72 +147,72 @@ function unmark_all_rows(container_id)
 
 	<form id="tables" method="post" action="{U_ACTION}">
 
-	<fieldset>
-		<legend>{L_OPTIMIZE_REPAIR_OPTIONS}</legend>
-	<dl>
-		<dt><label for="disable_board">{L_DISABLE_BOARD}{L_COLON}</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
-		<dd>
-			<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked" /> {L_YES}</label>
-			<label><input type="radio" class="radio" name="disable_board" value="0" /> {L_NO}</label>
-		</dd>
-	</dl>
-	<dl>
-		<dt><label for="type">{L_ACTION}{L_COLON}</label></dt>
-		<dd>
-			<label><input type="radio" class="radio" name="type" value="optimize" id="type" checked="checked" /> {L_OPTIMIZE}</label>
-			<label><input type="radio" class="radio" name="type" value="repair" /> {L_REPAIR}</label>
-			<label><input type="radio" class="radio" name="type" value="check" /> {L_CHECK}</label>
-		</dd>
-	</dl>
+		<fieldset>
+			<legend>{L_OPTIMIZE_REPAIR_OPTIONS}</legend>
+			<dl>
+				<dt><label for="disable_board">{L_DISABLE_BOARD}{L_COLON}</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
+				<dd>
+					<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked" /> {L_YES}</label>
+					<label><input type="radio" class="radio" name="disable_board" value="0" /> {L_NO}</label>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="type">{L_ACTION}{L_COLON}</label></dt>
+				<dd>
+					<label><input type="radio" class="radio" name="type" value="optimize" id="type" checked="checked" /> {L_OPTIMIZE}</label>
+					<label><input type="radio" class="radio" name="type" value="repair" /> {L_REPAIR}</label>
+					<label><input type="radio" class="radio" name="type" value="check" /> {L_CHECK}</label>
+				</dd>
+			</dl>
 
-	<table class="table1" id="table_data">
-	<thead>
-	<tr>
-		<th>{L_TH_NAME}</th>
-		<th>{L_TH_TYPE}</th>
-		<th style="text-align:right;">{L_TH_SIZE}</th>
-		<th style="text-align:right;">{L_TH_OVERHEAD}</th>
-		<th style="text-align:center;">{L_MARK}</th>
-	</tr>
-	</thead>
-	<tbody>
-<!-- IF .tables -->
-	<!-- BEGIN tables -->
-	<!-- IF tables.S_ROW_COUNT is even --><tr class="row1{tables.HAS_OVERHEAD}"><!-- ELSE --><tr class="row2{tables.HAS_OVERHEAD}"><!-- ENDIF -->
-		<td>{tables.TABLE_NAME}</td>
-		<td>{tables.TABLE_TYPE}</td>
-		<td style="text-align:right;">{tables.DATA_SIZE}</td>
-		<td style="text-align:right;">{tables.DATA_FREE}</td>
-		<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{tables.TABLE_NAME}" />&nbsp;</td>
-	</tr>
-	<!-- END tables -->
-	<tr>
-		<th>{L_TH_TOTAL}</th>
-		<th>&nbsp;</th>
-		<th style="text-align:right;">{TOTAL_DATA_SIZE}</th>
-		<th style="text-align:right;">{TOTAL_DATA_FREE}</th>
-		<th>&nbsp;</th>
-	</tr>
-<!-- ELSE -->
-	<tr><td colspan="5">{L_TABLE_EMPTY}</td></tr>
-<!-- ENDIF -->
-	</tbody>
-	</table>
+			<table class="table1" id="table_data">
+				<thead>
+					<tr>
+						<th>{L_TH_NAME}</th>
+						<th>{L_TH_TYPE}</th>
+						<th style="text-align:right;">{L_TH_SIZE}</th>
+						<th style="text-align:right;">{L_TH_OVERHEAD}</th>
+						<th style="text-align:center;">{L_MARK}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- IF .tables -->
+						<!-- BEGIN tables -->
+							<!-- IF tables.S_ROW_COUNT is even --><tr class="row1{tables.HAS_OVERHEAD}"><!-- ELSE --><tr class="row2{tables.HAS_OVERHEAD}"><!-- ENDIF -->
+								<td>{tables.TABLE_NAME}</td>
+								<td>{tables.TABLE_TYPE}</td>
+								<td style="text-align:right;">{tables.DATA_SIZE}</td>
+								<td style="text-align:right;">{tables.DATA_FREE}</td>
+								<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{tables.TABLE_NAME}" />&nbsp;</td>
+							</tr>
+						<!-- END tables -->
+						<tr>
+							<th>{L_TH_TOTAL}</th>
+							<th>&nbsp;</th>
+							<th style="text-align:right;">{TOTAL_DATA_SIZE}</th>
+							<th style="text-align:right;">{TOTAL_DATA_FREE}</th>
+							<th>&nbsp;</th>
+						</tr>
+					<!-- ELSE -->
+						<tr><td colspan="5">{L_TABLE_EMPTY}</td></tr>
+					<!-- ENDIF -->
+				</tbody>
+			</table>
 
-	<fieldset class="quick">
-		<p class="small"><a href="#" onclick="mark_all_rows('table_data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmark_all_rows('table_data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmark_all_rows('table_data'); mark_all_rows('table_data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
-	</fieldset>
+			<fieldset class="quick">
+				<p class="small"><a href="#" onclick="mark_all_rows('table_data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmark_all_rows('table_data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmark_all_rows('table_data'); mark_all_rows('table_data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
+			</fieldset>
 
-	<p id="buttons" class="submit-buttons">
-		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="JavaScript:document.getElementById('buttons').style.display='none';document.getElementById('processing').style.display='block';" />&nbsp;
-		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-	</p>
-	<p id="processing" class="submit-buttons" style="display:none;">
-		<input class="button1" type="button" value="{L_PROCESSING}" disabled="disabled" />
-	</p>
-	{S_FORM_TOKEN}
+			<p id="buttons" class="submit-buttons">
+				<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="JavaScript:document.getElementById('buttons').style.display='none';document.getElementById('processing').style.display='block';" />&nbsp;
+				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			</p>
+			<p id="processing" class="submit-buttons" style="display:none;">
+				<input class="button1" type="button" value="{L_PROCESSING}" disabled="disabled" />
+			</p>
+			{S_FORM_TOKEN}
 
-	</fieldset>
+		</fieldset>
 	</form>
 
 <!-- INCLUDE overall_footer.html -->
