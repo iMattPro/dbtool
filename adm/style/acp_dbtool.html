@@ -3,18 +3,13 @@
 <script type="text/javascript">
 // <![CDATA[
 
-/**
-* The following javascripts are derived from phpMyAdmin's methods
-*/
+// The following javascripts are derived from phpMyAdmin's methods
 
-/**
-* This array is used to remember mark status of rows in browse mode
-*/
-var marked_row = new Array;
+// This array is used to remember mark status of rows in browse mode
+var marked_row = [];
 
 /**
 * enables highlight and marking of rows in data tables
-*
 */
 function mark_rows_init()
 {
@@ -22,7 +17,7 @@ function mark_rows_init()
 	var rows = document.getElementsByTagName('tr');
 	for ( var i = 0; i < rows.length; i++ )
 	{
-		// ... with the class 'odd' or 'even' ...
+		// ... with the class 'row1' or 'row2' ...
 		if ( 'row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4) )
 		{
 			continue;
@@ -31,10 +26,10 @@ function mark_rows_init()
 		// ... to highlight the row on mouseover ...
 		rows[i].onmouseover = function() {
 			this.className += ' row3';
-		}
+		};
 		rows[i].onmouseout = function() {
 			this.className = this.className.replace( ' row3', '' );
-		}
+		};
 		// ... and to mark the row on click ...
 		rows[i].onmousedown = function() {
 			var unique_id;
@@ -63,11 +58,11 @@ function mark_rows_init()
 				marked_row[unique_id] = false;
 			}
 
-			if ( checkbox && checkbox.disabled == false )
+			if ( checkbox && checkbox.disabled === false )
 			{
 				checkbox.checked = marked_row[unique_id];
 			}
-		}
+		};
 
 		// .. and checkbox clicks
 		var checkbox = rows[i].getElementsByTagName('input')[0];
@@ -76,7 +71,7 @@ function mark_rows_init()
 			checkbox.onclick = function() {
 				// opera does not recognize return false;
 				this.checked = ! this.checked;
-			}
+			};
 		}
 	}
 }
@@ -87,7 +82,6 @@ window.onload = mark_rows_init;
 * We must use phpMyAdmin derived mark all, unmark all rows 
 * for compatability with the table row clicking function above
 */
-
 function mark_all_rows(container_id, overhead)
 {
 	var rows = (!overhead) ? document.getElementById(container_id).getElementsByTagName('tr') : document.getElementById(container_id).getElementsByClassName('overhead');
@@ -102,7 +96,7 @@ function mark_all_rows(container_id, overhead)
 		if ( checkbox && checkbox.type == 'checkbox' )
 		{
 			unique_id = checkbox.name + checkbox.value;
-			if ( checkbox.disabled == false )
+			if ( checkbox.disabled === false )
 			{
 				checkbox.checked = true;
 				if ( typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id] )
