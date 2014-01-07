@@ -11,11 +11,6 @@ namespace vse\dbtool\migrations;
 
 class install_1_1_0 extends \phpbb\db\migration\migration
 {
-	public function effectively_installed()
-	{
-		return isset($this->config['dbtool_version']) && version_compare($this->config['dbtool_version'], '1.1.0', '>=');
-	}
-
 	static public function depends_on()
 	{
 		return array('\vse\dbtool\migrations\remove_database_or');

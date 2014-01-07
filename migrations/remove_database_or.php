@@ -16,11 +16,6 @@ class remove_database_or extends \phpbb\db\migration\migration
 		return !isset($this->config['database_or_version']);
 	}
 
-	static public function depends_on()
-	{
-		return array('\phpbb\db\migration\data\v310\dev');
-	}
-
 	public function update_data()
 	{
 		return array(
