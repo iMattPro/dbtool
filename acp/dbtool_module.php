@@ -43,7 +43,7 @@ class dbtool_module
 		// Check to make sure only MySQL users can proceed
 		if ($this->db->sql_layer != 'mysql4' && $this->db->sql_layer != 'mysqli')
 		{
-			trigger_error($this->user->lang['WARNING_MYSQL'], E_USER_WARNING);
+			trigger_error($this->user->lang('WARNING_MYSQL'), E_USER_WARNING);
 		}
 
 		// Get vars from the form
@@ -61,7 +61,7 @@ class dbtool_module
 
 			if (!sizeof($table_ary))
 			{
-				trigger_error($this->user->lang['TABLE_ERROR'] . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			// Make sure Safe Mode is disabled during this script execution
@@ -85,7 +85,7 @@ class dbtool_module
 
 					add_log('admin', 'OPTIMIZE_LOG', $tables);
 
-					trigger_error($this->user->lang['OPTIMIZE_SUCCESS'] . $optimize . adm_back_link($this->u_action));
+					trigger_error($this->user->lang('OPTIMIZE_SUCCESS') . $optimize . adm_back_link($this->u_action));
 
 				break;
 
@@ -95,7 +95,7 @@ class dbtool_module
 
 					add_log('admin', 'REPAIR_LOG', $tables);
 
-					trigger_error($this->user->lang['REPAIR_SUCCESS'] . $repair . adm_back_link($this->u_action));
+					trigger_error($this->user->lang('REPAIR_SUCCESS') . $repair . adm_back_link($this->u_action));
 
 				break;
 
@@ -103,7 +103,7 @@ class dbtool_module
 
 					$check = $this->table_maintenance('CHECK TABLE', $tables, $disable_board);
 
-					trigger_error($this->user->lang['CHECK_SUCCESS'] . $check . adm_back_link($this->u_action));
+					trigger_error($this->user->lang('CHECK_SUCCESS') . $check . adm_back_link($this->u_action));
 
 				break;
 			}
