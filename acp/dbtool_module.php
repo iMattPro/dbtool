@@ -141,7 +141,7 @@ class dbtool_module
 					'TABLE_TYPE'	=> $table['Engine'],
 					'DATA_SIZE'		=> $this->file_size($data_size),
 					'DATA_FREE'		=> $this->file_size($table['Data_free']),
-					'HAS_OVERHEAD'	=> $table['Data_free'] ? ' overhead' : '',
+					'S_OVERHEAD'	=> $table['Data_free'] ? true : false,
 				));
 			}
 		}
