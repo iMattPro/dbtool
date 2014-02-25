@@ -6,7 +6,7 @@ php:
   - 5.6
 
 env:
-#  - DB=mariadb
+  # DB=mariadb
   - DB=mysql
   - DB=postgres
 
@@ -15,7 +15,7 @@ before_script:
   - VENDOR="vse"
   - NAME="dbtool"
 
-  # clone phpBB
+  # clone test framework
   - git clone "git://github.com/phpbb-extensions/test-framework.git" "./../../test-framework"
   
   # run the prepare-travis.sh file from the cloned repo to finish the setup
