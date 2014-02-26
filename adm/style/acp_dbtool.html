@@ -17,8 +17,8 @@ function mark_rows_init()
 	var rows = document.getElementsByTagName('tr');
 	for ( var i = 0; i < rows.length; i++ )
 	{
-		// ... with the class 'rows' ...
-		if ( 'rows' != rows[i].className.substr(0,4) )
+		// ... with the class 'row1' or 'row2' ...
+		if ( 'row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4) )
 		{
 			continue;
 		}
@@ -165,7 +165,7 @@ function unmark_all_rows(container_id)
 				</dd>
 			</dl>
 
-			<table class="table1 zebra-table" id="table_data">
+			<table class="table1" id="table_data">
 				<thead>
 					<tr>
 						<th>{L_TH_NAME}</th>
@@ -178,7 +178,7 @@ function unmark_all_rows(container_id)
 				<tbody>
 					<!-- IF .tables -->
 						<!-- BEGIN tables -->
-							<tr class="rows<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->">
+							<!-- IF tables.S_ROW_COUNT is even --><tr class="row1<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ELSE --><tr class="row2<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ENDIF -->
 								<td>{tables.TABLE_NAME}</td>
 								<td>{tables.TABLE_TYPE}</td>
 								<td style="text-align:right;">{tables.DATA_SIZE}</td>
