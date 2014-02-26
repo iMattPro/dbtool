@@ -178,7 +178,7 @@ function unmark_all_rows(container_id)
 				<tbody>
 					<!-- IF .tables -->
 						<!-- BEGIN tables -->
-							<!-- IF tables.S_ROW_COUNT is even --><tr class="row1{tables.HAS_OVERHEAD}"><!-- ELSE --><tr class="row2{tables.HAS_OVERHEAD}"><!-- ENDIF -->
+							<!-- IF tables.S_ROW_COUNT is even --><tr class="row1<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ELSE --><tr class="row2<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ENDIF -->
 								<td>{tables.TABLE_NAME}</td>
 								<td>{tables.TABLE_TYPE}</td>
 								<td style="text-align:right;">{tables.DATA_SIZE}</td>
