@@ -10,14 +10,15 @@
 /**
 * @group functional
 */
-class phpbb_functional_dbtool_acp_test extends \vse\dbtool\tests\testframework\functional_test_case
+class phpbb_functional_dbtool_acp_test extends extension_functional_test_case
 {
 	public function setUp()
 	{
 		parent::setUp();
 		$this->login();
 		$this->admin_login();
-		$this->enable_dbtool_ext();
+		$this->set_extension('vse', 'dbtool', 'Database Optimize');
+		$this->enable_extension();
 	}
 
 	public function acp_pages_data()

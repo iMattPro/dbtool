@@ -6,7 +6,7 @@ php:
   - 5.6
 
 env:
-  # DB=mariadb
+  - DB=mariadb
   - DB=mysql
   - DB=postgres
 
