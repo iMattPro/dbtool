@@ -7,7 +7,7 @@
 *
 */
 
-class extension_system_database_base_test extends extension_database_test_case
+class extension_system_database_base_test extends phpbb_database_test_case
 {
 	public function getDataSet()
 	{
@@ -39,12 +39,5 @@ class extension_system_database_base_test extends extension_database_test_case
 			),
 		), $this->db->sql_fetchrowset($result));
 		$this->db->sql_freeresult($result);
-	}
-
-	/**
-	 * Confirm the migration was installed
-	 */
-	public function test_migration()
-	{
 	}
 }
