@@ -33,8 +33,6 @@ You can install this on the latest copy of the develop branch ([phpBB 3.1-dev](h
 2. Navigate in the ACP to `Customise -> Extension Management -> Extensions`.
 3. Click `Enable`.
 
-You can install this on the latest copy of the develop branch ([phpBB 3.1-dev](https://github.com/phpbb/phpbb3)) by following the steps below:
-
 ## Usage
 After installation, you can find the Optimize & Repair Tool in `ACP -> Maintenance -> Database -> Optimize & Repair`. 
 
