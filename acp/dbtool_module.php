@@ -131,7 +131,7 @@ class dbtool_module
 				{
 					$table['Data_free'] = 0;
 				}
-				
+
 				$data_size = ($table['Data_length'] + $table['Index_length']);
 				$total_data_size = $total_data_size + $data_size;
 				$total_data_free = $total_data_free + $table['Data_free'];
