@@ -26,7 +26,7 @@ class install_1_1_0 extends \phpbb\db\migration\migration
 					'module_basename'	=> '\vse\dbtool\acp\dbtool_module',
 					'module_langname'	=> 'ACP_OPTIMIZE_REPAIR',
 					'module_mode'		=> 'view',
-					'module_auth'		=> 'ext_vse/dbtool',
+					'module_auth'		=> 'ext_vse/dbtool && acl_a_backup',
 					'after'				=> 'ACP_RESTORE', // Will be placed after ACP_RESTORE
 				)
 			)),
