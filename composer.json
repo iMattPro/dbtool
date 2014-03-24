@@ -4,7 +4,7 @@
     "description": "Allows you to check, optimize and repair phpBB's database tables from a phpMyAdmin-like interface in the Administration Control Panel.",
     "homepage": "https://github.com/VSEphpbb/dbtool",
     "version": "1.1.0",
-    "time": "2013-10-04",
+    "keywords": ["phpbb", "extension", "database", "optimize", "repair", "phpmyadmin"],
     "licence": "GPL-2.0",
     "authors": [
         {
