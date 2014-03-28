@@ -3,12 +3,12 @@ php:
   - 5.3
   - 5.4
   - 5.5
-  # 5.6
+  - 5.6
 
 env:
   # DB=mariadb
   - DB=mysql
-  - DB=postgres
+  # DB=postgres
 
 before_script:
   # MUST UPDATE THIS FOR YOUR EXTENSION
@@ -27,3 +27,8 @@ before_script:
 
 script:
   - ./phpBB/vendor/bin/phpunit --configuration ./phpBB/ext/$VENDOR/$NAME/travis/phpunit-$DB-travis.xml
+
+matrix:
+  include:
+    - php: 5.4
+      env: DB=mariadb
