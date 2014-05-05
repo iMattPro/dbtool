@@ -161,9 +161,9 @@ class dbtool_module
 	* @param string $tables comma delinieated string of all tables to be processed
 	* @param bool $disable_board the users option to disable the board during run time
 	* @return string $message any errors or status information
-	* @access private
+	* @access protected
 	*/
-	private function table_maintenance($query, $tables, $disable_board = 0)
+	protected function table_maintenance($query, $tables, $disable_board = 0)
 	{
 		// Disable the board if admin selected this option
 		if ($disable_board)
@@ -203,9 +203,9 @@ class dbtool_module
 	*
 	* @param int $size number representing bytes
 	* @return string $size with the correct units symbol appended
-	* @access private
+	* @access protected
 	*/
-	private function file_size($size)
+	protected function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
 		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[$i] : '0 B';
