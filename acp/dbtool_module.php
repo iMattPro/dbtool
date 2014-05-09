@@ -56,7 +56,7 @@ class dbtool_module
 		{
 			if (!check_form_key($form_name))
 			{
-				trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
+				trigger_error($user->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			if (!sizeof($table_ary))
