@@ -19,7 +19,6 @@ class dbtool_info
 		return array(
 			'filename'	=> '\vse\dbtool\acp\dbtool_module',
 			'title'		=> 'ACP_OPTIMIZE_REPAIR',
-			'version'	=> '1.1.0',
 			'modes'		=> array(
 				'view'	=> array('title' => 'ACP_OPTIMIZE_REPAIR', 'auth' => 'ext_vse/dbtool && acl_a_backup', 'cat' => array('ACP_CAT_DATABASE')),
 			),
