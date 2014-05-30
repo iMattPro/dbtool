@@ -14,25 +14,40 @@ namespace vse\dbtool\acp;
 */
 class dbtool_module
 {
-	public $u_action;
-
-	protected $db;
+	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;
-	protected $user;
-	protected $template;
-	protected $request;
+
+	/** @var \phpbb\config\config */
 	protected $config;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\request\request */
+	protected $request;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var ContainerBuilder */
+	protected $phpbb_container;
+
+	public $u_action;
 
 	public function main($id, $mode)
 	{
-		global $db, $cache, $user, $template, $request, $config;
+		global $cache, $config, $db, $request, $template, $user, $phpbb_container;
 
-		$this->db = $db;
 		$this->cache = $cache;
-		$this->user = $user;
-		$this->template = $template;
-		$this->request = $request;
 		$this->config = $config;
+		$this->db = $db;
+		$this->request = $request;
+		$this->template = $template;
+		$this->user = $user;
+		$this->phpbb_container = $phpbb_container;
 
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
@@ -83,7 +98,8 @@ class dbtool_module
 
 					$optimize = $this->table_maintenance('OPTIMIZE TABLE', $tables, $disable_board);
 
-					add_log('admin', 'OPTIMIZE_LOG', $tables);
+					$log = $this->phpbb_container->get('log');
+					$log->add('admin', $this->user->data['user_id'], $this->user->ip, 'OPTIMIZE_LOG', time(), array($tables));
 
 					trigger_error($this->user->lang('OPTIMIZE_SUCCESS') . $optimize . adm_back_link($this->u_action));
 
@@ -93,7 +109,8 @@ class dbtool_module
 
 					$repair = $this->table_maintenance('REPAIR TABLE', $tables, $disable_board);
 
-					add_log('admin', 'REPAIR_LOG', $tables);
+					$log = $this->phpbb_container->get('log');
+					$log->add('admin', $this->user->data['user_id'], $this->user->ip, 'REPAIR_LOG', time(), array($tables));
 
 					trigger_error($this->user->lang('REPAIR_SUCCESS') . $repair . adm_back_link($this->u_action));
 
