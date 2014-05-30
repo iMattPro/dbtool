@@ -7,10 +7,12 @@
 *
 */
 
+namespace vse\dbtool\tests\functional;
+
 /**
 * @group functional
 */
-class extension_functional_dbtool_acp_test extends extension_functional_test_case
+class dbtool_acp_test extends \extension_functional_test_case
 {
 	public function setUp()
 	{
