@@ -18,6 +18,11 @@
         "phpbb/phpbb": "3.1.*@dev"
     },
     "extra": {
-        "display-name": "Database Optimize & Repair Tool"
+        "display-name": "Database Optimize & Repair Tool",
+        "version-check": {
+            "host": "vsephpbb.github.io",
+            "directory": "/dbtool",
+            "filename": "version.json"
+        }
     }
 }
