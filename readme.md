@@ -13,25 +13,15 @@ This is an extension for phpBB 3.1 that will allow you to check, optimize and re
 * Nice javascript interactions
 
 ## Requirements
-* phpBB 3.1-dev or higher
+* phpBB 3.1.0-b4 or higher
 * PHP 5.3.3 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 
 ## Installation
-You can install this on the latest copy of the develop branch ([phpBB 3.1-dev](https://github.com/phpbb/phpbb3)) by following the steps below:
-
-**Manual:**
-
-1. Copy the entire contents of this repo to `phpBB/ext/vse/dbtool/`
-2. Navigate in the ACP to `Customise -> Extension Management -> Extensions`.
-3. Click `Enable`.
-
-**Git CLI:**
-
-1. From the board root run the following git command:
-`git clone https://github.com/VSEphpbb/dbtool.git phpBB/ext/vse/dbtool`
-2. Navigate in the ACP to `Customise -> Extension Management -> Extensions`.
-3. Click `Enable`.
+1. [Download the latest release](https://github.com/VSEphpbb/dbtool/releases) and unzip it.
+2. Copy the entire contents from the unzipped folder to `phpBB/ext/vse/dbtool/`.
+3. Navigate in the ACP to `Customise -> Manage extensions`.
+4. Find Database Optimize & Repair Tool under "Disabled Extensions" and click `Enable`.
 
 ## Usage
 After installation, you can find the Optimize & Repair Tool in `ACP -> Maintenance -> Database -> Optimize & Repair`. 
@@ -41,9 +31,9 @@ After installation, you can find the Optimize & Repair Tool in `ACP -> Maintenan
 > Note: InnoDB table types do not support the Repair option.
 
 ## Uninstallation
-Navigate in the ACP to `Customise -> Extension Management -> Extensions` and click `Disable`.
-
-To permanently uninstall, click `Delete Data` and then you can safely delete the `/ext/vse/dbtool` folder.
+1. Navigate in the ACP to `Customise -> Manage extensions`.
+2. Click the `Disable` link for Database Optimize & Repair Tool.
+3. To permanently uninstall, click `Delete Data`, then delete the `dbtool` folder from `phpBB/ext/vse/`.
 
 ## License
 [GNU General Public License v2](http://opensource.org/licenses/GPL-2.0)
