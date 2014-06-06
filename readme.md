@@ -24,7 +24,9 @@ This is an extension for phpBB 3.1 that will allow you to check, optimize and re
 4. Find Database Optimize & Repair Tool under "Disabled Extensions" and click `Enable`.
 
 ## Usage
-After installation, you can find the Optimize & Repair Tool in `ACP -> Maintenance -> Database -> Optimize & Repair`. 
+After installation, you can find the Optimize & Repair Tool in:
+
+`ACP -> Maintenance -> Database -> Optimize & Repair`. 
 
 > You use this extension at your own risk! There have been cases with certain shared web hosts where a database table could crash for a very large forum. This extension will perform the same functions on your database as phpMyAdmin, so if you have been using phpMyAdmin on your database with no problems, then it should be safe to use this extension. It is always safest to run a backup of your database before performing any Optimize or Repair functions just in case anything goes wrong.
 
