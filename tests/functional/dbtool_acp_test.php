@@ -12,15 +12,11 @@ namespace vse\dbtool\tests\functional;
 /**
 * @group functional
 */
-class dbtool_acp_test extends \extension_functional_test_case
+class dbtool_acp_test extends \phpbb_functional_test_case
 {
-	public function setUp()
+	static protected function setup_extensions()
 	{
-		parent::setUp();
-		$this->login();
-		$this->admin_login();
-		$this->set_extension('vse', 'dbtool', 'Database Optimize');
-		$this->enable_extension();
+		return array('vse/dbtool');
 	}
 
 	public function acp_pages_data()
@@ -35,6 +31,8 @@ class dbtool_acp_test extends \extension_functional_test_case
 	*/
 	public function test_acp_pages($mode)
 	{
-		$crawler = self::request('GET', 'adm/index.php?i=\vse\dbtool\acp\dbtool_module&amp;mode=' . $mode . '&sid=' . $this->sid);
+		$this->login();
+		$this->admin_login();
+		self::request('GET', 'adm/index.php?i=\vse\dbtool\acp\dbtool_module&amp;mode=' . $mode . '&sid=' . $this->sid);
 	}
 }
