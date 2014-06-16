@@ -1,9 +1,10 @@
 <?php
 /**
 *
-* @package migration
-* @copyright (c) 2013 phpBB Group
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* Database Optimize & Repair Tool
+*
+* @copyright (c) 2013 Matt Friedman
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 

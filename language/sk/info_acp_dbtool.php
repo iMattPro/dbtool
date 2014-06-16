@@ -1,11 +1,11 @@
 <?php
 /**
 *
-* info_acp_dbtool [Slovak]
+* Database Optimize & Repair Tool [Slovak]
+* Translated by ansysko miskin@miskin.sk
 *
-* @package language
-* @copyright (c) 2013 ansysko miskin@miskin.sk
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @copyright (c) 2013 Matt Friedman
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
