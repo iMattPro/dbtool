@@ -1,11 +1,11 @@
 <?php
 /**
 *
-* info_acp_dbtool [Russian]
+* Database Optimize & Repair Tool [Russian]
+* Translated by vovanchig@gmail.com
 *
-* @package language
-* @copyright (c) 2013 Matt Friedman / translated by vovanchig@gmail.com
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @copyright (c) 2013 Matt Friedman
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
