@@ -36,6 +36,7 @@ class dbtool_module
 	/** @var ContainerBuilder */
 	protected $phpbb_container;
 
+	/** @var string */
 	public $u_action;
 
 	public function main($id, $mode)
@@ -57,7 +58,7 @@ class dbtool_module
 		add_form_key($form_name);
 
 		// Check to make sure only MySQL users can proceed
-		if ($this->db->sql_layer != 'mysql4' && $this->db->sql_layer != 'mysqli')
+		if ($this->db->get_sql_layer() != 'mysql4' && $this->db->get_sql_layer() != 'mysqli')
 		{
 			trigger_error($this->user->lang('WARNING_MYSQL'), E_USER_WARNING);
 		}
