@@ -13,7 +13,7 @@ This is an extension for phpBB 3.1 that will allow you to check, optimize and re
 * Nice javascript interactions
 
 ## Requirements
-* phpBB 3.1.0-b4 or higher
+* phpBB 3.1.0-RC2 or higher
 * PHP 5.3.3 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 
