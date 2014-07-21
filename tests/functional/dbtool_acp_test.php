@@ -35,7 +35,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 		$this->login();
 		$this->admin_login();
 
-		$this->add_lang_ext('vse/dbtool', 'info_acp_dbtool');
+		$this->add_lang_ext('vse/dbtool', 'dbtool_acp');
 
 		$crawler = self::request('GET', 'adm/index.php?i=\vse\dbtool\acp\dbtool_module&amp;mode=' . $mode . '&sid=' . $this->sid);
 		$this->assertContainsLang('ACP_OPTIMIZE_REPAIR', $crawler->text());

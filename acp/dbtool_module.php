@@ -51,6 +51,7 @@ class dbtool_module
 		$this->user = $user;
 		$this->phpbb_container = $phpbb_container;
 
+		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
 
