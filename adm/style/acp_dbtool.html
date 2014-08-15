@@ -1,8 +1,6 @@
 <!-- INCLUDE overall_header.html -->
 
-<script type="text/javascript">
-// <![CDATA[
-
+<script>
 // The following javascripts are derived from phpMyAdmin's methods
 
 // This array is used to remember mark status of rows in browse mode
@@ -11,15 +9,12 @@ var marked_row = [];
 /**
 * enables highlight and marking of rows in data tables
 */
-function mark_rows_init()
-{
+function mark_rows_init() {
 	// for every table row ...
 	var rows = document.getElementsByTagName('tr');
-	for ( var i = 0; i < rows.length; i++ )
-	{
+	for (var i = 0; i < rows.length; i++) {
 		// ... with the class 'row1' or 'row2' ...
-		if ( 'row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4) )
-		{
+		if ('row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4)) {
 			continue;
 		}
 		// ... add event listeners ...
@@ -28,46 +23,36 @@ function mark_rows_init()
 			this.className += ' row3';
 		};
 		rows[i].onmouseout = function() {
-			this.className = this.className.replace( ' row3', '' );
+			this.className = this.className.replace(' row3', '');
 		};
 		// ... and to mark the row on click ...
 		rows[i].onmousedown = function() {
 			var unique_id;
 			var checkbox;
 
-			checkbox = this.getElementsByTagName( 'input' )[0];
-			if ( checkbox && checkbox.type == 'checkbox' )
-			{
+			checkbox = this.getElementsByTagName('input')[0];
+			if (checkbox && checkbox.type == 'checkbox') {
 				unique_id = checkbox.name + checkbox.value;
-			}
-			else if ( this.id.length > 0 )
-			{
+			} else if (this.id.length > 0) {
 				unique_id = this.id;
-			}
-			else
-			{
+			} else {
 				return;
 			}
 
-			if ( typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id] )
-			{
+			if (typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id]) {
 				marked_row[unique_id] = true;
-			}
-			else
-			{
+			} else {
 				marked_row[unique_id] = false;
 			}
 
-			if ( checkbox && checkbox.disabled === false )
-			{
+			if (checkbox && checkbox.disabled === false) {
 				checkbox.checked = marked_row[unique_id];
 			}
 		};
 
 		// .. and checkbox clicks
 		var checkbox = rows[i].getElementsByTagName('input')[0];
-		if ( checkbox )
-		{
+		if (checkbox) {
 			checkbox.onclick = function() {
 				// opera does not recognize return false;
 				this.checked = ! this.checked;
@@ -82,25 +67,20 @@ window.onload = mark_rows_init;
 * We must use phpMyAdmin derived mark all, unmark all rows
 * for compatability with the table row clicking function above
 */
-function mark_all_rows(container_id, overhead)
-{
+function mark_all_rows(container_id, overhead) {
 	var rows = (!overhead) ? document.getElementById(container_id).getElementsByTagName('tr') : document.getElementById(container_id).getElementsByClassName('overhead');
 
 	var unique_id;
 	var checkbox;
 
-	for ( var i = 0; i < rows.length; i++ )
-	{
-		checkbox = rows[i].getElementsByTagName( 'input' )[0];
+	for (var i = 0; i < rows.length; i++) {
+		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if ( checkbox && checkbox.type == 'checkbox' )
-		{
+		if (checkbox && checkbox.type == 'checkbox') {
 			unique_id = checkbox.name + checkbox.value;
-			if ( checkbox.disabled === false )
-			{
+			if (checkbox.disabled === false) {
 				checkbox.checked = true;
-				if ( typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id] )
-				{
+				if (typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id]) {
 					marked_row[unique_id] = true;
 				}
 			}
@@ -110,18 +90,15 @@ function mark_all_rows(container_id, overhead)
 	return true;
 }
 
-function unmark_all_rows(container_id)
-{
+function unmark_all_rows(container_id) {
 	var rows = document.getElementById(container_id).getElementsByTagName('tr');
 	var unique_id;
 	var checkbox;
 
-	for ( var i = 0; i < rows.length; i++ )
-	{
-		checkbox = rows[i].getElementsByTagName( 'input' )[0];
+	for (var i = 0; i < rows.length; i++) {
+		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if ( checkbox && checkbox.type == 'checkbox' )
-		{
+		if (checkbox && checkbox.type == 'checkbox') {
 			unique_id = checkbox.name + checkbox.value;
 			checkbox.checked = false;
 			marked_row[unique_id] = false;
@@ -131,7 +108,6 @@ function unmark_all_rows(container_id)
 	return true;
 }
 
-// ]]>
 </script>
 
 	<a id="maincontent"></a>
