@@ -17,6 +17,8 @@ This is an extension for phpBB 3.1 that will allow you to check, optimize and re
 * PHP 5.3.3 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 
+Note: This extension is in development. Installation is only recommended for testing purposes and is not supported on live boards. This extension will be officially released following phpBB 3.1.0.
+
 ## Installation
 1. [Download the latest release](https://github.com/VSEphpbb/dbtool/releases) and unzip it.
 2. Copy the entire contents from the unzipped folder to `phpBB/ext/vse/dbtool/`.
