@@ -227,6 +227,6 @@ class dbtool_module
 	protected function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
-		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[$i] : '0 B';
+		return $size ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[(int) $i] : '0 B';
 	}
 }
