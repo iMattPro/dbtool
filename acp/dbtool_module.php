@@ -33,7 +33,7 @@ class dbtool_module
 	/** @var \phpbb\user */
 	protected $user;
 
-	/** @var ContainerBuilder */
+	/** @var ContainerInterface */
 	protected $phpbb_container;
 
 	/** @var string */
@@ -178,8 +178,8 @@ class dbtool_module
 	* Perform table SQL query and return any messages
 	*
 	* @param string $query	should either be OPTIMIZE TABLE, REPAIR TABLE, or CHECK TABLE
-	* @param string $tables comma delinieated string of all tables to be processed
-	* @param bool $disable_board the users option to disable the board during run time
+	* @param string $tables comma delineated string of all tables to be processed
+	* @param int $disable_board the users option to disable the board during run time
 	* @return string $message any errors or status information
 	* @access protected
 	*/
@@ -219,7 +219,7 @@ class dbtool_module
 	}
 
 	/**
-	* Display filesize in the proper units
+	* Display file size in the proper units
 	*
 	* @param int $size number representing bytes
 	* @return string $size with the correct units symbol appended
