@@ -131,7 +131,6 @@ class dbtool_module
 
 		// Generate Show Table Data
 		$total_data_size = $total_data_free = 0;
-		$overhead = '';
 
 		$tables = $this->db->sql_query('SHOW TABLE STATUS');
 
