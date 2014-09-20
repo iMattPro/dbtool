@@ -4,12 +4,12 @@
 // The following javascripts are derived from phpMyAdmin's methods
 
 // This array is used to remember mark status of rows in browse mode
-var marked_row = [];
+var markedRow = [];
 
 /**
 * enables highlight and marking of rows in data tables
 */
-function mark_rows_init() {
+function markRowsInit() {
 	// for every table row ...
 	var rows = document.getElementsByTagName('tr');
 	for (var i = 0; i < rows.length; i++) {
@@ -27,26 +27,22 @@ function mark_rows_init() {
 		};
 		// ... and to mark the row on click ...
 		rows[i].onmousedown = function() {
-			var unique_id;
+			var uniqueId;
 			var checkbox;
 
 			checkbox = this.getElementsByTagName('input')[0];
 			if (checkbox && checkbox.type == 'checkbox') {
-				unique_id = checkbox.name + checkbox.value;
+				uniqueId = checkbox.name + checkbox.value;
 			} else if (this.id.length > 0) {
-				unique_id = this.id;
+				uniqueId = this.id;
 			} else {
 				return;
 			}
 
-			if (typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id]) {
-				marked_row[unique_id] = true;
-			} else {
-				marked_row[unique_id] = false;
-			}
+			markedRow[uniqueId] = typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId];
 
 			if (checkbox && checkbox.disabled === false) {
-				checkbox.checked = marked_row[unique_id];
+				checkbox.checked = markedRow[uniqueId];
 			}
 		};
 
@@ -61,27 +57,27 @@ function mark_rows_init() {
 	}
 }
 
-window.onload = mark_rows_init;
+window.onload = markRowsInit;
 
 /**
 * We must use phpMyAdmin derived mark all, unmark all rows
 * for compatability with the table row clicking function above
 */
-function mark_all_rows(container_id, overhead) {
-	var rows = (!overhead) ? document.getElementById(container_id).getElementsByTagName('tr') : document.getElementById(container_id).getElementsByClassName('overhead');
+function markAllRows(containerId, overhead) {
+	var rows = (!overhead) ? document.getElementById(containerId).getElementsByTagName('tr') : document.getElementById(containerId).getElementsByClassName('overhead');
 
-	var unique_id;
+	var uniqueId;
 	var checkbox;
 
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
 		if (checkbox && checkbox.type == 'checkbox') {
-			unique_id = checkbox.name + checkbox.value;
+			uniqueId = checkbox.name + checkbox.value;
 			if (checkbox.disabled === false) {
 				checkbox.checked = true;
-				if (typeof(marked_row[unique_id]) == 'undefined' || !marked_row[unique_id]) {
-					marked_row[unique_id] = true;
+				if (typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId]) {
+					markedRow[uniqueId] = true;
 				}
 			}
 		}
@@ -90,18 +86,18 @@ function mark_all_rows(container_id, overhead) {
 	return true;
 }
 
-function unmark_all_rows(container_id) {
-	var rows = document.getElementById(container_id).getElementsByTagName('tr');
-	var unique_id;
+function unmarkAllRows(containerId) {
+	var rows = document.getElementById(containerId).getElementsByTagName('tr');
+	var uniqueId;
 	var checkbox;
 
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
 		if (checkbox && checkbox.type == 'checkbox') {
-			unique_id = checkbox.name + checkbox.value;
+			uniqueId = checkbox.name + checkbox.value;
 			checkbox.checked = false;
-			marked_row[unique_id] = false;
+			markedRow[uniqueId] = false;
 		}
 	}
 
@@ -141,7 +137,7 @@ function unmark_all_rows(container_id) {
 				</dd>
 			</dl>
 
-			<table class="table1" id="table_data">
+			<table class="table1" id="table-data">
 				<thead>
 					<tr>
 						<th>{L_TH_NAME}</th>
@@ -176,11 +172,11 @@ function unmark_all_rows(container_id) {
 			</table>
 
 			<fieldset class="quick">
-				<p class="small"><a href="#" onclick="mark_all_rows('table_data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmark_all_rows('table_data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmark_all_rows('table_data'); mark_all_rows('table_data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
+				<p class="small"><a href="#" onclick="markAllRows('table-data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmarkAllRows('table-data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmarkAllRows('table-data'); markAllRows('table-data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
 			</fieldset>
 
 			<p id="buttons" class="submit-buttons">
-				<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="JavaScript:document.getElementById('buttons').style.display='none';document.getElementById('processing').style.display='block';" />&nbsp;
+				<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="document.getElementById('buttons').style.display='none'; document.getElementById('processing').style.display='block';" />&nbsp;
 				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
 			</p>
 			<p id="processing" class="submit-buttons" style="display:none;">
