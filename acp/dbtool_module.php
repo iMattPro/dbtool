@@ -55,9 +55,6 @@ class dbtool_module
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
 
-		$form_name = 'acp_dbtool';
-		add_form_key($form_name);
-
 		// Check to make sure only MySQL users can proceed
 		if ($this->db->get_sql_layer() != 'mysql4' && $this->db->get_sql_layer() != 'mysqli')
 		{
@@ -67,63 +64,71 @@ class dbtool_module
 		// Get vars from the form
 		$action = $this->request->variable('action', '');
 		$type = $this->request->variable('type', '');
-		$table_ary = $this->request->variable('mark', array(''));
+		$marked = $this->request->variable('mark', array(''));
 		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
 
 		if ($this->request->is_set_post('submit'))
 		{
-			if (!check_form_key($form_name))
+			if (confirm_box(true))
 			{
-				trigger_error($user->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+				if (!sizeof($marked))
+				{
+					trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
 
-			if (!sizeof($table_ary))
-			{
-				trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+				// Make sure Safe Mode is disabled during this script execution
+				if (@ini_get('safe_mode') || @strtolower(ini_get('safe_mode')) == 'on')
+				{
+					@ini_set('safe_mode', 'Off');
+				}
 
-			// Make sure Safe Mode is disabled during this script execution
-			if (@ini_get('safe_mode') || @strtolower(ini_get('safe_mode')) == 'on')
-			{
-				@ini_set('safe_mode', 'Off');
-			}
+				// Extend or disable script execution timeout (copied this from acp_database.php)
+				@set_time_limit(1200);
+				@set_time_limit(0);
 
-			// Extend or disable script execution timeout (copied this from acp_database.php)
-			@set_time_limit(1200);
-			@set_time_limit(0);
+				$tables = implode(', ', $marked);
+				unset($marked);
 
-			$tables = implode(', ', $table_ary);
-			unset($table_ary);
+				switch ($type)
+				{
+					case 'optimize':
 
-			switch ($type)
-			{
-				case 'optimize':
-
-					$optimize = $this->table_maintenance('OPTIMIZE TABLE', $tables, $disable_board);
+						$optimize = $this->table_maintenance('OPTIMIZE TABLE', $tables, $disable_board);
 
 						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'OPTIMIZE_LOG', time(), array($tables));
 
-					trigger_error($this->user->lang('OPTIMIZE_SUCCESS') . $optimize . adm_back_link($this->u_action));
+						trigger_error($this->user->lang('OPTIMIZE_SUCCESS') . $optimize . adm_back_link($this->u_action));
 
-				break;
+					break;
 
-				case 'repair':
+					case 'repair':
 
-					$repair = $this->table_maintenance('REPAIR TABLE', $tables, $disable_board);
+						$repair = $this->table_maintenance('REPAIR TABLE', $tables, $disable_board);
 
 						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'REPAIR_LOG', time(), array($tables));
 
-					trigger_error($this->user->lang('REPAIR_SUCCESS') . $repair . adm_back_link($this->u_action));
+						trigger_error($this->user->lang('REPAIR_SUCCESS') . $repair . adm_back_link($this->u_action));
 
-				break;
+					break;
 
-				case 'check':
+					case 'check':
 
-					$check = $this->table_maintenance('CHECK TABLE', $tables, $disable_board);
+						$check = $this->table_maintenance('CHECK TABLE', $tables, $disable_board);
 
-					trigger_error($this->user->lang('CHECK_SUCCESS') . $check . adm_back_link($this->u_action));
+						trigger_error($this->user->lang('CHECK_SUCCESS') . $check . adm_back_link($this->u_action));
 
-				break;
+					break;
+				}
+			}
+			else
+			{
+				confirm_box(false, $this->user->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
+					'submit'		=> 1,
+					'mode'			=> $mode,
+					'type'			=> $type,
+					'mark'			=> $marked,
+					'disable_board'	=> $disable_board,
+				)));
 			}
 		}
 
