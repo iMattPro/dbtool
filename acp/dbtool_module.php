@@ -24,6 +24,9 @@ class dbtool_module
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
+	/** @var \phpbb\log\log */
+	protected $log;
+
 	/** @var \phpbb\request\request */
 	protected $request;
 
@@ -33,23 +36,20 @@ class dbtool_module
 	/** @var \phpbb\user */
 	protected $user;
 
-	/** @var ContainerInterface */
-	protected $phpbb_container;
-
 	/** @var string */
 	public $u_action;
 
 	public function main($id, $mode)
 	{
-		global $cache, $config, $db, $request, $template, $user, $phpbb_container;
+		global $cache, $config, $db, $phpbb_log, $request, $template, $user;
 
 		$this->cache = $cache;
 		$this->config = $config;
 		$this->db = $db;
+		$this->log = $phpbb_log;
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
-		$this->phpbb_container = $phpbb_container;
 
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 		$this->tpl_name = 'acp_dbtool';
@@ -101,8 +101,7 @@ class dbtool_module
 
 					$optimize = $this->table_maintenance('OPTIMIZE TABLE', $tables, $disable_board);
 
-					$log = $this->phpbb_container->get('log');
-					$log->add('admin', $this->user->data['user_id'], $this->user->ip, 'OPTIMIZE_LOG', time(), array($tables));
+						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'OPTIMIZE_LOG', time(), array($tables));
 
 					trigger_error($this->user->lang('OPTIMIZE_SUCCESS') . $optimize . adm_back_link($this->u_action));
 
@@ -112,8 +111,7 @@ class dbtool_module
 
 					$repair = $this->table_maintenance('REPAIR TABLE', $tables, $disable_board);
 
-					$log = $this->phpbb_container->get('log');
-					$log->add('admin', $this->user->data['user_id'], $this->user->ip, 'REPAIR_LOG', time(), array($tables));
+						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'REPAIR_LOG', time(), array($tables));
 
 					trigger_error($this->user->lang('REPAIR_SUCCESS') . $repair . adm_back_link($this->u_action));
 
