@@ -52,6 +52,7 @@ class dbtool_module
 		$this->user = $user;
 
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
+
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
 
@@ -62,7 +63,6 @@ class dbtool_module
 		}
 
 		// Get vars from the form
-		$action = $this->request->variable('action', '');
 		$type = $this->request->variable('type', '');
 		$marked = $this->request->variable('mark', array(''));
 		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
