@@ -1,6 +1,6 @@
 ## ![alt text](http://mattfriedman.me/forum/images/database_check_1.png "DB Tool") Database Optimize & Repair Tool (for phpBB3)
 
-This is an extension for phpBB 3.1 that will allow you to check, optimize and repair phpBB's database tables from a phpMyAdmin-like interface in the Administration Control Panel.
+This is an extension for phpBB 3.1 that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.
 
 [![Build Status](https://travis-ci.org/VSEphpbb/dbtool.png)](https://travis-ci.org/VSEphpbb/dbtool)
 
@@ -17,8 +17,6 @@ This is an extension for phpBB 3.1 that will allow you to check, optimize and re
 * PHP 5.3.3 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 
-Note: This extension is in development. Installation is only recommended for testing purposes and is not supported on live boards. This extension will be officially released following phpBB 3.1.0.
-
 ## Installation
 1. [Download the latest release](https://github.com/VSEphpbb/dbtool/releases) and unzip it.
 2. Copy the entire contents from the unzipped folder to `phpBB/ext/vse/dbtool/`.
@@ -28,7 +26,7 @@ Note: This extension is in development. Installation is only recommended for tes
 ## Usage
 After installation, you can find the Optimize & Repair Tool in:
 
-`ACP -> Maintenance -> Database -> Optimize & Repair`. 
+`ACP -> Maintenance -> Database -> Optimize & Repair`.
 
 > You use this extension at your own risk! There have been cases with certain shared web hosts where a database table could crash for a very large forum. This extension will perform the same functions on your database as phpMyAdmin, so if you have been using phpMyAdmin on your database with no problems, then it should be safe to use this extension. It is always safest to run a backup of your database before performing any Optimize or Repair functions just in case anything goes wrong.
 
