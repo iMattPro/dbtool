@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "A phpBB 3.1 extension that allows you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.",
 	"homepage": "https://github.com/VSEphpbb/dbtool",
-	"version": "1.1.0",
+	"version": "1.1.1-dev",
 	"keywords": ["phpbb", "extension", "database", "mysql", "optimize", "repair", "phpmyadmin"],
 	"license": "GPL-2.0",
 	"authors": [
