@@ -3,6 +3,7 @@
 This is an extension for phpBB 3.1 that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.
 
 [![Build Status](https://travis-ci.org/VSEphpbb/dbtool.png)](https://travis-ci.org/VSEphpbb/dbtool)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/?branch=master)
 
 ## Features
 * Optimize, Repair and Check tables directly from the ACP
