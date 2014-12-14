@@ -22,13 +22,13 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_OPTIMIZE_REPAIR'			=> 'Optimise &amp; Repair',
-	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Here you can optimise or repair your phpBB related tables. For large databases, this could take several minutes to complete. <strong>OPTIMISE</strong> will defragment your database and can offer improved database performance. <strong>REPAIR</strong> should only be used if you have reason to believe your database has crashed or corrupt tables. Note: <strong>InnoDB</strong> tables do not support Repair.',
+	'ACP_OPTIMIZE_REPAIR'			=> 'Optimize &amp; Repair',
+	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Here you can optimize or repair your phpBB related tables. For large databases, this could take several minutes to complete. <strong>OPTIMIZE</strong> will defragment your database and can offer improved database performance. <strong>REPAIR</strong> should only be used if you have reason to believe your database has crashed or corrupt tables. Note: <strong>InnoDB</strong> tables do not support Repair.',
 	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Database options',
 	'DISABLE_BOARD'					=> 'Disable board',
 	'DISABLE_BOARD_EXPLAIN'			=> 'You may disable the board during this process. The board will be enabled at the end of the process.',
-	'OPTIMIZE'			=> 'Optimise',
-	'OPTIMIZE_SUCCESS'	=> 'Optimisation of the selected table(s) is complete.',
+	'OPTIMIZE'			=> 'Optimize',
+	'OPTIMIZE_SUCCESS'	=> 'Optimization of the selected table(s) is complete.',
 	'REPAIR'			=> 'Repair',
 	'REPAIR_SUCCESS'	=> 'Repair of the selected table(s) is complete.',
 	'CHECK'				=> 'Check',
