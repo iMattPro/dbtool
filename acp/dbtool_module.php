@@ -87,10 +87,6 @@ class dbtool_module
 					case 'REPAIR':
 					case 'CHECK':
 						$result = $this->table_maintenance($type, $tables, $disable_board);
-						if ($type != 'CHECK')
-						{
-							$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $type . '_LOG', time(), array($tables));
-						}
 						trigger_error($this->user->lang($type . '_SUCCESS') . $result . adm_back_link($this->u_action));
 					break;
 				}
@@ -121,15 +117,7 @@ class dbtool_module
 	*/
 	protected function table_maintenance($operation, $tables, $disable_board = 0)
 	{
-		// Make sure Safe Mode is disabled during this script execution
-		if (@ini_get('safe_mode') || @strtolower(ini_get('safe_mode')) == 'on')
-		{
-			@ini_set('safe_mode', 'Off');
-		}
-
-		// Extend or disable script execution timeout (copied this from acp_database.php)
-		@set_time_limit(1200);
-		@set_time_limit(0);
+		$this->extend_execution_limits();
 
 		$this->disable_board($disable_board, true);
 
@@ -145,6 +133,11 @@ class dbtool_module
 		}
 		$this->db->sql_freeresult($result);
 
+		if ($operation != 'CHECK')
+		{
+			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $operation . '_LOG', time(), array($tables));
+		}
+
 		$this->disable_board($disable_board, false);
 
 		// Clear cache to ensure board is re-enabled for all users
@@ -158,7 +151,7 @@ class dbtool_module
 	*
 	* @param int $disable The users option to disable the board during run time
 	* @param bool $switch True to disable board, false to enable board
-	* @return void
+	* @return null
 	* @access protected
 	*/
 	protected function disable_board($disable, $switch = true)
@@ -172,7 +165,7 @@ class dbtool_module
 	/**
 	* Generate Show Table Data
 	*
-	* @return void
+	* @return null
 	* @access protected
 	*/
 	protected function display_tables()
@@ -260,5 +253,24 @@ class dbtool_module
 	protected function is_mysql()
 	{
 		return $this->db->get_sql_layer() == 'mysql4' || $this->db->get_sql_layer() == 'mysqli';
+	}
+
+	/**
+	* Extend execution limits to mitigate timeouts
+	*
+	* @return null
+	* @access protected
+	*/
+	protected function extend_execution_limits()
+	{
+		// Make sure Safe Mode is disabled during this script execution
+		if (@ini_get('safe_mode') || @strtolower(ini_get('safe_mode')) == 'on')
+		{
+			@ini_set('safe_mode', 'Off');
+		}
+
+		// Extend or disable script execution timeout (copied this from acp_database.php)
+		@set_time_limit(1200);
+		@set_time_limit(0);
 	}
 }
