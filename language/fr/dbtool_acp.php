@@ -9,6 +9,7 @@
 * French translation by Galixte (http://www.galixte.com)
 *
 */
+
 /**
 * DO NOT CHANGE
 */
@@ -16,10 +17,12 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
 }
+
 $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'			=> 'Optimiser &amp; réparer',
 	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Ici vous pouvez optimiser ou réparer les tables de la base de données de votre forum phpBB. Pour les bases de données importantes plusieurs minutes seront nécessaires. La fonction <strong>OPTIMISER</strong> va défragmenter votre base de données et vous offrir de meilleures performances. La fonction <strong>REPARER</strong> doit être utilisée lorsque vous avez des raisons de croire que votre base de données a rencontré une erreur ou contient des tables corrompues. Note : les tables <strong>InnoDB</strong> ne supportent pas la fonction REPARER.',
