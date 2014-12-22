@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* Database Optimize & Repair Tool [English]
+* Database Optimize & Repair Tool [French]
 *
 * @copyright (c) 2013 Matt Friedman
 * @license GNU General Public License, version 2 (GPL-2.0)
