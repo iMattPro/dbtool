@@ -39,6 +39,9 @@ class dbtool_module
 	/** @var string */
 	public $u_action;
 
+	/**
+	* Constructor
+	*/
 	public function __construct()
 	{
 		global $cache, $config, $db, $phpbb_log, $request, $template, $user;
@@ -54,6 +57,13 @@ class dbtool_module
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 	}
 
+	/**
+	* Main ACP module
+	*
+	* @param int $id
+	* @param string $mode
+	* @access public
+	*/
 	public function main($id, $mode)
 	{
 		$this->tpl_name = 'acp_dbtool';
