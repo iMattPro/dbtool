@@ -60,7 +60,7 @@ class dbtool_module
 	/**
 	* Main ACP module
 	*
-	* @param int $id
+	* @param int    $id
 	* @param string $mode
 	* @access public
 	*/
@@ -74,54 +74,59 @@ class dbtool_module
 			trigger_error($this->user->lang('WARNING_MYSQL'), E_USER_WARNING);
 		}
 
-		$type = $this->request->variable('type', '');
-		$marked = $this->request->variable('mark', array(''));
-		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
-
 		if ($this->request->is_set_post('submit'))
 		{
-			if (confirm_box(true))
-			{
-				if (!sizeof($marked))
-				{
-					trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
-				}
-
-				$type = strtoupper($type);
-				$tables = implode(', ', $marked);
-				unset($marked);
-
-				switch ($type)
-				{
-					case 'OPTIMIZE':
-					case 'REPAIR':
-					case 'CHECK':
-						$result = $this->table_maintenance($type, $tables, $disable_board);
-						trigger_error($this->user->lang($type . '_SUCCESS') . $result . adm_back_link($this->u_action));
-					break;
-				}
-			}
-			else
-			{
-				confirm_box(false, $this->user->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
-					'submit'		=> 1,
-					'mode'			=> $mode,
-					'type'			=> $type,
-					'mark'			=> $marked,
-					'disable_board'	=> $disable_board,
-				)));
-			}
+			$this->run_tool();
 		}
 
 		$this->display_tables();
 	}
 
 	/**
+	* Run database tool
+	*
+	* @return null
+	* @access protected
+	*/
+	protected function run_tool()
+	{
+		$operation = $this->request->variable('operation', '');
+		$marked = $this->request->variable('mark', array(''));
+		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
+
+		if (confirm_box(true))
+		{
+			if (!sizeof($marked))
+			{
+				trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
+			}
+
+			$operation = strtoupper($operation);
+			$tables = implode(', ', $marked);
+
+			if ($this->is_valid_operation($operation))
+			{
+				$result = $this->table_maintenance($operation, $tables, $disable_board);
+				trigger_error($this->user->lang($operation . '_SUCCESS') . $result . adm_back_link($this->u_action));
+			}
+		}
+		else
+		{
+			confirm_box(false, $this->user->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
+				'submit'		=> 1,
+				'operation'		=> $operation,
+				'mark'			=> $marked,
+				'disable_board'	=> $disable_board,
+			)));
+		}
+	}
+
+	/**
 	* Perform table SQL query and return any messages
 	*
-	* @param string $operation OPTIMIZE, REPAIR, or CHECK
-	* @param string $tables Comma delineated string of all tables to be processed
-	* @param int $disable_board The user's option to disable the board during run time
+	* @param string $operation     OPTIMIZE, REPAIR, or CHECK
+	* @param string $tables        Comma delineated string of all tables to be processed
+	* @param int    $disable_board The user's option to disable the board during run time
 	* @return string Any errors or status information
 	* @access protected
 	*/
@@ -154,22 +159,6 @@ class dbtool_module
 		$this->cache->purge();
 
 		return $message;
-	}
-
-	/**
-	* Set disable board config state
-	*
-	* @param int $disable The users option to disable the board during run time
-	* @param bool $switch True to disable board, false to enable board
-	* @return null
-	* @access protected
-	*/
-	protected function disable_board($disable, $switch = true)
-	{
-		if ($disable)
-		{
-			$this->config->set('board_disable', (int) $switch);
-		}
 	}
 
 	/**
@@ -218,6 +207,45 @@ class dbtool_module
 	}
 
 	/**
+	* Set disable board config state
+	*
+	* @param int  $disable The users option to disable the board during run time
+	* @param bool $switch  True to disable board, false to enable board
+	* @return null
+	* @access protected
+	*/
+	protected function disable_board($disable, $switch = true)
+	{
+		if ($disable)
+		{
+			$this->config->set('board_disable', (int) $switch);
+		}
+	}
+
+	/**
+	* Is the database using MySQL
+	*
+	* @return bool True if MySQL, false otherwise
+	* @access protected
+	*/
+	protected function is_mysql()
+	{
+		return $this->db->get_sql_layer() == 'mysql4' || $this->db->get_sql_layer() == 'mysqli';
+	}
+
+	/**
+	* Is requested operation to optimize, repair or check tables
+	*
+	* @param string $operation The name of the operation
+	* @return bool True if valid operation, false otherwise
+	* @access protected
+	*/
+	protected function is_valid_operation($operation)
+	{
+		return in_array($operation, array('OPTIMIZE', 'REPAIR', 'CHECK'));
+	}
+
+	/**
 	* Only allow tables using MyISAM, InnoDB or Archive storage engines
 	*
 	* @param string $engine The name of the engine
@@ -252,17 +280,6 @@ class dbtool_module
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
 		return ($size) ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[(int) $i] : '0 B';
-	}
-
-	/**
-	* Is the database using MySQL
-	*
-	* @return bool True if MySQL, false otherwise
-	* @access protected
-	*/
-	protected function is_mysql()
-	{
-		return $this->db->get_sql_layer() == 'mysql4' || $this->db->get_sql_layer() == 'mysqli';
 	}
 
 	/**
