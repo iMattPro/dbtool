@@ -207,22 +207,6 @@ class dbtool_module
 	}
 
 	/**
-	* Set disable board config state
-	*
-	* @param int  $disable The users option to disable the board during run time
-	* @param bool $switch  True to disable board, false to enable board
-	* @return null
-	* @access protected
-	*/
-	protected function disable_board($disable, $switch = true)
-	{
-		if ($disable)
-		{
-			$this->config->set('board_disable', (int) $switch);
-		}
-	}
-
-	/**
 	* Is the database using MySQL
 	*
 	* @return bool True if MySQL, false otherwise
@@ -238,9 +222,9 @@ class dbtool_module
 	*
 	* @param string $operation The name of the operation
 	* @return bool True if valid operation, false otherwise
-	* @access protected
+	* @access public
 	*/
-	protected function is_valid_operation($operation)
+	public function is_valid_operation($operation)
 	{
 		return in_array($operation, array('OPTIMIZE', 'REPAIR', 'CHECK'));
 	}
@@ -250,9 +234,9 @@ class dbtool_module
 	*
 	* @param string $engine The name of the engine
 	* @return bool True if valid engine, false otherwise
-	* @access protected
+	* @access public
 	*/
-	protected function is_valid_engine($engine)
+	public function is_valid_engine($engine)
 	{
 		return in_array(strtolower($engine), array('myisam', 'innodb', 'archive'));
 	}
@@ -262,11 +246,27 @@ class dbtool_module
 	*
 	* @param string $engine The name of the engine
 	* @return bool True if InnoDB engine, false otherwise
-	* @access protected
+	* @access public
 	*/
-	protected function is_innodb($engine)
+	public function is_innodb($engine)
 	{
 		return strtolower($engine) == 'innodb';
+	}
+
+	/**
+	* Set disable board config state
+	*
+	* @param int  $disable The users option to disable the board during run time
+	* @param bool $switch  True to disable board, false to enable board
+	* @return null
+	* @access public
+	*/
+	public function disable_board($disable, $switch = true)
+	{
+		if ($disable)
+		{
+			$this->config->set('board_disable', (int) $switch);
+		}
 	}
 
 	/**
@@ -274,9 +274,9 @@ class dbtool_module
 	*
 	* @param int $size Number representing bytes
 	* @return string $size with the correct units symbol appended
-	* @access protected
+	* @access public
 	*/
-	protected function file_size($size)
+	public function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
 		return ($size) ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[(int) $i] : '0 B';
