@@ -20,11 +20,6 @@ class dbtool_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/**
-	* Setup test environment
-	*
-	* @access public
-	*/
 	public function setUp()
 	{
 		parent::setUp();
@@ -43,9 +38,6 @@ class dbtool_test extends \phpbb_test_case
 
 	/**
 	* Data set for test_is_innodb
-	*
-	* @return array Array of test data
-	* @access public
 	*/
 	public function is_innodb_data()
 	{
@@ -65,7 +57,6 @@ class dbtool_test extends \phpbb_test_case
 	* Test the is_innodb method
 	*
 	* @dataProvider is_innodb_data
-	* @access public
 	*/
 	public function test_is_innodb($engine, $expected)
 	{
@@ -74,9 +65,6 @@ class dbtool_test extends \phpbb_test_case
 
 	/**
 	 * Data set for test_is_valid_engine
-	 *
-	 * @return array Array of test data
-	 * @access public
 	 */
 	public function is_valid_engine_data()
 	{
@@ -100,7 +88,6 @@ class dbtool_test extends \phpbb_test_case
 	 * Test the is_valid_engine method
 	 *
 	 * @dataProvider is_valid_engine_data
-	 * @access public
 	 */
 	public function test_is_valid_engine($engine, $expected)
 	{
@@ -109,9 +96,6 @@ class dbtool_test extends \phpbb_test_case
 
 	/**
 	 * Data set for test_is_valid_operation
-	 *
-	 * @return array Array of test data
-	 * @access public
 	 */
 	public function is_valid_operation_data()
 	{
@@ -132,7 +116,6 @@ class dbtool_test extends \phpbb_test_case
 	 * Test the is_valid_operation method
 	 *
 	 * @dataProvider is_valid_operation_data
-	 * @access public
 	 */
 	public function test_is_valid_operation($operation, $expected)
 	{
@@ -141,9 +124,6 @@ class dbtool_test extends \phpbb_test_case
 
 	/**
 	 * Data set for test_file_size
-	 *
-	 * @return array Array of test data
-	 * @access public
 	 */
 	public function file_size_data()
 	{
@@ -167,7 +147,6 @@ class dbtool_test extends \phpbb_test_case
 	 * Test the file_size method
 	 *
 	 * @dataProvider file_size_data
-	 * @access public
 	 */
 	public function test_file_size($value, $expected)
 	{
@@ -176,9 +155,6 @@ class dbtool_test extends \phpbb_test_case
 
 	/**
 	 * Data set for test_disable_board
-	 *
-	 * @return array Array of test data
-	 * @access public
 	 */
 	public function disable_board_data()
 	{
@@ -198,7 +174,6 @@ class dbtool_test extends \phpbb_test_case
 	 * Test the disable_board method
 	 *
 	 * @dataProvider disable_board_data
-	 * @access public
 	 */
 	public function test_disable_board($disable_board, $switch, $current_state, $expected_state)
 	{
