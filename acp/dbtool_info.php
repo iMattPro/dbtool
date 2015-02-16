@@ -15,7 +15,7 @@ namespace vse\dbtool\acp;
 */
 class dbtool_info
 {
-	function module()
+	public function module()
 	{
 		return array(
 			'filename'	=> '\vse\dbtool\acp\dbtool_module',
