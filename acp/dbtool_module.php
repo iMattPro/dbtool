@@ -53,6 +53,7 @@ class dbtool_module
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
+		$this->php_ini = new \phpbb\php\ini();
 
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 	}
@@ -290,8 +291,8 @@ class dbtool_module
 	*/
 	protected function extend_execution_limits()
 	{
-		// Make sure Safe Mode is disabled during this script execution
-		if (@ini_get('safe_mode') || @strtolower(ini_get('safe_mode')) == 'on')
+		// Disable safe mode during this script execution
+		if ($this->php_ini->get_bool('safe_mode'))
 		{
 			@ini_set('safe_mode', 'Off');
 		}
