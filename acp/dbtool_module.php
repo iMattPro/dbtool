@@ -291,13 +291,13 @@ class dbtool_module
 	*/
 	protected function extend_execution_limits()
 	{
-		// Disable safe mode during this script execution
+		// Disable safe mode to allow set_time_limit to work
 		if ($this->php_ini->get_bool('safe_mode'))
 		{
 			@ini_set('safe_mode', 'Off');
 		}
 
-		// Extend or disable script execution timeout (copied this from acp_database.php)
+		// Extend or disable script execution timeout (copied from acp_database.php)
 		@set_time_limit(1200);
 		@set_time_limit(0);
 	}
