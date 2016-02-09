@@ -110,7 +110,7 @@ class dbtool_module
 
 			if ($this->is_valid_operation($operation))
 			{
-				$result = $this->table_maintenance($operation, $tables, $disable_board);
+				$result = $this->process($operation, $tables, $disable_board);
 				trigger_error($this->user->lang($operation . '_SUCCESS') . $result . adm_back_link($this->u_action));
 			}
 		}
@@ -134,7 +134,7 @@ class dbtool_module
 	* @return string Any errors or status information
 	* @access protected
 	*/
-	protected function table_maintenance($operation, $tables, $disable_board = 0)
+	protected function process($operation, $tables, $disable_board = 0)
 	{
 		$this->extend_execution_limits();
 
