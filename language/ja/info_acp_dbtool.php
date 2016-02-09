@@ -25,4 +25,5 @@ $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'	=> '最適化と修復',
 	'OPTIMIZE_LOG'			=> '<strong>データベーステーブルを最適化しました</strong><br />» %s',
 	'REPAIR_LOG'			=> '<strong>データベーステーブルを修復しました</strong><br />» %s',
+	'CHECK_LOG'				=> '<strong>データベーステーブルをチェック</strong><br />» %s',
 ));

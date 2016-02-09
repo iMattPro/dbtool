@@ -149,10 +149,7 @@ class dbtool_module
 		}
 		$this->db->sql_freeresult($result);
 
-		if ($operation != 'CHECK')
-		{
-			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $operation . '_LOG', time(), array($tables));
-		}
+		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $operation . '_LOG', time(), array($tables));
 
 		$this->disable_board($disable_board, false);
 

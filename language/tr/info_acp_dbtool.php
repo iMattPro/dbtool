@@ -25,4 +25,5 @@ $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'	=> 'Optimize et &amp; Onar',
 	'OPTIMIZE_LOG'			=> '<strong>Veritabanı tabloları optimize edildi</strong><br />» %s',
 	'REPAIR_LOG'			=> '<strong>Veritabanı tabloları onarıldı</strong><br />» %s',
+	'CHECK_LOG'				=> '<strong>Veritabanı tabloları incelendi</strong><br />» %s',
 ));
