@@ -27,6 +27,9 @@ class dbtool_module
 	/** @var \phpbb\log\log */
 	protected $log;
 
+	/** @var \phpbb\php\ini */
+	protected $php_ini;
+
 	/** @var \phpbb\request\request */
 	protected $request;
 
