@@ -170,6 +170,7 @@ class dbtool_module
 	*/
 	protected function display_tables()
 	{
+		$table_data = array();
 		$total_data_size = $total_data_free = 0;
 
 		$tables = $this->db->sql_query('SHOW TABLE STATUS');
@@ -189,21 +190,22 @@ class dbtool_module
 				$total_data_size = $total_data_size + $data_size;
 				$total_data_free = $total_data_free + $table['Data_free'];
 
-				$this->template->assign_block_vars('tables', array(
+				$table_data[] = array(
 					'TABLE_NAME'	=> $table['Name'],
 					'TABLE_TYPE'	=> $table['Engine'],
 					'DATA_SIZE'		=> $this->file_size($data_size),
 					'DATA_FREE'		=> $this->file_size($table['Data_free']),
 					'S_OVERHEAD'	=> (bool) $table['Data_free'],
-				));
+				);
 			}
 		}
 		$this->db->sql_freeresult($tables);
 
 		$this->template->assign_vars(array(
-			'TOTAL_DATA_SIZE' => $this->file_size($total_data_size),
-			'TOTAL_DATA_FREE' => $this->file_size($total_data_free),
-			'U_ACTION' => $this->u_action,
+			'TABLE_DATA'		=> $table_data,
+			'TOTAL_DATA_SIZE'	=> $this->file_size($total_data_size),
+			'TOTAL_DATA_FREE'	=> $this->file_size($total_data_free),
+			'U_ACTION'			=> $this->u_action,
 		));
 	}
 

@@ -146,30 +146,28 @@ function unmarkAllRows(containerId) {
 				</tr>
 			</thead>
 			<tbody>
-				{% if loops.tables %}
-					{% for table in loops.tables %}
-						{% if table.S_ROW_COUNT is even %}
-							<tr class="row1{{ table.S_OVERHEAD ? ' overhead' }}">
-						{% else %}
-							<tr class="row2{{ table.S_OVERHEAD ? ' overhead' }}">
-						{% endif %}
-							<td>{{ table.TABLE_NAME }}</td>
-							<td>{{ table.TABLE_TYPE }}</td>
-							<td style="text-align:right;">{{ table.DATA_SIZE }}</td>
-							<td style="text-align:right;">{{ table.DATA_FREE }}</td>
-							<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
-						</tr>
-					{% endfor %}
-					<tr>
-						<th>{{ lang('TH_TOTAL') }}</th>
-						<th></th>
-						<th style="text-align:right;">{{ TOTAL_DATA_SIZE }}</th>
-						<th style="text-align:right;">{{ TOTAL_DATA_FREE }}</th>
-						<th></th>
+				{% for table in TABLE_DATA %}
+					{% if loop.index0 is even %}
+						<tr class="row1{{ table.S_OVERHEAD ? ' overhead' }}">
+					{% else %}
+						<tr class="row2{{ table.S_OVERHEAD ? ' overhead' }}">
+					{% endif %}
+						<td>{{ table.TABLE_NAME }}</td>
+						<td>{{ table.TABLE_TYPE }}</td>
+						<td style="text-align:right;">{{ table.DATA_SIZE }}</td>
+						<td style="text-align:right;">{{ table.DATA_FREE }}</td>
+						<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
 					</tr>
 				{% else %}
 					<tr><td colspan="5">{{ lang('TABLE_EMPTY') }}</td></tr>
-				{% endif %}
+				{% endfor %}
+				<tr>
+					<th>{{ lang('TH_TOTAL') }}</th>
+					<th></th>
+					<th style="text-align:right;">{{ TOTAL_DATA_SIZE }}</th>
+					<th style="text-align:right;">{{ TOTAL_DATA_FREE }}</th>
+					<th></th>
+				</tr>
 			</tbody>
 		</table>
 
