@@ -304,14 +304,10 @@ class dbtool_test extends \phpbb_test_case
 	public function disable_board_data()
 	{
 		return array(
-			array(true, true, false, true),
-			array(true, false, false, false),
-			array(true, true, true, true),
-			array(true, false, true, false),
-			array(false, true, false, false),
-			array(false, false, false, false),
-			array(false, true, true, true),
-			array(false, false, true, true),
+			array(true, false, true, false), // this tests toggling disabled state when users wants it
+			array(true, true, true, true), // this tests that board should always remain disabled
+			array(false, true, true, true), // this tests that board should always remain disabled
+			array(false, false, false, false), // this tests that board should always remain enabled
 		);
 	}
 
@@ -320,13 +316,17 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider disable_board_data
 	 */
-	public function test_disable_board($disable_board, $switch, $current_state, $expected_state)
+	public function test_disable_board($disable_board, $current_state, $expected_state1, $expected_state2)
 	{
 		$this->config->set('board_disable', $current_state);
 
-		$this->dbtool->disable_board($disable_board, $switch);
+		// Pass 1, based on current state
+		$state = $this->dbtool->disable_board($disable_board, $current_state);
+		$this->assertEquals($expected_state1, $this->config['board_disable']);
 
-		$this->assertEquals($expected_state, $this->config['board_disable']);
+		// Pass 2, based on state resulting from pass 1
+		$this->dbtool->disable_board($disable_board, $state);
+		$this->assertEquals($expected_state2, $this->config['board_disable']);
 	}
 
 	protected function setExpectedDisplayTables()

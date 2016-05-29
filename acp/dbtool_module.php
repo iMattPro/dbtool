@@ -96,7 +96,7 @@ class dbtool_module
 	{
 		$operation = $this->request->variable('operation', '');
 		$marked = $this->request->variable('mark', array(''));
-		$disable_board = (!$this->config['board_disable']) ? $this->request->variable('disable_board', 0) : 0;
+		$disable_board = $this->request->variable('disable_board', 0);
 
 		if (confirm_box(true))
 		{
@@ -138,7 +138,7 @@ class dbtool_module
 	{
 		$this->extend_execution_limits();
 
-		$this->disable_board($disable_board, true);
+		$disabled = $this->disable_board($disable_board, $this->config['board_disable']);
 
 		$message = '<br />';
 		$result = $this->db->sql_query($operation . ' TABLE ' . $this->db->sql_escape($tables));
@@ -154,7 +154,7 @@ class dbtool_module
 
 		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $operation . '_LOG', time(), array($tables));
 
-		$this->disable_board($disable_board, false);
+		$this->disable_board($disable_board, $disabled);
 
 		// Clear cache to ensure board is re-enabled for all users
 		$this->cache->purge();
@@ -257,19 +257,21 @@ class dbtool_module
 	}
 
 	/**
-	* Set disable board config state
-	*
-	* @param int  $disable The users option to disable the board during run time
-	* @param bool $switch  True to disable board, false to enable board
-	* @return null
-	* @access public
-	*/
-	public function disable_board($disable, $switch = true)
+	 * Set disable board config state
+	 *
+	 * @param int $disable  The users option to disable the board during run time
+	 * @param int $disabled The current disabled state
+	 * @return int The original disabled state of the board
+	 * @access public
+	 */
+	public function disable_board($disable, $disabled)
 	{
-		if ($disable)
+		if ($disable && !$disabled)
 		{
-			$this->config->set('board_disable', (int) $switch);
+			$this->config->set('board_disable', !$this->config['board_disable']);
 		}
+
+		return $disabled;
 	}
 
 	/**
