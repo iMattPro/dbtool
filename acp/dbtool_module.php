@@ -64,11 +64,9 @@ class dbtool_module
 	/**
 	* Main ACP module
 	*
-	* @param int    $id
-	* @param string $mode
 	* @access public
 	*/
-	public function main($id, $mode)
+	public function main()
 	{
 		$this->tpl_name = 'acp_dbtool';
 		$this->page_title = 'ACP_OPTIMIZE_REPAIR';
@@ -100,7 +98,7 @@ class dbtool_module
 
 		if (confirm_box(true))
 		{
-			if (!sizeof($marked))
+			if (!count($marked))
 			{
 				trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
@@ -145,7 +143,7 @@ class dbtool_module
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			// Build a message only for optimize/repair errors, or if check table is run
-			if ((in_array(strtolower($row['Msg_type']), array('error', 'info', 'note', 'warning'))) || $operation == 'CHECK')
+			if ($operation === 'CHECK' || in_array(strtolower($row['Msg_type']), array('error', 'info', 'note', 'warning')))
 			{
 				$message .= '<br />' . substr($row['Table'], (strpos($row['Table'], '.') + 1)) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
 			}
@@ -217,7 +215,7 @@ class dbtool_module
 	*/
 	protected function is_mysql()
 	{
-		return $this->db->get_sql_layer() == 'mysql4' || $this->db->get_sql_layer() == 'mysqli';
+		return $this->db->get_sql_layer() === 'mysql4' || $this->db->get_sql_layer() === 'mysqli';
 	}
 
 	/**
@@ -253,7 +251,7 @@ class dbtool_module
 	*/
 	public function is_innodb($engine)
 	{
-		return strtolower($engine) == 'innodb';
+		return strtolower($engine) === 'innodb';
 	}
 
 	/**
@@ -284,7 +282,7 @@ class dbtool_module
 	public function file_size($size)
 	{
 		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
-		return (intval($size)) ? round($size / pow(1024, ($i = floor(log($size) / log(1024)))), 1) . $file_size_units[(int) $i] : '0 B';
+		return ((int) $size) ? round($size / pow(1024, $i = floor(log($size) / log(1024))), 1) . $file_size_units[(int) $i] : '0 B';
 	}
 
 	/**

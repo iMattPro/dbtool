@@ -31,7 +31,7 @@ class remove_database_or extends \phpbb\db\migration\migration
 			)),
 
 			array('if', array(
-				($this->config['database_or_version']),
+				$this->config->offsetExists('database_or_version'),
 				array('config.remove', array('database_or_version')),
 			)),
 		);
