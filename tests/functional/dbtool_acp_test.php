@@ -54,7 +54,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$form['disable_board']->select(1);
-		if ($operation != 'error')
+		if ($operation !== 'error')
 		{
 			$form['operation']->select($operation);
 			$form['mark'][0]->tick();

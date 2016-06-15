@@ -10,12 +10,12 @@
 
 namespace vse\dbtool\acp;
 
-require_once dirname(__FILE__) . '/../../../../includes/functions.php';
-require_once dirname(__FILE__) . '/../../../../includes/functions_acp.php';
+require_once __DIR__ . '/../../../../includes/functions.php';
+require_once __DIR__ . '/../../../../includes/functions_acp.php';
 
 class dbtool_test extends \phpbb_test_case
 {
-	static $confirm = false;
+	public static $confirm = false;
 
 	/** @var \vse\dbtool\acp\dbtool_module */
 	protected $dbtool;
@@ -97,7 +97,7 @@ class dbtool_test extends \phpbb_test_case
 			$this->setExpectedTriggerError(E_USER_WARNING, $this->user->lang('WARNING_MYSQL'));
 		}
 
-		$this->dbtool->main(null, null);
+		$this->dbtool->main();
 		$this->assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool);
 	}
 
@@ -177,7 +177,7 @@ class dbtool_test extends \phpbb_test_case
 			$this->setExpectedDisplayTables();
 		}
 
-		$this->dbtool->main(null, null);
+		$this->dbtool->main();
 		$this->assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool);
 	}
 
