@@ -87,7 +87,6 @@ class dbtool_module
 	/**
 	* Run database tool
 	*
-	* @return null
 	* @access protected
 	*/
 	protected function run_tool()
@@ -163,7 +162,6 @@ class dbtool_module
 	/**
 	* Generate Show Table Data
 	*
-	* @return null
 	* @access protected
 	*/
 	protected function display_tables()
@@ -288,7 +286,6 @@ class dbtool_module
 	/**
 	* Extend execution limits to mitigate timeouts
 	*
-	* @return null
 	* @access protected
 	*/
 	protected function extend_execution_limits()
