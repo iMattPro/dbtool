@@ -183,8 +183,8 @@ class dbtool_module
 				}
 
 				$data_size = $table['Data_length'] + $table['Index_length'];
-				$total_data_size = $total_data_size + $data_size;
-				$total_data_free = $total_data_free + $table['Data_free'];
+				$total_data_size += $data_size;
+				$total_data_free += $table['Data_free'];
 
 				$table_data[] = array(
 					'TABLE_NAME'	=> $table['Name'],
