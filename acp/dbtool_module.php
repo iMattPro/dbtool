@@ -40,6 +40,12 @@ class dbtool_module
 	protected $user;
 
 	/** @var string */
+	public $page_title;
+
+	/** @var string */
+	public $tpl_name;
+
+	/** @var string */
 	public $u_action;
 
 	/**
@@ -135,7 +141,7 @@ class dbtool_module
 	{
 		$this->extend_execution_limits();
 
-		$disabled = $this->disable_board($disable_board, $this->config['board_disable']);
+		$disabled = $this->disable_board($disable_board, $this->config->offsetGet('board_disable'));
 
 		$message = '<br />';
 		$result = $this->db->sql_query($operation . ' TABLE ' . $this->db->sql_escape($tables));
@@ -144,7 +150,7 @@ class dbtool_module
 			// Build a message only for optimize/repair errors, or if check table is run
 			if ($operation === 'CHECK' || in_array(strtolower($row['Msg_type']), array('error', 'info', 'note', 'warning')))
 			{
-				$message .= '<br />' . substr($row['Table'], (strpos($row['Table'], '.') + 1)) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
+				$message .= '<br />' . substr($row['Table'], strpos($row['Table'], '.') + 1) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
 			}
 		}
 		$this->db->sql_freeresult($result);
@@ -264,7 +270,7 @@ class dbtool_module
 	{
 		if ($disable && !$disabled)
 		{
-			$this->config->set('board_disable', !$this->config['board_disable']);
+			$this->config->set('board_disable', !$this->config->offsetGet('board_disable'));
 		}
 
 		return $disabled;
