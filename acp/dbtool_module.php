@@ -103,7 +103,7 @@ class dbtool_module
 
 		if (confirm_box(true))
 		{
-			if (!sizeof($marked))
+			if (!count($marked))
 			{
 				trigger_error($this->user->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
