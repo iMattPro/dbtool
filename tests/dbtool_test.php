@@ -10,7 +10,6 @@
 
 namespace vse\dbtool\acp;
 
-require_once __DIR__ . '/../../../../includes/functions.php';
 require_once __DIR__ . '/../../../../includes/functions_acp.php';
 
 class dbtool_test extends \phpbb_test_case
@@ -26,6 +25,9 @@ class dbtool_test extends \phpbb_test_case
 	/** @var \phpbb\db\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
 	protected $db;
 
+	/** @var \phpbb\language\language */
+	protected $lang;
+
 	/** @var \phpbb\request\request|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
@@ -39,7 +41,7 @@ class dbtool_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
-		global $cache, $config, $db, $phpbb_log, $request, $template, $user, $phpbb_extension_manager, $phpbb_root_path;
+		global $cache, $config, $db, $phpbb_log, $request, $template, $user, $phpbb_extension_manager, $phpbb_root_path, $phpEx;
 
 		// Must mock extension manager for the user class
 		$phpbb_extension_manager = new \phpbb_mock_extension_manager($phpbb_root_path);
@@ -50,10 +52,12 @@ class dbtool_test extends \phpbb_test_case
 		$phpbb_log = $this->getMock('\phpbb\log\log_interface');
 		$request   = $this->getMock('\phpbb\request\request');
 		$template  = $this->getMock('\phpbb\template\template');
-		$user      = new \phpbb\user(array('\phpbb\datetime'));
+		$lang      = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
+		$user      = new \phpbb\user($lang, '\phpbb\datetime');
 
 		$this->config   = $config;
 		$this->db       = $db;
+		$this->lang     = $lang;
 		$this->request  = $request;
 		$this->template = $template;
 		$this->user     = $user;
@@ -94,7 +98,7 @@ class dbtool_test extends \phpbb_test_case
 		else
 		{
 			// Expect trigger_error() on error
-			$this->setExpectedTriggerError(E_USER_WARNING, $this->user->lang('WARNING_MYSQL'));
+			$this->setExpectedTriggerError(E_USER_WARNING, $this->lang->lang('WARNING_MYSQL'));
 		}
 
 		$this->dbtool->main();
@@ -158,7 +162,7 @@ class dbtool_test extends \phpbb_test_case
 			if (empty($tables) || $marked_tables == '')
 			{
 				// Expect a trigger_error if no tables were marked
-				$this->setExpectedTriggerError(E_USER_WARNING, $this->user->lang('TABLE_ERROR'));
+				$this->setExpectedTriggerError(E_USER_WARNING, $this->lang->lang('TABLE_ERROR'));
 			}
 			else
 			{
