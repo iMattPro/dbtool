@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2 - 2017-01-10
+
+- Various code improvements and fixes
+- Added Czech translation
+
 ## 1.1.1 - 2016-05-01
 
 - Refactored entire codebase
