@@ -14,8 +14,8 @@ A phpBB extension that will allow you to check, optimize and repair phpBB's MySQ
 * Actions are logged to the Admin log
 * Nice javascript interactions
 
-## Requirements
-* phpBB 3.1.0-RC2 or higher
+## Minimum equirements
+* phpBB 3.1.0 or phpBB 3.2.0
 * PHP 5.3.3 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 

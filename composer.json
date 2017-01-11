@@ -20,7 +20,7 @@
 	"extra": {
 		"display-name": "Database Optimize & Repair Tool",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.0-RC2"
+			"phpbb/phpbb": ">=3.1.0,<3.4"
 		},
 		"version-check": {
 			"host": "www.phpbb.com",
