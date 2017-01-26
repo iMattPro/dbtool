@@ -2,7 +2,7 @@
 
 A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.
 
-[![Build Status](https://travis-ci.org/VSEphpbb/dbtool.png)](https://travis-ci.org/VSEphpbb/dbtool)
+[![Build Status](https://travis-ci.org/VSEphpbb/dbtool.svg)](https://travis-ci.org/VSEphpbb/dbtool)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/vse/dbtool/v/stable)](https://www.phpbb.com/customise/db/extension/database_optimize_and_repair_tool/)
 
