@@ -15,7 +15,7 @@ namespace vse\dbtool\tests\functional;
 */
 class dbtool_acp_test extends \phpbb_functional_test_case
 {
-	static protected function setup_extensions()
+	protected static function setup_extensions()
 	{
 		return array('vse/dbtool');
 	}
@@ -62,8 +62,8 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 		$crawler = self::submit($form);
 
 		$form = $crawler->selectButton('Yes')->form();
-		$crawler = self::submit($form);
+		self::submit($form);
 
-		$this->assertContainsLang($expected, $this->get_content());
+		$this->assertContainsLang($expected, static::get_content());
 	}
 }

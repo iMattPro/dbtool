@@ -157,9 +157,9 @@ class dbtool_test extends \phpbb_test_case
 			->method('sql_escape')
 			->will($this->returnValue($marked_tables));
 
-		if (self::$confirm = $confirmed === true)
+		if (self::$confirm = ($confirmed === true))
 		{
-			if (empty($tables) || $marked_tables == '')
+			if (empty($tables) || $marked_tables === '')
 			{
 				// Expect a trigger_error if no tables were marked
 				$this->setExpectedTriggerError(E_USER_WARNING, $this->lang->lang('TABLE_ERROR'));

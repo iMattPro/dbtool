@@ -14,7 +14,7 @@ function markRowsInit() {
 	var rows = document.getElementsByTagName('tr');
 	for (var i = 0; i < rows.length; i++) {
 		// ... with the class 'row1' or 'row2' ...
-		if ('row1' != rows[i].className.substr(0, 4) && 'row2' != rows[i].className.substr(0, 4)) {
+		if ('row1' !== rows[i].className.substr(0, 4) && 'row2' !== rows[i].className.substr(0, 4)) {
 			continue;
 		}
 		// ... add event listeners ...
@@ -31,7 +31,7 @@ function markRowsInit() {
 			var checkbox;
 
 			checkbox = this.getElementsByTagName('input')[0];
-			if (checkbox && checkbox.type == 'checkbox') {
+			if (checkbox && checkbox.type === 'checkbox') {
 				uniqueId = checkbox.name + checkbox.value;
 			} else if (this.id.length > 0) {
 				uniqueId = this.id;
@@ -39,7 +39,7 @@ function markRowsInit() {
 				return;
 			}
 
-			markedRow[uniqueId] = typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId];
+			markedRow[uniqueId] = typeof(markedRow[uniqueId]) === 'undefined' || !markedRow[uniqueId];
 
 			if (checkbox && checkbox.disabled === false) {
 				checkbox.checked = markedRow[uniqueId];
@@ -72,11 +72,11 @@ function markAllRows(containerId, overhead) {
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if (checkbox && checkbox.type == 'checkbox') {
+		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
 			if (checkbox.disabled === false) {
 				checkbox.checked = true;
-				if (typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId]) {
+				if (typeof(markedRow[uniqueId]) === 'undefined' || !markedRow[uniqueId]) {
 					markedRow[uniqueId] = true;
 				}
 			}
@@ -94,7 +94,7 @@ function unmarkAllRows(containerId) {
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if (checkbox && checkbox.type == 'checkbox') {
+		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
 			checkbox.checked = false;
 			markedRow[uniqueId] = false;
