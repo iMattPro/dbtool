@@ -1,4 +1,4 @@
-## ![alt text](http://mattfriedman.me/forum/images/database_check_1.png "DB Tool") Database Optimize & Repair Tool for phpBB
+## ![alt text](http://vsephpbb.github.io/logo/database_check_1.png "DB Tool") Database Optimize & Repair Tool for phpBB
 
 A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.
 
