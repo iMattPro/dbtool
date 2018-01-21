@@ -46,12 +46,12 @@ class dbtool_test extends \phpbb_test_case
 		// Must mock extension manager for the user class
 		$phpbb_extension_manager = new \phpbb_mock_extension_manager($phpbb_root_path);
 
-		$cache     = $this->getMock('\phpbb\cache\driver\driver_interface');
+		$cache     = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
 		$config    = new \phpbb\config\config(array('board_disable' => 0));
-		$db        = $this->getMock('\phpbb\db\driver\driver_interface');
-		$phpbb_log = $this->getMock('\phpbb\log\log_interface');
-		$request   = $this->getMock('\phpbb\request\request');
-		$template  = $this->getMock('\phpbb\template\template');
+		$db        = $this->getMockBuilder('\phpbb\db\driver\driver_interface')->getMock();
+		$phpbb_log = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
+		$request   = $this->getMockBuilder('\phpbb\request\request')->getMock();
+		$template  = $this->getMockBuilder('\phpbb\template\template')->getMock();
 		$lang      = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
 		$user      = new \phpbb\user($lang, '\phpbb\datetime');
 
