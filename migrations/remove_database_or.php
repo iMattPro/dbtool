@@ -10,7 +10,7 @@
 
 namespace vse\dbtool\migrations;
 
-class remove_database_or extends \phpbb\db\migration\migration
+class remove_database_or extends \phpbb\db\migration\container_aware_migration
 {
 	public function effectively_installed()
 	{
@@ -24,9 +24,12 @@ class remove_database_or extends \phpbb\db\migration\migration
 
 	public function update_data()
 	{
+		// use module tool explicitly since module.exists does not work in 'if'
+		$module_tool = $this->container->get('migrator.tool.module');
+
 		return array(
 			array('if', array(
-				array('module.exists', array('acp', false, 'ACP_DATABASE_OR')),
+				$module_tool->exists('acp', false, 'ACP_DATABASE_OR', true),
 				array('module.remove', array('acp', false, 'ACP_DATABASE_OR')),
 			)),
 
