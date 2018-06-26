@@ -176,11 +176,8 @@ function unmarkAllRows(containerId) {
 		</fieldset>
 
 		<p id="buttons" class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" onclick="document.getElementById('buttons').style.display='none'; document.getElementById('processing').style.display='block';" />&nbsp;
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
-		</p>
-		<p id="processing" class="submit-buttons" style="display:none;">
-			<input class="button1" type="button" value="{{ lang('PROCESSING') }}" disabled="disabled" />
 		</p>
 		{{ S_FORM_TOKEN }}
 	</fieldset>

@@ -124,7 +124,7 @@ class dbtool_module
 				'operation'		=> $operation,
 				'mark'			=> $marked,
 				'disable_board'	=> $disable_board,
-			)));
+			)), 'confirm_dbtool.html');
 		}
 	}
 
