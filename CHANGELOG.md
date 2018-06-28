@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.3 - 2018-06-28
+
+- Various code improvements and fixes
+- Added Brazilian Portuguese translation
+
 ## 1.1.2 - 2017-01-10
 
 - Various code improvements and fixes
