@@ -1,7 +1,7 @@
-<!-- INCLUDE overall_header.html -->
+{% include 'overall_header.html' %}
 
 <script>
-// The following javascripts are derived from phpMyAdmin's methods
+// The following javascript is derived from phpMyAdmin's methods
 
 // This array is used to remember mark status of rows in browse mode
 var markedRow = [];
@@ -14,7 +14,7 @@ function markRowsInit() {
 	var rows = document.getElementsByTagName('tr');
 	for (var i = 0; i < rows.length; i++) {
 		// ... with the class 'row1' or 'row2' ...
-		if ('row1' != rows[i].className.substr(0,4) && 'row2' != rows[i].className.substr(0,4)) {
+		if ('row1' !== rows[i].className.substr(0, 4) && 'row2' !== rows[i].className.substr(0, 4)) {
 			continue;
 		}
 		// ... add event listeners ...
@@ -31,7 +31,7 @@ function markRowsInit() {
 			var checkbox;
 
 			checkbox = this.getElementsByTagName('input')[0];
-			if (checkbox && checkbox.type == 'checkbox') {
+			if (checkbox && checkbox.type === 'checkbox') {
 				uniqueId = checkbox.name + checkbox.value;
 			} else if (this.id.length > 0) {
 				uniqueId = this.id;
@@ -39,7 +39,7 @@ function markRowsInit() {
 				return;
 			}
 
-			markedRow[uniqueId] = typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId];
+			markedRow[uniqueId] = typeof(markedRow[uniqueId]) === 'undefined' || !markedRow[uniqueId];
 
 			if (checkbox && checkbox.disabled === false) {
 				checkbox.checked = markedRow[uniqueId];
@@ -51,7 +51,7 @@ function markRowsInit() {
 		if (checkbox) {
 			checkbox.onclick = function() {
 				// opera does not recognize return false;
-				this.checked = ! this.checked;
+				this.checked = !this.checked;
 			};
 		}
 	}
@@ -61,7 +61,7 @@ window.onload = markRowsInit;
 
 /**
 * We must use phpMyAdmin derived mark all, unmark all rows
-* for compatability with the table row clicking function above
+* for compatibility with the table row clicking function above
 */
 function markAllRows(containerId, overhead) {
 	var rows = (!overhead) ? document.getElementById(containerId).getElementsByTagName('tr') : document.getElementById(containerId).getElementsByClassName('overhead');
@@ -72,11 +72,11 @@ function markAllRows(containerId, overhead) {
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if (checkbox && checkbox.type == 'checkbox') {
+		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
 			if (checkbox.disabled === false) {
 				checkbox.checked = true;
-				if (typeof(markedRow[uniqueId]) == 'undefined' || !markedRow[uniqueId]) {
+				if (typeof(markedRow[uniqueId]) === 'undefined' || !markedRow[uniqueId]) {
 					markedRow[uniqueId] = true;
 				}
 			}
@@ -94,7 +94,7 @@ function unmarkAllRows(containerId) {
 	for (var i = 0; i < rows.length; i++) {
 		checkbox = rows[i].getElementsByTagName('input')[0];
 
-		if (checkbox && checkbox.type == 'checkbox') {
+		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
 			checkbox.checked = false;
 			markedRow[uniqueId] = false;
@@ -103,88 +103,84 @@ function unmarkAllRows(containerId) {
 
 	return true;
 }
-
 </script>
 
-	<a id="maincontent"></a>
+<a id="maincontent"></a>
 
-	<h1>{L_ACP_OPTIMIZE_REPAIR}</h1>
+<h1>{{ lang('ACP_OPTIMIZE_REPAIR') }}</h1>
 
-	<p>{L_ACP_OPTIMIZE_REPAIR_EXPLAIN}</p>
+<p>{{ lang('ACP_OPTIMIZE_REPAIR_EXPLAIN') }}</p>
 
-	<div class="errorbox">
-		<h3>{L_WARNING}</h3>
-		<p>{L_WARNING_EXPLAIN}</p>
-	</div>
+<div class="errorbox">
+	<h3>{{ lang('WARNING') }}</h3>
+	<p>{{ lang('WARNING_EXPLAIN') }}</p>
+</div>
 
-	<form id="tables" method="post" action="{U_ACTION}">
+<form id="tables" method="post" action="{{ U_ACTION }}">
+	<fieldset>
+		<legend>{{ lang('OPTIMIZE_REPAIR_OPTIONS') }}</legend>
+		<dl>
+			<dt><label for="disable_board">{{ lang('DISABLE_BOARD') ~ lang('COLON') }}</label><br /><span>{{ lang('DISABLE_BOARD_EXPLAIN') }}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked" /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="disable_board" value="0" /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="operation">{{ lang('ACTION') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="operation" value="optimize" id="operation" checked="checked" /> {{ lang('OPTIMIZE') }}</label>
+				<label><input type="radio" class="radio" name="operation" value="repair" /> {{ lang('REPAIR') }}</label>
+				<label><input type="radio" class="radio" name="operation" value="check" /> {{ lang('CHECK') }}</label>
+			</dd>
+		</dl>
 
-		<fieldset>
-			<legend>{L_OPTIMIZE_REPAIR_OPTIONS}</legend>
-			<dl>
-				<dt><label for="disable_board">{L_DISABLE_BOARD}{L_COLON}</label><br /><span>{L_DISABLE_BOARD_EXPLAIN}</span></dt>
-				<dd>
-					<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked" /> {L_YES}</label>
-					<label><input type="radio" class="radio" name="disable_board" value="0" /> {L_NO}</label>
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="type">{L_ACTION}{L_COLON}</label></dt>
-				<dd>
-					<label><input type="radio" class="radio" name="type" value="optimize" id="type" checked="checked" /> {L_OPTIMIZE}</label>
-					<label><input type="radio" class="radio" name="type" value="repair" /> {L_REPAIR}</label>
-					<label><input type="radio" class="radio" name="type" value="check" /> {L_CHECK}</label>
-				</dd>
-			</dl>
-
-			<table class="table1" id="table-data">
-				<thead>
-					<tr>
-						<th>{L_TH_NAME}</th>
-						<th>{L_TH_TYPE}</th>
-						<th style="text-align:right;">{L_TH_SIZE}</th>
-						<th style="text-align:right;">{L_TH_OVERHEAD}</th>
-						<th style="text-align:center;">{L_MARK}</th>
+		<table class="table1" id="table-data">
+			<thead>
+				<tr>
+					<th>{{ lang('TH_NAME') }}</th>
+					<th>{{ lang('TH_TYPE') }}</th>
+					<th style="text-align:right;">{{ lang('TH_SIZE') }}</th>
+					<th style="text-align:right;">{{ lang('TH_OVERHEAD') }}</th>
+					<th style="text-align:center;">{{ lang('MARK') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for table in TABLE_DATA %}
+					{% if loop.index0 is even %}
+						<tr class="row1{{ table.S_OVERHEAD ? ' overhead' }}">
+					{% else %}
+						<tr class="row2{{ table.S_OVERHEAD ? ' overhead' }}">
+					{% endif %}
+						<td>{{ table.TABLE_NAME }}</td>
+						<td>{{ table.TABLE_TYPE }}</td>
+						<td style="text-align:right;">{{ table.DATA_SIZE }}</td>
+						<td style="text-align:right;">{{ table.DATA_FREE }}</td>
+						<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
 					</tr>
-				</thead>
-				<tbody>
-					<!-- IF .tables -->
-						<!-- BEGIN tables -->
-							<!-- IF tables.S_ROW_COUNT is even --><tr class="row1<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ELSE --><tr class="row2<!-- IF tables.S_OVERHEAD --> overhead<!-- ENDIF -->"><!-- ENDIF -->
-								<td>{tables.TABLE_NAME}</td>
-								<td>{tables.TABLE_TYPE}</td>
-								<td style="text-align:right;">{tables.DATA_SIZE}</td>
-								<td style="text-align:right;">{tables.DATA_FREE}</td>
-								<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{tables.TABLE_NAME}" />&nbsp;</td>
-							</tr>
-						<!-- END tables -->
-						<tr>
-							<th>{L_TH_TOTAL}</th>
-							<th>&nbsp;</th>
-							<th style="text-align:right;">{TOTAL_DATA_SIZE}</th>
-							<th style="text-align:right;">{TOTAL_DATA_FREE}</th>
-							<th>&nbsp;</th>
-						</tr>
-					<!-- ELSE -->
-						<tr><td colspan="5">{L_TABLE_EMPTY}</td></tr>
-					<!-- ENDIF -->
-				</tbody>
-			</table>
+				{% else %}
+					<tr><td colspan="5">{{ lang('TABLE_EMPTY') }}</td></tr>
+				{% endfor %}
+				<tr>
+					<th>{{ lang('TH_TOTAL') }}</th>
+					<th></th>
+					<th style="text-align:right;">{{ TOTAL_DATA_SIZE }}</th>
+					<th style="text-align:right;">{{ TOTAL_DATA_FREE }}</th>
+					<th></th>
+				</tr>
+			</tbody>
+		</table>
 
-			<fieldset class="quick">
-				<p class="small"><a href="#" onclick="markAllRows('table-data', false); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="unmarkAllRows('table-data'); return false;">{L_UNMARK_ALL}</a><!-- IF TOTAL_DATA_FREE neq '0 B' --> &bull; <a href="#" onclick="unmarkAllRows('table-data'); markAllRows('table-data', true); return false;">{L_MARK_OVERHEAD}</a><!-- ENDIF --></p>
-			</fieldset>
-
-			<p id="buttons" class="submit-buttons">
-				<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" onclick="document.getElementById('buttons').style.display='none'; document.getElementById('processing').style.display='block';" />&nbsp;
-				<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-			</p>
-			<p id="processing" class="submit-buttons" style="display:none;">
-				<input class="button1" type="button" value="{L_PROCESSING}" disabled="disabled" />
-			</p>
-			{S_FORM_TOKEN}
-
+		<fieldset class="quick">
+			<p class="small"><a href="#" onclick="markAllRows('table-data', false); return false;">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" onclick="unmarkAllRows('table-data'); return false;">{{ lang('UNMARK_ALL') }}</a>{% if TOTAL_DATA_FREE != '0 B' %} &bull; <a href="#" onclick="unmarkAllRows('table-data'); markAllRows('table-data', true); return false;">{{ lang('MARK_OVERHEAD') }}</a>{% endif %}</p>
 		</fieldset>
-	</form>
 
-<!-- INCLUDE overall_footer.html -->
+		<p id="buttons" class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+		</p>
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+</form>
+
+{% include 'overall_footer.html' %}

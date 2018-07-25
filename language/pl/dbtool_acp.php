@@ -23,7 +23,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'			=> 'Optymalizacja &amp; Naprawa',
-	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Tutaj możesz optymalizować i naprawiać powiązane tabele phpBB. W przypadku dużych baz danych, może to potrwać kilka minut. <strong>OPTYMALIZACJA</strong> będzie defragmentować Twoją bazę danych i może zaoferować jej wyższą wydajność. <strong>NAPRAWA</strong> powinna być stosowana tylko gdy masz powody sądzić, że baza danych uległa awarii lub ma uszkodzone tabele. Uwaga: tabele <strong> InnoDB </ strong> nie obsługują napraw.',
+	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Tutaj możesz optymalizować i naprawiać powiązane tabele phpBB. W przypadku dużych baz danych, może to potrwać kilka minut. <strong>OPTYMALIZACJA</strong> będzie defragmentować Twoją bazę danych i może zaoferować jej wyższą wydajność. <strong>NAPRAWA</strong> powinna być stosowana tylko gdy masz powody sądzić, że baza danych uległa awarii lub ma uszkodzone tabele. Uwaga: tabele <strong> InnoDB </strong> nie obsługują napraw.',
 	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Opcje dostępu do bazy',
 	'DISABLE_BOARD'					=> 'Wyłącz forum',
 	'DISABLE_BOARD_EXPLAIN'			=> 'Powinieneś wyłączyć forum w trakcie tego procesu. Forum będzie dostępne pod koniec procesu.',

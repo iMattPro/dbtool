@@ -2,6 +2,7 @@
 /**
 *
 * Database Optimize & Repair Tool [Croatian]
+* Croatian translation by Ančica Sečan (http://ancica.sunceko.net)
 *
 * @copyright (c) 2013 Matt Friedman
 * @license GNU General Public License, version 2 (GPL-2.0)
@@ -22,7 +23,8 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_OPTIMIZE_REPAIR'	=> 'Optimizacija &amp; Reparacija',
-	'OPTIMIZE_LOG'			=> '<strong>Tablice databaze su optimizirane</strong><br />» %s',
-	'REPAIR_LOG'			=> '<strong>Tablice databaza su reparirane</strong><br />» %s',
+	'ACP_OPTIMIZE_REPAIR'	=> 'Optimiziraj &amp; Popravi',
+	'OPTIMIZE_LOG'			=> '<strong>Optimizirane tablice baze podataka</strong><br />» %s',
+	'REPAIR_LOG'			=> '<strong>Popravljene tablice baze podataka</strong><br />» %s',
+	'CHECK_LOG'				=> '<strong>Provjereno tablice baze podataka</strong><br />» %s',
 ));
