@@ -41,26 +41,25 @@ class dbtool_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
-		global $cache, $config, $db, $phpbb_log, $request, $template, $user, $phpbb_extension_manager, $phpbb_root_path, $phpEx;
+		global $phpbb_container, $phpbb_root_path, $phpEx;
 
-		// Must mock extension manager for the user class
-		$phpbb_extension_manager = new \phpbb_mock_extension_manager($phpbb_root_path);
+		$cache          = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
+		$this->config   = new \phpbb\config\config(array('board_disable' => 0));
+		$this->db       = $this->getMockBuilder('\phpbb\db\driver\driver_interface')->getMock();
+		$phpbb_log      = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
+		$this->request  = $this->getMockBuilder('\phpbb\request\request')->getMock();
+		$this->template = $this->getMockBuilder('\phpbb\template\template')->getMock();
+		$this->lang     = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
+		$this->user     = new \phpbb\user($this->lang, '\phpbb\datetime');
 
-		$cache     = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
-		$config    = new \phpbb\config\config(array('board_disable' => 0));
-		$db        = $this->getMockBuilder('\phpbb\db\driver\driver_interface')->getMock();
-		$phpbb_log = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
-		$request   = $this->getMockBuilder('\phpbb\request\request')->getMock();
-		$template  = $this->getMockBuilder('\phpbb\template\template')->getMock();
-		$lang      = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
-		$user      = new \phpbb\user($lang, '\phpbb\datetime');
-
-		$this->config   = $config;
-		$this->db       = $db;
-		$this->lang     = $lang;
-		$this->request  = $request;
-		$this->template = $template;
-		$this->user     = $user;
+		$phpbb_container = new \phpbb_mock_container_builder;
+		$phpbb_container->set('cache', $cache);
+		$phpbb_container->set('config', $this->config);
+		$phpbb_container->set('dbal.conn', $this->db);
+		$phpbb_container->set('log', $phpbb_log);
+		$phpbb_container->set('request', $this->request);
+		$phpbb_container->set('template', $this->template);
+		$phpbb_container->set('user', $this->user);
 
 		$this->dbtool = new \vse\dbtool\acp\dbtool_module();
 	}

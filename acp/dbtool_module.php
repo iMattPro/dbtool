@@ -53,16 +53,16 @@ class dbtool_module
 	*/
 	public function __construct()
 	{
-		global $cache, $config, $db, $phpbb_log, $request, $template, $user;
+		global $phpbb_container;
 
-		$this->cache = $cache;
-		$this->config = $config;
-		$this->db = $db;
-		$this->log = $phpbb_log;
-		$this->request = $request;
-		$this->template = $template;
-		$this->user = $user;
-		$this->php_ini = new \phpbb\php\ini();
+		$this->cache    = $phpbb_container->get('cache');
+		$this->config   = $phpbb_container->get('config');
+		$this->db       = $phpbb_container->get('dbal.conn');
+		$this->log      = $phpbb_container->get('log');
+		$this->request  = $phpbb_container->get('request');
+		$this->template = $phpbb_container->get('template');
+		$this->user     = $phpbb_container->get('user');
+		$this->php_ini  = new \phpbb\php\ini();
 
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 	}
