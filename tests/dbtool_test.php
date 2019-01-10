@@ -85,9 +85,9 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function test_main_display($sql_layer, $valid)
 	{
-		$this->db->expects($this->any())
+		$this->db->expects($this->atMost(2))
 			->method('get_sql_layer')
-			->will($this->returnValue($sql_layer));
+			->willReturn($sql_layer);
 
 		if ($valid)
 		{
@@ -133,11 +133,11 @@ class dbtool_test extends \phpbb_test_case
 	public function test_main_run_tool($operation, $tables, $disable_board = true, $confirmed = true)
 	{
 		// Set expected request variables
-		$this->request->expects($this->any())
+		$this->request->expects($this->once())
 			->method('is_set_post')
 			->with($this->equalTo('submit'))
-			->will($this->returnValue(true));
-		$this->request->expects($this->any())
+			->willReturn(true);
+		$this->request->expects($this->exactly(3))
 			->method('variable')
 			->will($this->returnValueMap(array(
 				array('operation', '', false, \phpbb\request\request_interface::REQUEST, $operation),
@@ -149,12 +149,12 @@ class dbtool_test extends \phpbb_test_case
 		$marked_tables = "'" . implode(', ', $tables) . "'";
 
 		// Set expected db
-		$this->db->expects($this->any())
+		$this->db->expects($this->atMost(2))
 			->method('get_sql_layer')
-			->will($this->returnValue('mysqli'));
-		$this->db->expects($this->any())
+			->willReturn('mysqli');
+		$this->db->expects($this->atMost(1))
 			->method('sql_escape')
-			->will($this->returnValue($marked_tables));
+			->willReturn($marked_tables);
 
 		if (self::$confirm = ($confirmed === true))
 		{
@@ -338,7 +338,7 @@ class dbtool_test extends \phpbb_test_case
 		$this->db->expects($this->once())
 			->method('sql_query')
 			->with($this->equalTo('SHOW TABLE STATUS'))
-			->will($this->returnValue(true));
+			->willReturn(true);
 
 		// Expect to output data to the template
 		$this->template->expects($this->once())
