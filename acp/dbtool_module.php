@@ -55,14 +55,21 @@ class dbtool_module
 	{
 		global $phpbb_container;
 
-		$this->cache    = $phpbb_container->get('cache');
-		$this->config   = $phpbb_container->get('config');
-		$this->db       = $phpbb_container->get('dbal.conn');
-		$this->log      = $phpbb_container->get('log');
-		$this->request  = $phpbb_container->get('request');
-		$this->template = $phpbb_container->get('template');
-		$this->user     = $phpbb_container->get('user');
-		$this->php_ini  = new \phpbb\php\ini();
+		try
+		{
+			$this->cache    = $phpbb_container->get('cache');
+			$this->config   = $phpbb_container->get('config');
+			$this->db       = $phpbb_container->get('dbal.conn');
+			$this->log      = $phpbb_container->get('log');
+			$this->request  = $phpbb_container->get('request');
+			$this->template = $phpbb_container->get('template');
+			$this->user     = $phpbb_container->get('user');
+			$this->php_ini  = new \phpbb\php\ini();
+		}
+		catch (\Exception $e)
+		{
+			trigger_error($e->getMessage(), E_USER_WARNING);
+		}
 
 		$this->user->add_lang_ext('vse/dbtool', 'dbtool_acp');
 	}
