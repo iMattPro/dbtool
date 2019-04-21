@@ -1,0 +1,9 @@
+services:
+    vse.dbtool.tool:
+        class: vse\dbtool\tool\tool
+        arguments:
+            - '@cache.driver'
+            - '@config'
+            - '@dbal.conn'
+            - '@log'
+            - '@user'
