@@ -17,7 +17,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 {
 	protected static function setup_extensions()
 	{
-		return array('vse/dbtool');
+		return ['vse/dbtool'];
 	}
 
 	public function test_acp_pages()
@@ -36,12 +36,12 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 
 	public function operation_test_data()
 	{
-		return array(
-			array('optimize', 'OPTIMIZE_SUCCESS'),
-			array('repair', 'REPAIR_SUCCESS'),
-			array('check', 'CHECK_SUCCESS'),
-			array('error', 'TABLE_ERROR'),
-		);
+		return [
+			['optimize', 'OPTIMIZE_SUCCESS'],
+			['repair', 'REPAIR_SUCCESS'],
+			['check', 'CHECK_SUCCESS'],
+			['error', 'TABLE_ERROR'],
+		];
 	}
 
 	/**

@@ -19,18 +19,18 @@ class install_1_2_0 extends \phpbb\db\migration\migration
 
 	public static function depends_on()
 	{
-		return array('\vse\dbtool\migrations\install_1_1_0');
+		return ['\vse\dbtool\migrations\install_1_1_0'];
 	}
 
 	public function update_data()
 	{
-		return array(
-			array('config.add', array('dbtool_lock', 0, true)),
+		return [
+			['config.add', ['dbtool_lock', 0, true]],
 
-			array('if', array(
+			['if', [
 				$this->config->offsetExists('dbtool_version'),
-				array('config.remove', array('dbtool_version')),
-			)),
-		);
+				['config.remove', ['dbtool_version']],
+			]],
+		];
 	}
 }

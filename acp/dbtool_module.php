@@ -93,7 +93,7 @@ class dbtool_module
 	protected function run_tool()
 	{
 		$operation = $this->request->variable('operation', '');
-		$tables = $this->request->variable('mark', array(''));
+		$tables = $this->request->variable('mark', ['']);
 		$disable_board = $this->request->variable('disable_board', 0);
 
 		if (confirm_box(true))
@@ -114,12 +114,12 @@ class dbtool_module
 		}
 		else
 		{
-			confirm_box(false, $this->language->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
+			confirm_box(false, $this->language->lang('CONFIRM_OPERATION'), build_hidden_fields([
 				'submit'		=> 1,
 				'operation'		=> $operation,
 				'mark'			=> $tables,
 				'disable_board'	=> $disable_board,
-			)), 'confirm_dbtool.html');
+			]), 'confirm_dbtool.html');
 		}
 	}
 
@@ -130,7 +130,7 @@ class dbtool_module
 	*/
 	protected function display_tables()
 	{
-		$table_data = array();
+		$table_data = [];
 		$total_data_size = $total_data_free = 0;
 
 		$tables = $this->db->sql_query('SHOW TABLE STATUS');
@@ -150,23 +150,23 @@ class dbtool_module
 				$total_data_size += $data_size;
 				$total_data_free += $table['Data_free'];
 
-				$table_data[] = array(
+				$table_data[] = [
 					'TABLE_NAME'	=> $table['Name'],
 					'TABLE_TYPE'	=> $table['Engine'],
 					'DATA_SIZE'		=> $this->file_size($data_size),
 					'DATA_FREE'		=> $this->file_size($table['Data_free']),
 					'S_OVERHEAD'	=> (bool) $table['Data_free'],
-				);
+				];
 			}
 		}
 		$this->db->sql_freeresult($tables);
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'TABLE_DATA'		=> $table_data,
 			'TOTAL_DATA_SIZE'	=> $this->file_size($total_data_size),
 			'TOTAL_DATA_FREE'	=> $this->file_size($total_data_free),
 			'U_ACTION'			=> $this->u_action,
-		));
+		]);
 	}
 
 	/**
@@ -178,7 +178,7 @@ class dbtool_module
 	*/
 	public function file_size($size)
 	{
-		$file_size_units = array(' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
+		$file_size_units = [' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
 		return ((int) $size) ? round($size / pow(1024, $i = floor(log($size) / log(1024))), 1) . $file_size_units[(int) $i] : '0 B';
 	}
 }

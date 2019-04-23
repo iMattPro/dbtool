@@ -17,12 +17,12 @@ class dbtool_info
 {
 	public function module()
 	{
-		return array(
+		return [
 			'filename'	=> '\vse\dbtool\acp\dbtool_module',
 			'title'		=> 'ACP_OPTIMIZE_REPAIR',
-			'modes'		=> array(
-				'view'	=> array('title' => 'ACP_OPTIMIZE_REPAIR', 'auth' => 'ext_vse/dbtool && acl_a_backup', 'cat' => array('ACP_CAT_DATABASE')),
-			),
-		);
+			'modes'		=> [
+				'view'	=> ['title' => 'ACP_OPTIMIZE_REPAIR', 'auth' => 'ext_vse/dbtool && acl_a_backup', 'cat' => ['ACP_CAT_DATABASE']],
+			],
+		];
 	}
 }
