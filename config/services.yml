@@ -7,3 +7,22 @@ services:
             - '@dbal.conn'
             - '@log'
             - '@user'
+
+    vse.dbtool.command.db.tool:
+        class: vse\dbtool\console\command\db\tool
+        arguments:
+            - '@user'
+            - '@dbal.conn'
+            - '@dbal.tools'
+            - '@vse.dbtool.tool'
+            - '@vse.dbtool.db.lock'
+            - '@language'
+        tags:
+            - { name: console.command }
+
+    vse.dbtool.db.lock:
+        class: phpbb\lock\db
+        arguments:
+            - dbtool_lock
+            - '@config'
+            - '@dbal.conn'

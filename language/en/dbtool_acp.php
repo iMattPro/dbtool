@@ -45,4 +45,10 @@ $lang = array_merge($lang, array(
 	'TH_OVERHEAD'		=> 'Overhead',
 	'TABLE_ERROR'		=> 'You must select at least one table.',
 	'TABLE_EMPTY'		=> 'Table storage engine not supported.',
+	'CLI_DBTOOL_EXPLAIN'	=> 'Check, optimise and repair database tables.',
+	'CLI_DBTOOL_TABLE'		=> '[Optional] You can specify a single table by name to perform the operation on.',
+	'CLI_DBTOOL_CONTINUE'	=> 'Do you wish to continue?',
+	'CLI_DBTOOL_OPERATION'	=> 'Choose an operation to perform',
+	'CLI_DBTOOL_RESULTS'	=> '%s Results',
+	'CLI_DBTOOL_LOCK_ERROR'	=> 'The operation could not be performed, the %s operation is already in progress by another process.',
 ));
