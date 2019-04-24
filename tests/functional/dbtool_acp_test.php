@@ -1,18 +1,18 @@
 <?php
 /**
-*
-* Database Optimize & Repair Tool
-*
-* @copyright (c) 2014 Matt Friedman
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Database Optimize & Repair Tool
+ *
+ * @copyright (c) 2014 Matt Friedman
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace vse\dbtool\tests\functional;
 
 /**
-* @group functional
-*/
+ * @group functional
+ */
 class dbtool_acp_test extends \phpbb_functional_test_case
 {
 	protected static function setup_extensions()
@@ -45,7 +45,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 	}
 
 	/**
-	 * @depends test_acp_pages
+	 * @depends      test_acp_pages
 	 * @dataProvider operation_test_data
 	 */
 	public function test_operation($operation, $expected, $crawler)

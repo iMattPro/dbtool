@@ -3,7 +3,7 @@
  *
  * Database Optimize & Repair Tool
  *
- * @copyright (c) 2013 Matt Friedman
+ * @copyright (c) 2013, 2019 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */

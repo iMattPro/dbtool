@@ -1,18 +1,18 @@
 <?php
 /**
-*
-* Database Optimize & Repair Tool
-*
-* @copyright (c) 2013 Matt Friedman
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Database Optimize & Repair Tool
+ *
+ * @copyright (c) 2013 Matt Friedman
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace vse\dbtool\acp;
 
 /**
-* @package acp
-*/
+ * @package acp
+ */
 class dbtool_module
 {
 	/** @var \phpbb\db\driver\driver_interface */
@@ -40,8 +40,8 @@ class dbtool_module
 	public $u_action;
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	public function __construct()
 	{
 		global $phpbb_container;
@@ -63,10 +63,10 @@ class dbtool_module
 	}
 
 	/**
-	* Main ACP module
-	*
-	* @access public
-	*/
+	 * Main ACP module
+	 *
+	 * @access public
+	 */
 	public function main()
 	{
 		$this->tpl_name = 'acp_dbtool';
@@ -86,10 +86,10 @@ class dbtool_module
 	}
 
 	/**
-	* Run database tool
-	*
-	* @access protected
-	*/
+	 * Run database tool
+	 *
+	 * @access protected
+	 */
 	protected function run_tool()
 	{
 		$operation = $this->request->variable('operation', '');
@@ -124,10 +124,10 @@ class dbtool_module
 	}
 
 	/**
-	* Generate Show Table Data
-	*
-	* @access protected
-	*/
+	 * Generate Show Table Data
+	 *
+	 * @access protected
+	 */
 	protected function display_tables()
 	{
 		$table_data = [];
@@ -170,12 +170,12 @@ class dbtool_module
 	}
 
 	/**
-	* Display file size in the proper units
-	*
-	* @param int $size Number representing bytes
-	* @return string $size with the correct units symbol appended
-	* @access public
-	*/
+	 * Display file size in the proper units
+	 *
+	 * @param int $size Number representing bytes
+	 * @return string $size with the correct units symbol appended
+	 * @access public
+	 */
 	public function file_size($size)
 	{
 		$file_size_units = [' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
