@@ -151,8 +151,8 @@ class dbtool_module
 				$table_data[] = [
 					'TABLE_NAME'	=> $table['Name'],
 					'TABLE_TYPE'	=> $table['Engine'],
-					'DATA_SIZE'		=> $this->file_size($data_size),
-					'DATA_FREE'		=> $this->file_size($table['Data_free']),
+					'DATA_SIZE'		=> get_formatted_filesize($data_size),
+					'DATA_FREE'		=> get_formatted_filesize($table['Data_free']),
 					'S_OVERHEAD'	=> (bool) $table['Data_free'],
 				];
 			}
@@ -161,22 +161,9 @@ class dbtool_module
 
 		$this->template->assign_vars([
 			'TABLE_DATA'		=> $table_data,
-			'TOTAL_DATA_SIZE'	=> $this->file_size($total_data_size),
-			'TOTAL_DATA_FREE'	=> $this->file_size($total_data_free),
+			'TOTAL_DATA_SIZE'	=> get_formatted_filesize($total_data_size),
+			'TOTAL_DATA_FREE'	=> get_formatted_filesize($total_data_free),
 			'U_ACTION'			=> $this->u_action,
 		]);
-	}
-
-	/**
-	 * Display file size in the proper units
-	 *
-	 * @param int $size Number representing bytes
-	 * @return string $size with the correct units symbol appended
-	 * @access public
-	 */
-	public function file_size($size)
-	{
-		$file_size_units = [' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
-		return ((int) $size) ? round($size / pow(1024, $i = floor(log($size) / log(1024))), 1) . $file_size_units[(int) $i] : '0 B';
 	}
 }

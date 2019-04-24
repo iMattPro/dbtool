@@ -296,39 +296,6 @@ class dbtool_test extends \phpbb_test_case
 	}
 
 	/**
-	 * Data set for test_file_size
-	 */
-	public function file_size_data()
-	{
-		return [
-			[0, '0 B'],
-			[1, '1 B'],
-			[111, '111 B'],
-			[1024, '1 KB'],
-			[1048576, '1 MB'],
-			[1073741824, '1 GB'],
-			[1099511627776, '1 TB'],
-			[1125899906842624, '1 PB'],
-			[1152921504606846976, '1 EB'],
-			['foobar', '0 B'],
-			['', '0 B'],
-			[null, '0 B'],
-		];
-	}
-
-	/**
-	 * Test the file_size method
-	 *
-	 * @dataProvider file_size_data
-	 * @param mixed  $value
-	 * @param string $expected
-	 */
-	public function test_file_size($value, $expected)
-	{
-		$this->assertEquals($expected, $this->dbtool_module->file_size($value));
-	}
-
-	/**
 	 * Data set for test_disable_board
 	 */
 	public function disable_board_data()
@@ -400,12 +367,12 @@ class dbtool_test extends \phpbb_test_case
 				'TABLE_DATA'		=> [0 => [
 					'TABLE_NAME'	=> 'phpbb_zebra',
 					'TABLE_TYPE'	=> 'InnoDB',
-					'DATA_SIZE'		=> '0 B',
-					'DATA_FREE'		=> '0 B',
+					'DATA_SIZE'		=> '0 BYTES',
+					'DATA_FREE'		=> '0 BYTES',
 					'S_OVERHEAD'	=> false,
 				]],
-				'TOTAL_DATA_SIZE'	=> '0 B',
-				'TOTAL_DATA_FREE'	=> '0 B',
+				'TOTAL_DATA_SIZE'	=> '0 BYTES',
+				'TOTAL_DATA_FREE'	=> '0 BYTES',
 				'U_ACTION'			=> null,
 			])
 		;
