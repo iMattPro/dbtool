@@ -92,7 +92,7 @@ class dbtool_module
 	 */
 	protected function run_tool()
 	{
-		$operation = $this->request->variable('operation', '');
+		$operation = strtoupper($this->request->variable('operation', ''));
 		$tables = $this->request->variable('mark', ['']);
 		$disable_board = $this->request->variable('disable_board', 0);
 
@@ -103,13 +103,11 @@ class dbtool_module
 				trigger_error($this->language->lang('TABLE_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
-			$operation = strtoupper($operation);
-
 			if ($this->db_tool->is_valid_operation($operation))
 			{
-				$result = $this->db_tool->run($operation, $tables, $disable_board);
-				$result = '<br />' . implode('<br />', $result);
-				trigger_error($this->language->lang($operation . '_SUCCESS') . $result . adm_back_link($this->u_action));
+				$results = $this->db_tool->run($operation, $tables, $disable_board);
+				$results = '<br />' . implode('<br />', $results);
+				trigger_error($this->language->lang($operation . '_SUCCESS') . $results . adm_back_link($this->u_action));
 			}
 		}
 		else

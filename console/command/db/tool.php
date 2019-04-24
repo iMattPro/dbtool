@@ -52,6 +52,7 @@ class tool extends command
 	 *
 	 * @param \phpbb\user                       $user
 	 * @param \phpbb\db\driver\driver_interface $db
+	 * @param \phpbb\db\tools\tools_interface   $phpbb_db_tools
 	 * @param \vse\dbtool\tool\tool             $db_tool
 	 * @param \phpbb\lock\db                    $db_lock
 	 * @param \phpbb\language\language          $language
@@ -79,7 +80,7 @@ class tool extends command
 			->addArgument(
 				'table',
 				InputArgument::OPTIONAL,
-				$this->language->lang('CLI_DBTOOL_TABLE')
+				$this->language->lang('CLI_DBTOOL_ARG_TABLE')
 			)
 			->addOption(
 				'disable-board',
@@ -91,7 +92,7 @@ class tool extends command
 	}
 
 	/**
-	 * Execute the DB Tool
+	 * Execute the DB Tool command
 	 *
 	 * @param InputInterface  $input  An InputInterface instance
 	 * @param OutputInterface $output An OutputInterface instance
