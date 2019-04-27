@@ -22,7 +22,7 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_OPTIMIZE_REPAIR'			=> 'Optimaliseren & repareren',
+	'ACP_OPTIMIZE_REPAIR'			=> 'Optimaliseren &amp; repareren',
 	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Hier kunt u uw phpBB gerelateerde tabellen optimaliseren of repareren. Voor grote databases kan dit enkele minuten duren. <strong>OPTIMALISEREN</strong> zal uw database defragmenteren en kan verbeterde database prestaties bieden. <strong>REPAREREN</strong> mag alleen worden gebruikt als u reden hebt om aan te nemen dat uw database is gecrasht of corrupte tabellen bevat. Notitie: <strong>InnoDB</strong> tabellen ondersteunen geen reparatie.',
 	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Database opties',
 	'DISABLE_BOARD'					=> 'Forum uitschakelen',

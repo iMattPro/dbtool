@@ -22,7 +22,7 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_OPTIMIZE_REPAIR'			=> 'Ottimizza & ripara',
+	'ACP_OPTIMIZE_REPAIR'			=> 'Ottimizza &amp; ripara',
 	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Qui è possibile ottimizzare o riparare le tabelle relative a phpBB. Per grandi database, questo potrebbe richiedere alcuni minuti. <strong> OTTIMIZZA: </strong> deframmenterà il tuo database e può offrire migliori prestazioni del database. <strong> RIPARA: </strong> dovrebbe essere usato solo se si ha motivo di ritenere che il database è andato in crash o tabelle corrotte. Nota: le tabelle <strong>InnoDB</strong> non supportano la riparazione.',
 	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Opzioni del database',
 	'DISABLE_BOARD'					=> 'Disablita il board',
