@@ -1,22 +1,22 @@
 ## ![alt text](http://vsephpbb.github.io/logo/database_check_1.png "DB Tool") Database Optimize & Repair Tool for phpBB
 
-A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel.
+A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel or from the CLI.
 
 [![Build Status](https://travis-ci.org/VSEphpbb/dbtool.svg)](https://travis-ci.org/VSEphpbb/dbtool)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/vse/dbtool/v/stable)](https://www.phpbb.com/customise/db/extension/database_optimize_and_repair_tool/)
 
 ## Features
-* Optimize, Repair and Check tables directly from the ACP
-* Select individual or all tables independently
-* Displays table size and table overhead values
+* Optimize, Repair and Check tables directly from the ACP or the CLI
+* Select individual tables or all tables at once
+* Displays table size and table overhead values in the ACP
 * Option to safely disable board during the optimize/repair process
-* Actions are logged to the Admin log
-* Nice javascript interactions
+* Results are logged to the Admin log
+* Enhanced javascript interactions
 
-## Minimum equirements
-* phpBB 3.1.0 or phpBB 3.2.0
-* PHP 5.3.3 or higher
+## Minimum Requirements
+* phpBB 3.2.0
+* PHP 5.4 or higher
 * MySQL 4.0.1 or higher (using MyISAM, InnoDB or Archive table types)
 
 ## Install
@@ -33,6 +33,27 @@ After installation, you can find the Optimize & Repair Tool in:
 > Use this extension at your own risk! There have been cases with certain shared web hosts where a database table could crash for a very large forum. This extension will perform the same functions on your database as phpMyAdmin, so if you have been using phpMyAdmin on your database with no problems, then it should be safe to use this extension. It is always safest to run a backup of your database before performing any Optimize or Repair functions just in case anything goes wrong.
 
 > Note: InnoDB table types do not support the Repair option.
+
+## CLI Usage
+The Optimize & Repair Tool can also be run from the command line interface in 
+phpBB using the `db:tool` command. The tool will prompt you to choose an operation:
+Optimize, Repair, or Check.
+
+To check, optimize or repair all tables:
+
+`$ php bin/phpbbcli.php db:tool`
+
+To check, optimize or repair a specific table:
+
+`$ php bin/phpbbcli.php db:tool table_name`
+
+To disable the board during an operation, use the `--disable-board` or `-D` option:
+
+`$ php bin/phpbbcli.php db:tool --disable-board`
+
+For help with the Optimize & Repair Tool command:
+
+`$ php bin/phpbbcli.php db:tool --help`
 
 ## Uninstall
 1. Navigate in the ACP to `Customise -> Manage extensions`.

@@ -1,23 +1,23 @@
 <?php
 /**
-*
-* Database Optimize & Repair Tool
-*
-* @copyright (c) 2014 Matt Friedman
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Database Optimize & Repair Tool
+ *
+ * @copyright (c) 2014 Matt Friedman
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace vse\dbtool\tests\functional;
 
 /**
-* @group functional
-*/
+ * @group functional
+ */
 class dbtool_acp_test extends \phpbb_functional_test_case
 {
 	protected static function setup_extensions()
 	{
-		return array('vse/dbtool');
+		return ['vse/dbtool'];
 	}
 
 	public function test_acp_pages()
@@ -36,16 +36,16 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 
 	public function operation_test_data()
 	{
-		return array(
-			array('optimize', 'OPTIMIZE_SUCCESS'),
-			array('repair', 'REPAIR_SUCCESS'),
-			array('check', 'CHECK_SUCCESS'),
-			array('error', 'TABLE_ERROR'),
-		);
+		return [
+			['optimize', 'OPTIMIZE_SUCCESS'],
+			['repair', 'REPAIR_SUCCESS'],
+			['check', 'CHECK_SUCCESS'],
+			['error', 'TABLE_ERROR'],
+		];
 	}
 
 	/**
-	 * @depends test_acp_pages
+	 * @depends      test_acp_pages
 	 * @dataProvider operation_test_data
 	 */
 	public function test_operation($operation, $expected, $crawler)

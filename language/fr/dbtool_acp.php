@@ -47,4 +47,10 @@ $lang = array_merge($lang, array(
 	'TH_OVERHEAD'		=> 'Perte',
 	'TABLE_ERROR'		=> 'Vous devez sélectionner au moins une table.',
 	'TABLE_EMPTY'		=> 'Le système de stockage de la table n’est pas supporté.',
+	'CLI_DBTOOL_EXPLAIN'	=> 'Check, optimise and repair database tables.',
+	'CLI_DBTOOL_ARG_TABLE'	=> '[Optional] You can specify a single table by name to perform the operation on.',
+	'CLI_DBTOOL_CONTINUE'	=> 'Do you wish to continue?',
+	'CLI_DBTOOL_OPERATION'	=> 'Choose an operation to perform',
+	'CLI_DBTOOL_RESULTS'	=> '%s Results',
+	'CLI_DBTOOL_LOCK_ERROR'	=> 'The operation could not be performed, a database operation is already in progress by another process. Try again in an hour.',
 ));
