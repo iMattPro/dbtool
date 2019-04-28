@@ -27,7 +27,7 @@ class dbtool_module
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	/** @var \vse\dbtool\tool\tool */
+	/** @var \vse\dbtool\tool\tool_interface */
 	protected $db_tool;
 
 	/** @var string */

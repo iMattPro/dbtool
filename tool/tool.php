@@ -17,7 +17,7 @@ use phpbb\log\log_interface as log;
 use phpbb\user;
 use vse\dbtool\ext;
 
-class tool
+class tool implements tool_interface
 {
 	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;

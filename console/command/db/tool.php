@@ -22,7 +22,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use vse\dbtool\ext;
-use vse\dbtool\tool\tool as db_tool;
+use vse\dbtool\tool\tool_interface as db_tool;
 
 class tool extends command
 {
@@ -53,7 +53,7 @@ class tool extends command
 	 * @param \phpbb\user                       $user
 	 * @param \phpbb\db\driver\driver_interface $db
 	 * @param \phpbb\db\tools\tools_interface   $phpbb_db_tools
-	 * @param \vse\dbtool\tool\tool             $db_tool
+	 * @param \vse\dbtool\tool\tool_interface   $db_tool
 	 * @param \phpbb\lock\db                    $db_lock
 	 * @param \phpbb\language\language          $language
 	 */
