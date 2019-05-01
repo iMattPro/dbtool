@@ -122,7 +122,7 @@ class tool extends command
 			{
 				if (!$this->db_lock->acquire())
 				{
-					$io->error($this->language->lang('CLI_DBTOOL_LOCK_ERROR', $operation));
+					$io->error($this->language->lang('CLI_DBTOOL_LOCK_ERROR'));
 					return 1;
 				}
 

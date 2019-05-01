@@ -58,7 +58,7 @@ class tool implements tool_interface
 	 * @param string $operation     OPTIMIZE, REPAIR, or CHECK
 	 * @param array  $tables        Array of all tables to be processed
 	 * @param int    $disable_board The users option to disable the board during run time
-	 * @return array Any errors or status information
+	 * @return array Any errors or status information, otherwise the array of tables processed
 	 * @access public
 	 */
 	public function run($operation, $tables, $disable_board = 0)
