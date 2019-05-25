@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 - 2019-04-30
+
+- Supports running from the command line interface using the command: `db:tool`
+- phpBB 3.2.0 or newer required. Support for phpBB 3.1 has ended.
+- Added Dutch translation
+
 ## 1.1.3 - 2018-06-28
 
 - Various code improvements and fixes
