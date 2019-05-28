@@ -1,6 +1,5 @@
 language: php
 sudo: required
-dist: precise
 
 matrix:
   include:
@@ -12,10 +11,6 @@ matrix:
       env: DB=mysql
     - php: 5.4
       env: DB=mariadb
-#    - php: 5.4
-#      env: DB=postgres
-#    - php: 5.4
-#      env: DB=sqlite3
     - php: 5.5
       env: DB=mysqli
     - php: 5.6
