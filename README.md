@@ -1,9 +1,9 @@
-## ![alt text](http://vsephpbb.github.io/logo/database_check_1.png "DB Tool") Database Optimize & Repair Tool for phpBB
+## ![alt text](http://imattpro.github.io/logo/database_check_1.png "DB Tool") Database Optimize & Repair Tool for phpBB
 
 A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel or from the CLI.
 
-[![Build Status](https://travis-ci.org/VSEphpbb/dbtool.svg)](https://travis-ci.org/VSEphpbb/dbtool)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VSEphpbb/dbtool/?branch=master)
+[![Build Status](https://travis-ci.org/iMattPro/dbtool.svg)](https://travis-ci.org/iMattPro/dbtool)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iMattPro/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iMattPro/dbtool/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/vse/dbtool/v/stable)](https://www.phpbb.com/customise/db/extension/database_optimize_and_repair_tool/)
 
 ## Features
