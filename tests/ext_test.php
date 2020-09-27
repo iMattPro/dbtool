@@ -24,7 +24,7 @@ class ext_test extends \phpbb_test_case
 	/**
 	 * @inheritdoc
 	 */
-	public function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 

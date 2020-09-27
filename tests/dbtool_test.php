@@ -53,11 +53,27 @@ class dbtool_test extends \phpbb_test_case
 	/** @var \phpbb\user */
 	protected $user;
 
-	public function setUp()
+	/**
+	 * Get an instance of \phpbb\language\language
+	 */
+	public function get_language_instance()
+	{
+		global $phpbb_root_path, $phpEx;
+
+		// Get instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
+		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
+		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
+		$this->lang = new language($lang_loader);
+		$this->lang->add_lang('dbtool_acp', 'vse/dbtool');
+	}
+
+	protected function setUp(): void
 	{
 		parent::setUp();
 
-		global $phpbb_container, $phpbb_root_path, $phpEx;
+		$this->get_language_instance();
+
+		global $phpbb_container;
 
 		$this->cache    = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
 		$this->config   = new config(['board_disable' => 0]);
@@ -65,7 +81,6 @@ class dbtool_test extends \phpbb_test_case
 		$this->log      = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
 		$this->request  = $this->getMockBuilder('\phpbb\request\request')->getMock();
 		$this->template = $this->getMockBuilder('\phpbb\template\template')->getMock();
-		$this->lang     = new language(new language_file_loader($phpbb_root_path, $phpEx));
 		$this->user     = new user($this->lang, '\phpbb\datetime');
 		$this->tool     = new tool($this->cache, $this->config, $this->db, $this->log, $this->user);
 
@@ -176,6 +191,9 @@ class dbtool_test extends \phpbb_test_case
 		$this->db->expects($this->atMost(1))
 			->method('sql_escape')
 			->willReturn($marked_tables);
+
+		// Set expected user id
+		$this->user->data['user_id'] = 2;
 
 		if (self::$confirm = ($confirmed === true))
 		{
