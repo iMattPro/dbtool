@@ -52,6 +52,6 @@ class ext_test extends \phpbb_test_case
 	{
 		$ext = new \vse\dbtool\ext($this->container, $this->extension_finder, $this->migrator, 'vse/dbtool', '');
 
-		$this->assertTrue($ext->is_enableable());
+		self::assertTrue($ext->is_enableable());
 	}
 }
