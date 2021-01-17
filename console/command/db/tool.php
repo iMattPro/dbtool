@@ -50,12 +50,12 @@ class tool extends command
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\user                       $user
-	 * @param \phpbb\db\driver\driver_interface $db
-	 * @param \phpbb\db\tools\tools_interface   $phpbb_db_tools
-	 * @param \vse\dbtool\tool\tool_interface   $db_tool
-	 * @param \phpbb\lock\db                    $db_lock
-	 * @param \phpbb\language\language          $language
+	 * @param user           $user
+	 * @param db             $db
+	 * @param phpbb_db_tools $phpbb_db_tools
+	 * @param db_tool        $db_tool
+	 * @param db_lock        $db_lock
+	 * @param language       $language
 	 */
 	public function __construct(user $user, db $db, phpbb_db_tools $phpbb_db_tools, db_tool $db_tool, db_lock $db_lock, language $language)
 	{
