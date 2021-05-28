@@ -64,7 +64,12 @@ window.onload = markRowsInit;
 * for compatibility with the table row clicking function above
 */
 function markAllRows(containerId, overhead) {
-	var rows = (!overhead) ? document.getElementById(containerId).getElementsByTagName('tr') : document.getElementById(containerId).getElementsByClassName('overhead');
+	var rows = document.getElementById(containerId).getElementsByTagName('tr');
+
+	if (overhead) {
+		unmarkAllRows(containerId);
+		rows = document.getElementById(containerId).getElementsByClassName('overhead');
+	}
 
 	var uniqueId;
 	var checkbox;
@@ -172,7 +177,7 @@ function unmarkAllRows(containerId) {
 		</table>
 
 		<fieldset class="quick">
-			<p class="small"><a href="#" onclick="markAllRows('table-data', false); return false;">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" onclick="unmarkAllRows('table-data'); return false;">{{ lang('UNMARK_ALL') }}</a>{% if TOTAL_DATA_FREE != '0 B' %} &bull; <a href="#" onclick="unmarkAllRows('table-data'); markAllRows('table-data', true); return false;">{{ lang('MARK_OVERHEAD') }}</a>{% endif %}</p>
+			<p class="small"><a href="#" class="markRows" data-callback="markAllRows">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" class="markRows" data-callback="unmarkAllRows">{{ lang('UNMARK_ALL') }}</a>{% if TOTAL_DATA_FREE != '0 B' %} &bull; <a href="#" class="markRows" data-callback="markAllRows" data-overhead="true">{{ lang('MARK_OVERHEAD') }}</a>{% endif %}</p>
 		</fieldset>
 
 		<p id="buttons" class="submit-buttons">
@@ -182,5 +187,18 @@ function unmarkAllRows(containerId) {
 		{{ S_FORM_TOKEN }}
 	</fieldset>
 </form>
+
+<script>
+
+	document.querySelectorAll(".markRows").forEach(mark => {
+		mark.addEventListener("click", (e) => {
+			e.preventDefault();
+			const callback = window[e.target.dataset.callback];
+			const overhead = e.target.dataset.overhead === "true";
+			if (typeof callback === "function") callback("table-data", overhead);
+		})
+	});
+
+</script>
 
 {% include 'overall_footer.html' %}
