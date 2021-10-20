@@ -61,7 +61,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 		}
 		$crawler = self::submit($form);
 
-		$form = $crawler->selectButton('Yes')->form();
+		$form = $crawler->selectButton($this->lang('YES'))->form();
 		self::submit($form);
 
 		$this->assertContainsLang($expected, static::get_content());
