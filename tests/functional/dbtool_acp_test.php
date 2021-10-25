@@ -50,6 +50,9 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 	 */
 	public function test_operation($operation, $expected, $crawler)
 	{
+		$this->login();
+		$this->admin_login();
+
 		$this->add_lang_ext('vse/dbtool', 'dbtool_acp');
 
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
