@@ -53,11 +53,30 @@ class dbtool_test extends \phpbb_test_case
 	/** @var \phpbb\user */
 	protected $user;
 
-	public function setUp()
+	/**
+	 * Get an instance of \phpbb\language\language
+	 */
+	public function get_language_instance()
+	{
+		global $user, $phpbb_root_path, $phpEx;
+
+		// Get instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
+		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
+		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
+		$this->lang = new language($lang_loader);
+		$this->lang->add_lang('dbtool_acp', 'vse/dbtool');
+
+		// Set the user lang object for use by trigger error
+		$user = new \phpbb\user($this->lang, '\phpbb\datetime');
+	}
+
+	protected function setUp(): void
 	{
 		parent::setUp();
 
-		global $phpbb_container, $phpbb_root_path, $phpEx;
+		$this->get_language_instance();
+
+		global $phpbb_container;
 
 		$this->cache    = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
 		$this->config   = new config(['board_disable' => 0]);
@@ -65,7 +84,6 @@ class dbtool_test extends \phpbb_test_case
 		$this->log      = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
 		$this->request  = $this->getMockBuilder('\phpbb\request\request')->getMock();
 		$this->template = $this->getMockBuilder('\phpbb\template\template')->getMock();
-		$this->lang     = new language(new language_file_loader($phpbb_root_path, $phpEx));
 		$this->user     = new user($this->lang, '\phpbb\datetime');
 		$this->tool     = new tool($this->cache, $this->config, $this->db, $this->log, $this->user);
 
@@ -102,7 +120,7 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function test_module_display($sql_layer, $valid)
 	{
-		$this->db->expects($this->atMost(2))
+		$this->db->expects(self::atMost(2))
 			->method('get_sql_layer')
 			->willReturn($sql_layer);
 
@@ -118,7 +136,7 @@ class dbtool_test extends \phpbb_test_case
 		}
 
 		$this->dbtool_module->main();
-		$this->assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
+		self::assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
 	}
 
 	/**
@@ -154,11 +172,11 @@ class dbtool_test extends \phpbb_test_case
 	public function test_module_run_tool($operation, $tables, $disable_board = true, $confirmed = true)
 	{
 		// Set expected request variables
-		$this->request->expects($this->once())
+		$this->request->expects(self::once())
 			->method('is_set_post')
-			->with($this->equalTo('submit'))
+			->with(self::equalTo('submit'))
 			->willReturn(true);
-		$this->request->expects($this->exactly(3))
+		$this->request->expects(self::exactly(3))
 			->method('variable')
 			->willReturnMap([
 				['operation', '', false, request_interface::REQUEST, $operation],
@@ -170,12 +188,15 @@ class dbtool_test extends \phpbb_test_case
 		$marked_tables = "'" . implode(', ', $tables) . "'";
 
 		// Set expected db
-		$this->db->expects($this->atMost(2))
+		$this->db->expects(self::atMost(2))
 			->method('get_sql_layer')
 			->willReturn('mysqli');
-		$this->db->expects($this->atMost(1))
+		$this->db->expects(self::atMost(1))
 			->method('sql_escape')
 			->willReturn($marked_tables);
+
+		// Set expected user id
+		$this->user->data['user_id'] = 2;
 
 		if (self::$confirm = ($confirmed === true))
 		{
@@ -200,7 +221,7 @@ class dbtool_test extends \phpbb_test_case
 		}
 
 		$this->dbtool_module->main();
-		$this->assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
+		self::assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
 	}
 
 	/**
@@ -229,7 +250,7 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function test_is_innodb($engine, $expected)
 	{
-		$this->assertEquals($expected, $this->tool->is_innodb($engine));
+		self::assertEquals($expected, $this->tool->is_innodb($engine));
 	}
 
 	/**
@@ -262,7 +283,7 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function test_is_valid_engine($engine, $expected)
 	{
-		$this->assertEquals($expected, $this->tool->is_valid_engine($engine));
+		self::assertEquals($expected, $this->tool->is_valid_engine($engine));
 	}
 
 	/**
@@ -292,7 +313,7 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function test_is_valid_operation($operation, $expected)
 	{
-		$this->assertEquals($expected, $this->tool->is_valid_operation($operation));
+		self::assertEquals($expected, $this->tool->is_valid_operation($operation));
 	}
 
 	/**
@@ -323,11 +344,11 @@ class dbtool_test extends \phpbb_test_case
 
 		// Pass 1, based on current state
 		$state = $this->tool->disable_board($disable_board, $current_state);
-		$this->assertEquals($expected_state1, $this->config['board_disable']);
+		self::assertEquals($expected_state1, $this->config['board_disable']);
 
 		// Pass 2, based on state resulting from pass 1
 		$this->tool->disable_board($disable_board, $state);
-		$this->assertEquals($expected_state2, $this->config['board_disable']);
+		self::assertEquals($expected_state2, $this->config['board_disable']);
 	}
 
 	/**
@@ -336,13 +357,13 @@ class dbtool_test extends \phpbb_test_case
 	protected function setExpectedDisplayTables()
 	{
 		$db = $this->db;
-		$this->db->expects($this->once())
+		$this->db->expects(self::once())
 			->method('sql_query')
-			->with($this->equalTo('SHOW TABLE STATUS'))
+			->with(self::equalTo('SHOW TABLE STATUS'))
 			->willReturn('result');
-		$this->db->expects($this->exactly(2))
+		$this->db->expects(self::exactly(2))
 			->method('sql_fetchrow')
-			->with($this->equalTo('result'))
+			->with(self::equalTo('result'))
 			->willReturnCallback( // prevents infinite while looping
 				static function () use ($db) {
 					if (isset($db->imported))
@@ -361,18 +382,18 @@ class dbtool_test extends \phpbb_test_case
 			)
 		;
 
-		$this->template->expects($this->once())
+		$this->template->expects(self::once())
 			->method('assign_vars')
 			->with([
 				'TABLE_DATA'		=> [0 => [
 					'TABLE_NAME'	=> 'phpbb_zebra',
 					'TABLE_TYPE'	=> 'InnoDB',
-					'DATA_SIZE'		=> '0 BYTES',
-					'DATA_FREE'		=> '0 BYTES',
+					'DATA_SIZE'		=> '0 Bytes',
+					'DATA_FREE'		=> '0 Bytes',
 					'S_OVERHEAD'	=> false,
 				]],
-				'TOTAL_DATA_SIZE'	=> '0 BYTES',
-				'TOTAL_DATA_FREE'	=> '0 BYTES',
+				'TOTAL_DATA_SIZE'	=> '0 Bytes',
+				'TOTAL_DATA_FREE'	=> '0 Bytes',
 				'U_ACTION'			=> null,
 			])
 		;
@@ -387,13 +408,13 @@ class dbtool_test extends \phpbb_test_case
 	protected function setExpectedOperationResponse($operation, $tables)
 	{
 		$db = $this->db;
-		$this->db->expects($this->once())
+		$this->db->expects(self::once())
 			->method('sql_query')
-			->with($this->equalTo(strtoupper($operation) . ' TABLE ' . $tables))
+			->with(self::equalTo(strtoupper($operation) . ' TABLE ' . $tables))
 			->willReturn('operation');
-		$this->db->expects($this->exactly(2))
+		$this->db->expects(self::exactly(2))
 			->method('sql_fetchrow')
-			->with($this->equalTo('operation'))
+			->with(self::equalTo('operation'))
 			->willReturnCallback( // prevents infinite while looping
 				static function () use ($db) {
 					if (isset($db->imported))

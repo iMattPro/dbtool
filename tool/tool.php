@@ -19,29 +19,29 @@ use vse\dbtool\ext;
 
 class tool implements tool_interface
 {
-	/** @var \phpbb\cache\driver\driver_interface */
+	/** @var cache */
 	protected $cache;
 
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db */
 	protected $db;
 
 	/** @var log */
 	protected $log;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
 	/**
 	 * tool constructor
 	 *
-	 * @param \phpbb\cache\driver\driver_interface $cache
-	 * @param \phpbb\config\config                 $config
-	 * @param \phpbb\db\driver\driver_interface    $db
-	 * @param \phpbb\log\log_interface             $log
-	 * @param \phpbb\user                          $user
+	 * @param cache  $cache
+	 * @param config $config
+	 * @param db     $db
+	 * @param log    $log
+	 * @param user   $user
 	 */
 	public function __construct(cache $cache, config $config, db $db, log $log, user $user)
 	{
