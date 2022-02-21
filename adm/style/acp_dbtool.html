@@ -12,21 +12,21 @@ var markedRow = [];
 function markRowsInit() {
 	// for every table row ...
 	var rows = document.getElementsByTagName('tr');
-	for (var i = 0; i < rows.length; i++) {
+	for (const row of rows) {
 		// ... with the class 'row1' or 'row2' ...
-		if ('row1' !== rows[i].className.substr(0, 4) && 'row2' !== rows[i].className.substr(0, 4)) {
+		if ('row1' !== row.className.substr(0, 4) && 'row2' !== row.className.substr(0, 4)) {
 			continue;
 		}
 		// ... add event listeners ...
 		// ... to highlight the row on mouseover ...
-		rows[i].onmouseover = function() {
+		row.onmouseover = function() {
 			this.className += ' row3';
 		};
-		rows[i].onmouseout = function() {
+		row.onmouseout = function() {
 			this.className = this.className.replace(' row3', '');
 		};
 		// ... and to mark the row on click ...
-		rows[i].onmousedown = function() {
+		row.onmousedown = function() {
 			var uniqueId;
 			var checkbox;
 
@@ -47,7 +47,7 @@ function markRowsInit() {
 		};
 
 		// .. and checkbox clicks
-		var checkbox = rows[i].getElementsByTagName('input')[0];
+		var checkbox = row.getElementsByTagName('input')[0];
 		if (checkbox) {
 			checkbox.onclick = function() {
 				// opera does not recognize return false;
@@ -64,13 +64,18 @@ window.onload = markRowsInit;
 * for compatibility with the table row clicking function above
 */
 function markAllRows(containerId, overhead) {
-	var rows = (!overhead) ? document.getElementById(containerId).getElementsByTagName('tr') : document.getElementById(containerId).getElementsByClassName('overhead');
+	var rows = document.getElementById(containerId).getElementsByTagName('tr');
+
+	if (overhead) {
+		unmarkAllRows(containerId);
+		rows = document.getElementById(containerId).getElementsByClassName('overhead');
+	}
 
 	var uniqueId;
 	var checkbox;
 
-	for (var i = 0; i < rows.length; i++) {
-		checkbox = rows[i].getElementsByTagName('input')[0];
+	for (const row of rows) {
+		checkbox = row.getElementsByTagName('input')[0];
 
 		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
@@ -91,8 +96,8 @@ function unmarkAllRows(containerId) {
 	var uniqueId;
 	var checkbox;
 
-	for (var i = 0; i < rows.length; i++) {
-		checkbox = rows[i].getElementsByTagName('input')[0];
+	for (const row of rows) {
+		checkbox = row.getElementsByTagName('input')[0];
 
 		if (checkbox && checkbox.type === 'checkbox') {
 			uniqueId = checkbox.name + checkbox.value;
@@ -140,9 +145,9 @@ function unmarkAllRows(containerId) {
 				<tr>
 					<th>{{ lang('TH_NAME') }}</th>
 					<th>{{ lang('TH_TYPE') }}</th>
-					<th style="text-align:right;">{{ lang('TH_SIZE') }}</th>
-					<th style="text-align:right;">{{ lang('TH_OVERHEAD') }}</th>
-					<th style="text-align:center;">{{ lang('MARK') }}</th>
+					<th style="text-align: right;">{{ lang('TH_SIZE') }}</th>
+					<th style="text-align: right;">{{ lang('TH_OVERHEAD') }}</th>
+					<th style="text-align: center;">{{ lang('MARK') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -154,9 +159,9 @@ function unmarkAllRows(containerId) {
 					{% endif %}
 						<td>{{ table.TABLE_NAME }}</td>
 						<td>{{ table.TABLE_TYPE }}</td>
-						<td style="text-align:right;">{{ table.DATA_SIZE }}</td>
-						<td style="text-align:right;">{{ table.DATA_FREE }}</td>
-						<td style="text-align:center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
+						<td style="text-align: right;">{{ table.DATA_SIZE }}</td>
+						<td style="text-align: right;">{{ table.DATA_FREE }}</td>
+						<td style="text-align: center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
 					</tr>
 				{% else %}
 					<tr><td colspan="5">{{ lang('TABLE_EMPTY') }}</td></tr>
@@ -164,15 +169,15 @@ function unmarkAllRows(containerId) {
 				<tr>
 					<th>{{ lang('TH_TOTAL') }}</th>
 					<th></th>
-					<th style="text-align:right;">{{ TOTAL_DATA_SIZE }}</th>
-					<th style="text-align:right;">{{ TOTAL_DATA_FREE }}</th>
+					<th style="text-align: right;">{{ TOTAL_DATA_SIZE }}</th>
+					<th style="text-align: right;">{{ TOTAL_DATA_FREE }}</th>
 					<th></th>
 				</tr>
 			</tbody>
 		</table>
 
 		<fieldset class="quick">
-			<p class="small"><a href="#" onclick="markAllRows('table-data', false); return false;">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" onclick="unmarkAllRows('table-data'); return false;">{{ lang('UNMARK_ALL') }}</a>{% if TOTAL_DATA_FREE != '0 B' %} &bull; <a href="#" onclick="unmarkAllRows('table-data'); markAllRows('table-data', true); return false;">{{ lang('MARK_OVERHEAD') }}</a>{% endif %}</p>
+			<p class="small"><a href="#" class="markRows" data-callback="markAllRows">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" class="markRows" data-callback="unmarkAllRows">{{ lang('UNMARK_ALL') }}</a>{% if TOTAL_DATA_FREE != '0 B' %} &bull; <a href="#" class="markRows" data-callback="markAllRows" data-overhead="true">{{ lang('MARK_OVERHEAD') }}</a>{% endif %}</p>
 		</fieldset>
 
 		<p id="buttons" class="submit-buttons">
@@ -182,5 +187,16 @@ function unmarkAllRows(containerId) {
 		{{ S_FORM_TOKEN }}
 	</fieldset>
 </form>
+
+<script>
+	for (const mark of document.querySelectorAll(".markRows")) {
+		mark.addEventListener("click", (e) => {
+			e.preventDefault();
+			const callback = window[e.target.dataset.callback];
+			const overhead = e.target.dataset.overhead === "true";
+			if (typeof callback === "function") callback("table-data", overhead);
+		})
+	}
+</script>
 
 {% include 'overall_footer.html' %}

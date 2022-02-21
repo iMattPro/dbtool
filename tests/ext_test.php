@@ -12,13 +12,13 @@ namespace vse\dbtool\tests\system;
 
 class ext_test extends \phpbb_test_case
 {
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\DependencyInjection\ContainerInterface */
+	/** @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\DependencyInjection\ContainerInterface */
 	protected $container;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\finder */
+	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\finder */
 	protected $extension_finder;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\db\migrator */
+	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\db\migrator */
 	protected $migrator;
 
 	/**

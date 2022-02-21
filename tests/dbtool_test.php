@@ -10,11 +10,17 @@
 
 namespace vse\dbtool\acp;
 
+use phpbb\cache\driver\driver_interface as cache;
 use phpbb\config\config;
+use phpbb\db\driver\driver_interface as db;
 use phpbb\language\language;
 use phpbb\language\language_file_loader;
+use phpbb\log\log_interface;
 use phpbb\request\request_interface;
+use phpbb\template\template;
 use phpbb\user;
+use PHPUnit\Framework\MockObject\MockObject;
+use vse\dbtool\acp\dbtool_module as module;
 use vse\dbtool\tool\tool;
 
 require_once __DIR__ . '/../../../../includes/functions_acp.php';
@@ -23,34 +29,34 @@ class dbtool_test extends \phpbb_test_case
 {
 	public static $confirm = false;
 
-	/** @var \vse\dbtool\acp\dbtool_module */
+	/** @var module */
 	protected $dbtool_module;
 
-	/** @var \vse\dbtool\tool\tool */
+	/** @var tool */
 	protected $tool;
 
-	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var cache|MockObject */
 	protected $cache;
 
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\db\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var db|MockObject */
 	protected $db;
 
-	/** @var \phpbb\language\language */
+	/** @var language */
 	protected $lang;
 
-	/** @var \phpbb\log\log_interface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var log_interface|MockObject */
 	protected $log;
 
-	/** @var \phpbb\request\request|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var request_interface|MockObject */
 	protected $request;
 
-	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var template|MockObject */
 	protected $template;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
 	/**
@@ -67,7 +73,7 @@ class dbtool_test extends \phpbb_test_case
 		$this->lang->add_lang('dbtool_acp', 'vse/dbtool');
 
 		// Set the user lang object for use by trigger error
-		$user = new \phpbb\user($this->lang, '\phpbb\datetime');
+		$user = new user($this->lang, '\phpbb\datetime');
 	}
 
 	protected function setUp(): void
