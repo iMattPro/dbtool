@@ -103,6 +103,18 @@ class dbtool_test extends \phpbb_test_case
 		$this->dbtool_module = new dbtool_module();
 	}
 
+	public function test_info()
+	{
+		$info_class = new \vse\dbtool\acp\dbtool_info();
+		self::assertInstanceOf('\vse\dbtool\acp\dbtool_info', $info_class);
+		$info_array = $info_class->module();
+		self::assertArrayHasKey('filename', $info_array);
+		self::assertEquals('\vse\dbtool\acp\dbtool_module', $info_array['filename']);
+		self::assertEquals('ACP_OPTIMIZE_REPAIR', $info_array['modes']['view']['title']);
+		self::assertEquals('ext_vse/dbtool && acl_a_backup', $info_array['modes']['view']['auth']);
+		self::assertEquals(['ACP_CAT_DATABASE'], $info_array['modes']['view']['cat']);
+	}
+
 	/**
 	 * Data set for test_module_display
 	 */
