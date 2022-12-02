@@ -21,6 +21,7 @@ use phpbb\template\template;
 use phpbb\user;
 use PHPUnit\Framework\MockObject\MockObject;
 use vse\dbtool\acp\dbtool_module as module;
+use vse\dbtool\acp\dbtool_info as module_info;
 use vse\dbtool\tool\tool;
 
 require_once __DIR__ . '/../../../../includes/functions_acp.php';
@@ -84,12 +85,12 @@ class dbtool_test extends \phpbb_test_case
 
 		global $phpbb_container;
 
-		$this->cache    = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')->getMock();
+		$this->cache    = $this->createMock('\phpbb\cache\driver\driver_interface');
 		$this->config   = new config(['board_disable' => 0]);
-		$this->db       = $this->getMockBuilder('\phpbb\db\driver\driver_interface')->getMock();
-		$this->log      = $this->getMockBuilder('\phpbb\log\log_interface')->getMock();
-		$this->request  = $this->getMockBuilder('\phpbb\request\request')->getMock();
-		$this->template = $this->getMockBuilder('\phpbb\template\template')->getMock();
+		$this->db       = $this->createMock('\phpbb\db\driver\driver_interface');
+		$this->log      = $this->createMock('\phpbb\log\log_interface');
+		$this->request  = $this->createMock('\phpbb\request\request');
+		$this->template = $this->createMock('\phpbb\template\template');
 		$this->user     = new user($this->lang, '\phpbb\datetime');
 		$this->tool     = new tool($this->cache, $this->config, $this->db, $this->log, $this->user);
 
@@ -101,6 +102,18 @@ class dbtool_test extends \phpbb_test_case
 		$phpbb_container->set('vse.dbtool.tool', $this->tool);
 
 		$this->dbtool_module = new dbtool_module();
+	}
+
+	public function test_info()
+	{
+		$info_class = new module_info();
+		self::assertInstanceOf('\vse\dbtool\acp\dbtool_info', $info_class);
+		$info_array = $info_class->module();
+		self::assertArrayHasKey('filename', $info_array);
+		self::assertEquals('\vse\dbtool\acp\dbtool_module', $info_array['filename']);
+		self::assertEquals('ACP_OPTIMIZE_REPAIR', $info_array['modes']['view']['title']);
+		self::assertEquals('ext_vse/dbtool && acl_a_backup', $info_array['modes']['view']['auth']);
+		self::assertEquals(['ACP_CAT_DATABASE'], $info_array['modes']['view']['cat']);
 	}
 
 	/**
