@@ -10,12 +10,12 @@
 
 namespace vse\dbtool\console\command\db;
 
+use phpbb\console\command\command;
 use phpbb\db\driver\driver_interface as db;
 use phpbb\db\tools\tools_interface as phpbb_db_tools;
 use phpbb\language\language;
 use phpbb\lock\db as db_lock;
 use phpbb\user;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,7 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use vse\dbtool\ext;
 use vse\dbtool\tool\tool_interface as db_tool;
 
-class tool extends \phpbb\console\command\command
+class tool extends command
 {
 	/** @var InputInterface */
 	protected $input;
@@ -106,7 +106,7 @@ class tool extends \phpbb\console\command\command
 		if (!$this->db_tool->is_mysql())
 		{
 			$io->error($this->language->lang('WARNING_MYSQL'));
-			return Command::FAILURE;
+			return 1;
 		}
 
 		$io->note($this->br2nl($this->language->lang('WARNING_EXPLAIN')));
@@ -123,7 +123,7 @@ class tool extends \phpbb\console\command\command
 				if (!$this->db_lock->acquire())
 				{
 					$io->error($this->language->lang('CLI_DBTOOL_LOCK_ERROR'));
-					return Command::FAILURE;
+					return 1;
 				}
 
 				$results = $this->db_tool->run($operation, $tables, $disable_board);
@@ -137,7 +137,7 @@ class tool extends \phpbb\console\command\command
 			}
 		}
 
-		return Command::SUCCESS;
+		return 0;
 	}
 
 	/**
