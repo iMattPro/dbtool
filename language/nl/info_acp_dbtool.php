@@ -23,7 +23,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'	=> 'Optimaliseren &amp; repareren',
-	'OPTIMIZE_LOG'			=> '<strong>Database tabellen geoptimaliseerd</strong><br />» %s',
-	'REPAIR_LOG'			=> '<strong>Database tabellen gerepareerd</strong><br />» %s',
-	'CHECK_LOG'				=> '<strong>Database tabellen gecontroleerd</strong><br />» %s',
+	'OPTIMIZE_LOG'			=> '<strong>Database tabellen geoptimaliseerd</strong><br>» %s',
+	'REPAIR_LOG'			=> '<strong>Database tabellen gerepareerd</strong><br>» %s',
+	'CHECK_LOG'				=> '<strong>Database tabellen gecontroleerd</strong><br>» %s',
 ));

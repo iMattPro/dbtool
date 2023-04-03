@@ -106,7 +106,7 @@ class dbtool_module
 			if ($this->db_tool->is_valid_operation($operation))
 			{
 				$results = $this->db_tool->run($operation, $tables, $disable_board);
-				$results = '<br />' . implode('<br />', $results);
+				$results = '<br>' . implode('<br>', $results);
 				trigger_error($this->language->lang($operation . '_SUCCESS') . $results . adm_back_link($this->u_action));
 			}
 		}
