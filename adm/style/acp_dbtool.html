@@ -125,18 +125,18 @@ function unmarkAllRows(containerId) {
 	<fieldset>
 		<legend>{{ lang('OPTIMIZE_REPAIR_OPTIONS') }}</legend>
 		<dl>
-			<dt><label for="disable_board">{{ lang('DISABLE_BOARD') ~ lang('COLON') }}</label><br /><span>{{ lang('DISABLE_BOARD_EXPLAIN') }}</span></dt>
+			<dt><label for="disable_board">{{ lang('DISABLE_BOARD') ~ lang('COLON') }}</label><br><span>{{ lang('DISABLE_BOARD_EXPLAIN') }}</span></dt>
 			<dd>
-				<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked" /> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="disable_board" value="0" /> {{ lang('NO') }}</label>
+				<label><input type="radio" class="radio" id="disable_board" name="disable_board" value="1" checked="checked"> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="disable_board" value="0"> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="operation">{{ lang('ACTION') ~ lang('COLON') }}</label></dt>
 			<dd>
-				<label><input type="radio" class="radio" name="operation" value="optimize" id="operation" checked="checked" /> {{ lang('OPTIMIZE') }}</label>
-				<label><input type="radio" class="radio" name="operation" value="repair" /> {{ lang('REPAIR') }}</label>
-				<label><input type="radio" class="radio" name="operation" value="check" /> {{ lang('CHECK') }}</label>
+				<label><input type="radio" class="radio" name="operation" value="optimize" id="operation" checked="checked"> {{ lang('OPTIMIZE') }}</label>
+				<label><input type="radio" class="radio" name="operation" value="repair"> {{ lang('REPAIR') }}</label>
+				<label><input type="radio" class="radio" name="operation" value="check"> {{ lang('CHECK') }}</label>
 			</dd>
 		</dl>
 
@@ -161,7 +161,7 @@ function unmarkAllRows(containerId) {
 						<td>{{ table.TABLE_TYPE }}</td>
 						<td style="text-align: right;">{{ table.DATA_SIZE }}</td>
 						<td style="text-align: right;">{{ table.DATA_FREE }}</td>
-						<td style="text-align: center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}" />&nbsp;</td>
+						<td style="text-align: center;">&nbsp;<input type="checkbox" class="radio" name="mark[]" value="{{ table.TABLE_NAME }}">&nbsp;</td>
 					</tr>
 				{% else %}
 					<tr><td colspan="5">{{ lang('TABLE_EMPTY') }}</td></tr>
@@ -181,8 +181,8 @@ function unmarkAllRows(containerId) {
 		</fieldset>
 
 		<p id="buttons" class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}">
 		</p>
 		{{ S_FORM_TOKEN }}
 	</fieldset>

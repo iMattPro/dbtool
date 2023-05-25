@@ -24,7 +24,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'	=> 'تحسين وإصلاح',
-	'OPTIMIZE_LOG'			=> '<strong>تم تحسين جداول قاعدة البيانات</strong><br />» %s',
-	'REPAIR_LOG'			=> '<strong>تم إصلاح جداول قاعدة البيانات</strong><br />» %s',
-	'CHECK_LOG'				=> '<strong>تم فحص جداول قاعدة البيانات</strong><br />» %s',
+	'OPTIMIZE_LOG'			=> '<strong>تم تحسين جداول قاعدة البيانات</strong><br>» %s',
+	'REPAIR_LOG'			=> '<strong>تم إصلاح جداول قاعدة البيانات</strong><br>» %s',
+	'CHECK_LOG'				=> '<strong>تم فحص جداول قاعدة البيانات</strong><br>» %s',
 ));

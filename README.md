@@ -63,6 +63,6 @@ For help with the Optimize & Repair Tool command:
 3. To permanently uninstall, click `Delete Data`, then delete the `dbtool` folder from `phpBB/ext/vse/`.
 
 ## License
-[GNU General Public License v2](http://opensource.org/licenses/GPL-2.0)
+[GNU General Public License v2](https://opensource.org/licenses/GPL-2.0)
 
 © 2013 - Matt Friedman

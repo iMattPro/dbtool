@@ -106,7 +106,7 @@ class dbtool_module
 			if ($this->db_tool->is_valid_operation($operation))
 			{
 				$results = $this->db_tool->run($operation, $tables, $disable_board);
-				$results = '<br />' . implode('<br />', $results);
+				$results = '<br>' . implode('<br>', $results);
 				trigger_error($this->language->lang($operation . '_SUCCESS') . $results . adm_back_link($this->u_action));
 			}
 		}
@@ -132,30 +132,31 @@ class dbtool_module
 		$total_data_size = $total_data_free = 0;
 
 		$tables = $this->db->sql_query('SHOW TABLE STATUS');
-
 		while ($table = $this->db->sql_fetchrow($tables))
 		{
 			$table['Engine'] = (!empty($table['Type']) ? $table['Type'] : $table['Engine']);
-			if ($this->db_tool->is_valid_engine($table['Engine']))
+			if (!$this->db_tool->is_valid_engine($table['Engine']))
 			{
-				// Data_free should always be 0 for InnoDB tables
-				if ($this->db_tool->is_innodb($table['Engine']))
-				{
-					$table['Data_free'] = 0;
-				}
-
-				$data_size = $table['Data_length'] + $table['Index_length'];
-				$total_data_size += $data_size;
-				$total_data_free += $table['Data_free'];
-
-				$table_data[] = [
-					'TABLE_NAME'	=> $table['Name'],
-					'TABLE_TYPE'	=> $table['Engine'],
-					'DATA_SIZE'		=> get_formatted_filesize($data_size),
-					'DATA_FREE'		=> get_formatted_filesize($table['Data_free']),
-					'S_OVERHEAD'	=> (bool) $table['Data_free'],
-				];
+				continue;
 			}
+
+			// Data_free should always be 0 for InnoDB tables
+			if ($this->db_tool->is_innodb($table['Engine']))
+			{
+				$table['Data_free'] = 0;
+			}
+
+			$data_size = $table['Data_length'] + $table['Index_length'];
+			$total_data_size += $data_size;
+			$total_data_free += $table['Data_free'];
+
+			$table_data[] = [
+				'TABLE_NAME'	=> $table['Name'],
+				'TABLE_TYPE'	=> $table['Engine'],
+				'DATA_SIZE'		=> get_formatted_filesize($data_size),
+				'DATA_FREE'		=> get_formatted_filesize($table['Data_free']),
+				'S_OVERHEAD'	=> (bool) $table['Data_free'],
+			];
 		}
 		$this->db->sql_freeresult($tables);
 
