@@ -2,7 +2,7 @@
 
 A phpBB extension that will allow you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel or from the CLI.
 
-[![Build Status](https://github.com/iMattPro/dbtool/workflows/Tests/badge.svg)](https://github.com/iMattPro/dbtool/actions)
+[![Build Status](https://github.com/iMattPro/dbtool/actions/workflows/tests.yml/badge.svg)](https://github.com/iMattPro/dbtool/actions)
 [![codecov](https://codecov.io/gh/iMattPro/dbtool/branch/master/graph/badge.svg?token=hlMnGtSzhE)](https://codecov.io/gh/iMattPro/dbtool)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3327f9379160c72b3b59/maintainability)](https://codeclimate.com/github/iMattPro/dbtool/maintainability)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iMattPro/dbtool/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iMattPro/dbtool/?branch=master)
