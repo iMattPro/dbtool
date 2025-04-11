@@ -65,13 +65,14 @@ class dbtool_test extends \phpbb_test_case
 	 */
 	public function get_language_instance()
 	{
-		global $user, $phpbb_root_path, $phpEx;
+		global $language, $user, $phpbb_root_path, $phpEx;
 
 		// Get instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
 		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
 		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
 		$this->lang = new language($lang_loader);
 		$this->lang->add_lang('dbtool_acp', 'vse/dbtool');
+		$language = $this->lang;
 
 		// Set the user lang object for use by trigger error
 		$user = new user($this->lang, '\phpbb\datetime');
