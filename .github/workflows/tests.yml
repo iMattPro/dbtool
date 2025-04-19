@@ -239,7 +239,7 @@ jobs:
 
             - name: Send code coverage
               if: ${{ matrix.COVERAGE == 1 }}
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v5
               with:
-                  files: ./phpBB3/build/logs/clover.xml
+                  token: ${{ secrets.CODECOV_TOKEN }}
     # END MySQL and MariaDB Job
