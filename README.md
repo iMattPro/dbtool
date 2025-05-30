@@ -4,7 +4,7 @@ A phpBB extension that will allow you to check, optimize and repair phpBB's MySQ
 
 [![Build Status](https://github.com/iMattPro/dbtool/actions/workflows/tests.yml/badge.svg)](https://github.com/iMattPro/dbtool/actions)
 [![codecov](https://codecov.io/gh/iMattPro/dbtool/branch/master/graph/badge.svg?token=hlMnGtSzhE)](https://codecov.io/gh/iMattPro/dbtool)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3327f9379160c72b3b59/maintainability)](https://codeclimate.com/github/iMattPro/dbtool/maintainability)
+[![Maintainability](https://qlty.sh/badges/66a0a813-4834-4175-8efc-4b6b0461d035/maintainability.svg)](https://qlty.sh/gh/iMattPro/projects/dbtool)
 [![Latest Stable Version](https://poser.pugx.org/vse/dbtool/v/stable)](https://www.phpbb.com/customise/db/extension/database_optimize_and_repair_tool/)
 
 ## Features
