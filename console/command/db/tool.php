@@ -160,11 +160,11 @@ class tool extends phpbb_command
 	 */
 	protected function get_return_code(bool $success): int
 	{
-		$returnCode = $success ? 'SUCCESS' : 'FAILURE';
-		$defaultCode = $success ? 0 : 1;
+		$return_code = $success ? 'SUCCESS' : 'FAILURE';
+		$default_code = $success ? 0 : 1;
 
-		return defined("Symfony\Component\Console\Command\Command::$returnCode")
-			? constant("Symfony\Component\Console\Command\Command::$returnCode")
-			: $defaultCode;
+		return defined("Symfony\Component\Console\Command\Command::$return_code")
+			? constant("Symfony\Component\Console\Command\Command::$return_code")
+			: $default_code;
 	}
 }
