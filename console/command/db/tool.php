@@ -10,7 +10,7 @@
 
 namespace vse\dbtool\console\command\db;
 
-use phpbb\console\command\command;
+use phpbb\console\command\command as phpbb_command;
 use phpbb\db\driver\driver_interface as db;
 use phpbb\db\tools\tools_interface as phpbb_db_tools;
 use phpbb\language\language;
@@ -24,7 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use vse\dbtool\ext;
 use vse\dbtool\tool\tool_interface as db_tool;
 
-class tool extends command
+class tool extends phpbb_command
 {
 	/** @var InputInterface */
 	protected $input;
@@ -50,12 +50,12 @@ class tool extends command
 	/**
 	 * Constructor
 	 *
-	 * @param user           $user
-	 * @param db             $db
+	 * @param user $user
+	 * @param db $db
 	 * @param phpbb_db_tools $phpbb_db_tools
-	 * @param db_tool        $db_tool
-	 * @param db_lock        $db_lock
-	 * @param language       $language
+	 * @param db_tool $db_tool
+	 * @param db_lock $db_lock
+	 * @param language $language
 	 */
 	public function __construct(user $user, db $db, phpbb_db_tools $phpbb_db_tools, db_tool $db_tool, db_lock $db_lock, language $language)
 	{
@@ -106,7 +106,7 @@ class tool extends command
 		if (!$this->db_tool->is_mysql())
 		{
 			$io->error($this->language->lang('WARNING_MYSQL'));
-			return 1;
+			return $this->get_return_code(false);
 		}
 
 		$io->note($this->br2nl($this->language->lang('WARNING_EXPLAIN')));
@@ -123,7 +123,7 @@ class tool extends command
 				if (!$this->db_lock->acquire())
 				{
 					$io->error($this->language->lang('CLI_DBTOOL_LOCK_ERROR'));
-					return 1;
+					return $this->get_return_code(false);
 				}
 
 				$results = $this->db_tool->run($operation, $tables, $disable_board);
@@ -137,7 +137,7 @@ class tool extends command
 			}
 		}
 
-		return 0;
+		return $this->get_return_code(true);
 	}
 
 	/**
@@ -150,5 +150,21 @@ class tool extends command
 	protected function br2nl($text)
 	{
 		return preg_replace('/<br(?:\s+)?\/?>/i', "\n", $text);
+	}
+
+	/**
+	 * Get the appropriate return code
+	 *
+	 * @param bool $success Whether the operation was successful
+	 * @return int
+	 */
+	protected function get_return_code(bool $success): int
+	{
+		$returnCode = $success ? 'SUCCESS' : 'FAILURE';
+		$defaultCode = $success ? 0 : 1;
+
+		return defined("Symfony\Component\Console\Command\Command::$returnCode")
+			? constant("Symfony\Component\Console\Command\Command::$returnCode")
+			: $defaultCode;
 	}
 }
