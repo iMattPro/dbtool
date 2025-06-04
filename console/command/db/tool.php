@@ -16,7 +16,6 @@ use phpbb\db\tools\tools_interface as phpbb_db_tools;
 use phpbb\language\language;
 use phpbb\lock\db as db_lock;
 use phpbb\user;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
