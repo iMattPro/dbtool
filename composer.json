@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "A phpBB extension that allows you to check, optimize and repair phpBB's MySQL database tables from a phpMyAdmin-like interface in the Administration Control Panel or from the CLI.",
 	"homepage": "https://github.com/iMattPro/dbtool",
-	"version": "1.2.1-dev",
+	"version": "1.2.1",
 	"keywords": ["phpbb", "extension", "database", "mysql", "optimize", "repair", "phpmyadmin"],
 	"license": "GPL-2.0-only",
 	"authors": [

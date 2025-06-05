@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 - 2025-06-04
+
+- Modernized codebase, ensuring compatibility with future phpBB releases
+- Removed XHTML artifacts
+- Added Estonian translation
+
 ## 1.2.0 - 2019-04-30
 
 - Supports running from the command line interface using the command: `db:tool`
