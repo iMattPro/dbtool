@@ -34,7 +34,7 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 		return $crawler;
 	}
 
-	public function operation_test_data()
+	public static function operation_test_data()
 	{
 		return [
 			['optimize', 'OPTIMIZE_SUCCESS'],

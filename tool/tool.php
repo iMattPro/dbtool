@@ -140,7 +140,7 @@ class tool implements tool_interface
 	 */
 	public function is_valid_engine($engine)
 	{
-		return in_array(strtolower($engine), ['myisam', 'innodb', 'archive']);
+		return in_array(strtolower((string) $engine), ['myisam', 'innodb', 'archive']);
 	}
 
 	/**
@@ -152,7 +152,7 @@ class tool implements tool_interface
 	 */
 	public function is_innodb($engine)
 	{
-		return strtolower($engine) === 'innodb';
+		return strtolower((string) $engine) === 'innodb';
 	}
 
 	/**

@@ -63,26 +63,28 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Get an instance of \phpbb\language\language
 	 */
-	public function get_language_instance()
+	public static function get_language_instance()
 	{
 		global $language, $user, $phpbb_root_path, $phpEx;
 
 		// Get instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
 		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
 		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
-		$this->lang = new language($lang_loader);
-		$this->lang->add_lang('dbtool_acp', 'vse/dbtool');
-		$language = $this->lang;
+		$lang = new language($lang_loader);
+		$lang->add_lang('dbtool_acp', 'vse/dbtool');
+		$language = $lang;
 
 		// Set the user lang object for use by trigger error
-		$user = new user($this->lang, '\phpbb\datetime');
+		$user = new user($lang, '\phpbb\datetime');
+
+		return $lang;
 	}
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->get_language_instance();
+		$this->lang = self::get_language_instance();
 
 		global $phpbb_container;
 
@@ -120,7 +122,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_module_display
 	 */
-	public function module_display_test_data()
+	public static function module_display_test_data()
 	{
 		return [
 			['mysqli', true],
@@ -162,7 +164,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_module_run_tool
 	 */
-	public function module_run_tool_test_data()
+	public static function module_run_tool_test_data()
 	{
 		return [
 			// user confirmed
@@ -247,7 +249,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_is_innodb
 	 */
-	public function is_innodb_data()
+	public static function is_innodb_data()
 	{
 		return [
 			['INNODB', true],
@@ -276,7 +278,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_is_valid_engine
 	 */
-	public function is_valid_engine_data()
+	public static function is_valid_engine_data()
 	{
 		return [
 			['INNODB', true],
@@ -309,7 +311,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_is_valid_operation
 	 */
-	public function is_valid_operation_data()
+	public static function is_valid_operation_data()
 	{
 		return [
 			['OPTIMIZE', true],
@@ -339,7 +341,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_disable_board
 	 */
-	public function disable_board_data()
+	public static function disable_board_data()
 	{
 		return [
 			[true, false, true, false], // this tests toggling disabled state when users wants it
@@ -381,16 +383,17 @@ class dbtool_test extends \phpbb_test_case
 			->method('sql_query')
 			->with(self::equalTo('SHOW TABLE STATUS'))
 			->willReturn('result');
+		$call_count = 0;
 		$this->db->expects(self::exactly(2))
 			->method('sql_fetchrow')
 			->with(self::equalTo('result'))
 			->willReturnCallback( // prevents infinite while looping
-				static function () use ($db) {
-					if (isset($db->imported))
+				static function () use (&$call_count) {
+					if ($call_count > 0)
 					{
 						return false;
 					}
-					$db->imported = true;
+					$call_count++;
 					return [
 						'Name'         => 'phpbb_zebra',
 						'Engine'       => 'InnoDB',
@@ -432,16 +435,17 @@ class dbtool_test extends \phpbb_test_case
 			->method('sql_query')
 			->with(self::equalTo(strtoupper($operation) . ' TABLE ' . $tables))
 			->willReturn('operation');
+		$call_count = 0;
 		$this->db->expects(self::exactly(2))
 			->method('sql_fetchrow')
 			->with(self::equalTo('operation'))
 			->willReturnCallback( // prevents infinite while looping
-				static function () use ($db) {
-					if (isset($db->imported))
+				static function () use (&$call_count) {
+					if ($call_count > 0)
 					{
 						return false;
 					}
-					$db->imported = true;
+					$call_count++;
 					return [
 						'Table'    => 'db.phpbb_zebra',
 						'Msg_type' => 'info',
