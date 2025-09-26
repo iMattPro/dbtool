@@ -55,7 +55,7 @@ class tool implements tool_interface
 	/**
 	 * Perform table SQL query and return any messages
 	 *
-	 * @param string $operation     OPTIMIZE, REPAIR, or CHECK
+	 * @param string $operation     OPTIMIZE, REPAIR or CHECK
 	 * @param array  $tables        Array of all tables to be processed
 	 * @param int    $disable_board The users option to disable the board during run time
 	 * @return array Any errors or status information, otherwise the array of tables processed
@@ -72,7 +72,7 @@ class tool implements tool_interface
 		$result = $this->db->sql_query($operation . ' TABLE ' . $this->db->sql_escape($tablestr));
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			// Build a message only for optimize/repair errors, or if check table is run
+			// Build a message only for optimize/repair errors or if a check table is run
 			if ($operation === ext::CHECK || in_array(strtolower($row['Msg_type']), ['error', 'info', 'note', 'warning']))
 			{
 				$output[] = substr($row['Table'], strpos($row['Table'], '.') + 1) . ' ... ' . $row['Msg_type'] . ': ' . $row['Msg_text'];
@@ -84,7 +84,7 @@ class tool implements tool_interface
 
 		$this->disable_board($disable_board, $disabled);
 
-		// Clear cache to ensure board is re-enabled for all users
+		// Clear cache to ensure the board is re-enabled for all users
 		$this->cache->purge();
 
 		return $output ?: $tables;
@@ -109,7 +109,7 @@ class tool implements tool_interface
 	}
 
 	/**
-	 * Is the database using MySQL
+	 * Is the database using MySQL?
 	 *
 	 * @return bool True if MySQL, false otherwise
 	 * @access public
@@ -120,7 +120,7 @@ class tool implements tool_interface
 	}
 
 	/**
-	 * Is requested operation to optimize, repair or check tables
+	 * Is the requested operation to optimize, repair or check tables?
 	 *
 	 * @param string $operation The name of the operation
 	 * @return bool True if valid operation, false otherwise

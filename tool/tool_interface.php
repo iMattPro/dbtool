@@ -15,7 +15,7 @@ interface tool_interface
 	/**
 	 * Perform table SQL query and return any messages
 	 *
-	 * @param string $operation     OPTIMIZE, REPAIR, or CHECK
+	 * @param string $operation     OPTIMIZE, REPAIR or CHECK
 	 * @param array  $tables        Array of all tables to be processed
 	 * @param int    $disable_board The users option to disable the board during run time
 	 * @return array Any errors or status information
@@ -34,7 +34,7 @@ interface tool_interface
 	public function disable_board($disable, $disabled);
 
 	/**
-	 * Is the database using MySQL
+	 * Is the database using MySQL?
 	 *
 	 * @return bool True if MySQL, false otherwise
 	 * @access public
@@ -42,7 +42,7 @@ interface tool_interface
 	public function is_mysql();
 
 	/**
-	 * Is requested operation to optimize, repair or check tables
+	 * Is the requested operation to optimize, repair or check tables?
 	 *
 	 * @param string $operation The name of the operation
 	 * @return bool True if valid operation, false otherwise

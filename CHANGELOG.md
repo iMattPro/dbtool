@@ -1,9 +1,15 @@
 # Changelog
 
+## 1.2.1 - 2025-06-04
+
+- Modernized codebase, ensuring compatibility with future phpBB releases
+- Removed XHTML artifacts
+- Added Estonian translation
+
 ## 1.2.0 - 2019-04-30
 
 - Supports running from the command line interface using the command: `db:tool`
-- phpBB 3.2.0 or newer required. Support for phpBB 3.1 has ended.
+- phpBB 3.2.0 or newer is required. Support for phpBB 3.1 has ended.
 - Added Dutch translation
 
 ## 1.1.3 - 2018-06-28
@@ -28,7 +34,7 @@
 
 ## 1.1.0 - 2014-11-26
 
-- Added a confirm dialog prior to running a table operation
+- Added a confirmation dialog before running a table operation
 - Various code improvements and fixes
 
 ## 1.1.0-b2 - 2014-07-12
