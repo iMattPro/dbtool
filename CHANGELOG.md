@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 - 2026-01-03
+
+- Fixed an issue that could cause fatal PHP errors if used in a phpBB 4.0.0-a2 board.
+
 ## 1.2.1 - 2025-06-04
 
 - Modernized codebase, ensuring compatibility with future phpBB releases
