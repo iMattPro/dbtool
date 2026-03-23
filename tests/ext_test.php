@@ -10,16 +10,23 @@
 
 namespace vse\dbtool\tests\system;
 
-class ext_test extends \phpbb_test_case
+use phpbb\db\migrator;
+use phpbb\finder\finder;
+use phpbb_test_case;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use vse\dbtool\ext;
+
+class ext_test extends phpbb_test_case
 {
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\DependencyInjection\ContainerInterface */
-	protected $container;
+	/** @var ContainerInterface|MockObject */
+	protected ContainerInterface|MockObject $container;
 
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\finder\finder */
-	protected $extension_finder;
+	/** @var MockObject|finder */
+	protected MockObject|finder $extension_finder;
 
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\db\migrator */
-	protected $migrator;
+	/** @var MockObject|migrator */
+	protected MockObject|migrator $migrator;
 
 	/**
 	 * @inheritdoc
@@ -29,22 +36,22 @@ class ext_test extends \phpbb_test_case
 		parent::setUp();
 
 		// Stub the container
-		$this->container = $this->createMock('\Symfony\Component\DependencyInjection\ContainerInterface');
+		$this->container = $this->createMock(ContainerInterface::class);
 
 		// Stub the ext finder and disable its constructor
-		$this->extension_finder = $this->createMock('\phpbb\finder\finder');
+		$this->extension_finder = $this->createMock(finder::class);
 
 		// Stub the migrator and disable its constructor
-		$this->migrator = $this->createMock('\phpbb\db\migrator');
+		$this->migrator = $this->createMock(migrator::class);
 	}
 
 	/**
 	 * Test the extension can only be enabled when the minimum
 	 * phpBB version requirement is satisfied.
 	 */
-	public function test_ext()
+	public function test_ext(): void
 	{
-		$ext = new \vse\dbtool\ext($this->container, $this->extension_finder, $this->migrator, 'vse/dbtool', '');
+		$ext = new ext($this->container, $this->extension_finder, $this->migrator, 'vse/dbtool', '');
 
 		self::assertTrue($ext->is_enableable());
 	}

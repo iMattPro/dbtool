@@ -19,63 +19,68 @@ use phpbb\log\log_interface;
 use phpbb\request\request_interface;
 use phpbb\template\template;
 use phpbb\user;
+use phpbb_mock_container_builder;
+use phpbb_mock_extension_manager;
+use phpbb_test_case;
 use PHPUnit\Framework\MockObject\MockObject;
 use vse\dbtool\acp\dbtool_module as module;
 use vse\dbtool\acp\dbtool_info as module_info;
 use vse\dbtool\tool\tool;
+use phpbb\datetime;
+use phpbb\request\request;
 
 require_once __DIR__ . '/../../../../includes/functions_acp.php';
 
-class dbtool_test extends \phpbb_test_case
+class dbtool_test extends phpbb_test_case
 {
-	public static $confirm = false;
+	public static bool $confirm = false;
 
 	/** @var module */
-	protected $dbtool_module;
+	protected dbtool_module $dbtool_module;
 
 	/** @var tool */
-	protected $tool;
+	protected tool $tool;
 
-	/** @var cache|MockObject */
-	protected $cache;
+	/** @var MockObject|cache */
+	protected MockObject|cache $cache;
 
 	/** @var config */
-	protected $config;
+	protected config $config;
 
-	/** @var db|MockObject */
-	protected $db;
+	/** @var MockObject|db */
+	protected  MockObject|db $db;
 
 	/** @var language */
-	protected $lang;
+	protected language $lang;
 
-	/** @var log_interface|MockObject */
-	protected $log;
+	/** @var MockObject|log_interface */
+	protected MockObject|log_interface $log;
 
-	/** @var request_interface|MockObject */
-	protected $request;
+	/** @var MockObject|request_interface */
+	protected MockObject|request_interface $request;
 
-	/** @var template|MockObject */
-	protected $template;
+	/** @var MockObject|template */
+	protected MockObject|template $template;
 
 	/** @var user */
-	protected $user;
+	protected user $user;
 
 	/**
 	 * Get an instance of \phpbb\language\language
 	 */
-	public static function get_language_instance()
+	public static function get_language_instance(): language
 	{
 		global $language, $user, $phpbb_root_path, $phpEx;
 
-		// Get instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
+		// Get an instance of \phpbb\language\language (dataProvider is called before setUp(), so this must be done here)
 		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
-		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
+		$lang_loader->set_extension_manager(new phpbb_mock_extension_manager($phpbb_root_path));
 		$lang = new language($lang_loader);
 		$lang->add_lang('dbtool_acp', 'vse/dbtool');
 		$language = $lang;
 
 		// Set the user lang object for use by trigger error
-		$user = new user($lang, '\phpbb\datetime');
+		$user = new user($lang, datetime::class);
 
 		return $lang;
 	}
@@ -88,16 +93,16 @@ class dbtool_test extends \phpbb_test_case
 
 		global $phpbb_container;
 
-		$this->cache    = $this->createMock('\phpbb\cache\driver\driver_interface');
+		$this->cache    = $this->createMock(cache::class);
 		$this->config   = new config(['board_disable' => 0]);
-		$this->db       = $this->createMock('\phpbb\db\driver\driver_interface');
-		$this->log      = $this->createMock('\phpbb\log\log_interface');
-		$this->request  = $this->createMock('\phpbb\request\request');
-		$this->template = $this->createMock('\phpbb\template\template');
-		$this->user     = new user($this->lang, '\phpbb\datetime');
+		$this->db       = $this->createMock(db::class);
+		$this->log      = $this->createMock(log_interface::class);
+		$this->request  = $this->createMock(request::class);
+		$this->template = $this->createMock(template::class);
+		$this->user     = new user($this->lang, datetime::class);
 		$this->tool     = new tool($this->cache, $this->config, $this->db, $this->log, $this->user);
 
-		$phpbb_container = new \phpbb_mock_container_builder;
+		$phpbb_container = new phpbb_mock_container_builder;
 		$phpbb_container->set('dbal.conn', $this->db);
 		$phpbb_container->set('language', $this->lang);
 		$phpbb_container->set('request', $this->request);
@@ -107,10 +112,10 @@ class dbtool_test extends \phpbb_test_case
 		$this->dbtool_module = new dbtool_module();
 	}
 
-	public function test_info()
+	public function test_info(): void
 	{
 		$info_class = new module_info();
-		self::assertInstanceOf('\vse\dbtool\acp\dbtool_info', $info_class);
+		self::assertInstanceOf(module_info::class, $info_class);
 		$info_array = $info_class->module();
 		self::assertArrayHasKey('filename', $info_array);
 		self::assertEquals('\vse\dbtool\acp\dbtool_module', $info_array['filename']);
@@ -122,7 +127,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_module_display
 	 */
-	public static function module_display_test_data()
+	public static function module_display_test_data(): array
 	{
 		return [
 			['mysqli', true],
@@ -138,9 +143,9 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider module_display_test_data
 	 * @param mixed $sql_layer
-	 * @param bool  $valid
+	 * @param bool $valid
 	 */
-	public function test_module_display($sql_layer, $valid)
+	public function test_module_display(mixed $sql_layer, bool $valid): void
 	{
 		$this->db->expects(self::atMost(2))
 			->method('get_sql_layer')
@@ -158,13 +163,13 @@ class dbtool_test extends \phpbb_test_case
 		}
 
 		$this->dbtool_module->main();
-		self::assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
+		self::assertInstanceOf(module::class, $this->dbtool_module);
 	}
 
 	/**
 	 * Data set for test_module_run_tool
 	 */
-	public static function module_run_tool_test_data()
+	public static function module_run_tool_test_data(): array
 	{
 		return [
 			// user confirmed
@@ -187,11 +192,11 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider module_run_tool_test_data
 	 * @param string $operation
-	 * @param array  $tables
-	 * @param bool   $disable_board
-	 * @param bool   $confirmed
+	 * @param array $tables
+	 * @param bool $disable_board
+	 * @param bool $confirmed
 	 */
-	public function test_module_run_tool($operation, $tables, $disable_board = true, $confirmed = true)
+	public function test_module_run_tool(string $operation, array $tables, bool $disable_board = true, bool $confirmed = true): void
 	{
 		// Set expected request variables
 		$this->request->expects(self::once())
@@ -206,7 +211,7 @@ class dbtool_test extends \phpbb_test_case
 				['disable_board', 0, false, request_interface::REQUEST, $disable_board],
 			]);
 
-		// Convert table array to expected string
+		// Convert a table array to the expected string
 		$marked_tables = "'" . implode(', ', $tables) . "'";
 
 		// Set expected db
@@ -229,27 +234,27 @@ class dbtool_test extends \phpbb_test_case
 			}
 			else
 			{
-				// Check that the expected sql query is made
+				// Check that the expected SQL query is made
 				$this->setExpectedOperationResponse($operation, $marked_tables);
 
-				// Expect a trigger_error at completion of task
+				// Expect a trigger_error at completion of a task
 				$this->setExpectedTriggerError(E_USER_NOTICE, $this->lang->lang(strtoupper($operation) . '_SUCCESS'));
 			}
 		}
 		else
 		{
-			// Expect displaying all tables if not confirmed
+			// Expect to display all tables if not confirmed
 			$this->setExpectedDisplayTables();
 		}
 
 		$this->dbtool_module->main();
-		self::assertInstanceOf('\vse\dbtool\acp\dbtool_module', $this->dbtool_module);
+		self::assertInstanceOf(module::class, $this->dbtool_module);
 	}
 
 	/**
 	 * Data set for test_is_innodb
 	 */
-	public static function is_innodb_data()
+	public static function is_innodb_data(): array
 	{
 		return [
 			['INNODB', true],
@@ -268,9 +273,9 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider is_innodb_data
 	 * @param mixed $engine
-	 * @param bool  $expected
+	 * @param bool $expected
 	 */
-	public function test_is_innodb($engine, $expected)
+	public function test_is_innodb(mixed $engine, bool $expected): void
 	{
 		self::assertEquals($expected, $this->tool->is_innodb($engine));
 	}
@@ -278,7 +283,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_is_valid_engine
 	 */
-	public static function is_valid_engine_data()
+	public static function is_valid_engine_data(): array
 	{
 		return [
 			['INNODB', true],
@@ -301,9 +306,9 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider is_valid_engine_data
 	 * @param mixed $engine
-	 * @param bool  $expected
+	 * @param bool $expected
 	 */
-	public function test_is_valid_engine($engine, $expected)
+	public function test_is_valid_engine(mixed $engine, bool $expected): void
 	{
 		self::assertEquals($expected, $this->tool->is_valid_engine($engine));
 	}
@@ -311,7 +316,7 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_is_valid_operation
 	 */
-	public static function is_valid_operation_data()
+	public static function is_valid_operation_data(): array
 	{
 		return [
 			['OPTIMIZE', true],
@@ -331,9 +336,9 @@ class dbtool_test extends \phpbb_test_case
 	 *
 	 * @dataProvider is_valid_operation_data
 	 * @param mixed $operation
-	 * @param bool   $expected
+	 * @param bool $expected
 	 */
-	public function test_is_valid_operation($operation, $expected)
+	public function test_is_valid_operation(mixed $operation, bool $expected): void
 	{
 		self::assertEquals($expected, $this->tool->is_valid_operation($operation));
 	}
@@ -341,10 +346,10 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Data set for test_disable_board
 	 */
-	public static function disable_board_data()
+	public static function disable_board_data(): array
 	{
 		return [
-			[true, false, true, false], // this tests toggling disabled state when users wants it
+			[true, false, true, false], // this tests toggling disabled state when users want it
 			[true, true, true, true], // this tests that board should always remain disabled
 			[false, true, true, true], // this tests that board should always remain disabled
 			[false, false, false, false], // this tests that board should always remain enabled
@@ -360,11 +365,11 @@ class dbtool_test extends \phpbb_test_case
 	 * @param bool $expected_state1
 	 * @param bool $expected_state2
 	 */
-	public function test_disable_board($disable_board, $current_state, $expected_state1, $expected_state2)
+	public function test_disable_board(bool $disable_board, bool $current_state, bool $expected_state1, bool $expected_state2): void
 	{
 		$this->config->set('board_disable', $current_state);
 
-		// Pass 1, based on current state
+		// Pass 1, based on the current state
 		$state = $this->tool->disable_board($disable_board, $current_state);
 		self::assertEquals($expected_state1, $this->config['board_disable']);
 
@@ -376,9 +381,8 @@ class dbtool_test extends \phpbb_test_case
 	/**
 	 * Assertions when calling SHOW TABLE STATUS and displaying the result
 	 */
-	protected function setExpectedDisplayTables()
+	protected function setExpectedDisplayTables(): void
 	{
-		$db = $this->db;
 		$this->db->expects(self::once())
 			->method('sql_query')
 			->with(self::equalTo('SHOW TABLE STATUS'))
@@ -423,12 +427,12 @@ class dbtool_test extends \phpbb_test_case
 	}
 
 	/**
-	 * Assertions when running the optimize, check and repair operations
+	 * Assertions when running the optimize, check, and repair operations
 	 *
 	 * @param string $operation
 	 * @param string $tables
 	 */
-	protected function setExpectedOperationResponse($operation, $tables)
+	protected function setExpectedOperationResponse(string $operation, string $tables): void
 	{
 		$db = $this->db;
 		$this->db->expects(self::once())
@@ -457,7 +461,7 @@ class dbtool_test extends \phpbb_test_case
 	}
 }
 
-function confirm_box()
+function confirm_box(): bool
 {
 	return dbtool_test::$confirm;
 }

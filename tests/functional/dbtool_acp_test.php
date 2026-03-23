@@ -10,31 +10,34 @@
 
 namespace vse\dbtool\tests\functional;
 
+use phpbb_functional_test_case;
+use Symfony\Component\DomCrawler\Crawler;
+
 /**
  * @group functional
  */
-class dbtool_acp_test extends \phpbb_functional_test_case
+class dbtool_acp_test extends phpbb_functional_test_case
 {
-	protected static function setup_extensions()
+	protected static function setup_extensions(): array
 	{
 		return ['vse/dbtool'];
 	}
 
-	public function test_acp_pages()
+	public function test_acp_pages(): Crawler
 	{
-		$this->login();
-		$this->admin_login();
+		self::login();
+		self::admin_login();
 
-		$this->add_lang_ext('vse/dbtool', 'dbtool_acp');
+		self::add_lang_ext('vse/dbtool', 'dbtool_acp');
 
 		$crawler = self::request('GET', 'adm/index.php?i=\vse\dbtool\acp\dbtool_module&amp;mode=view&sid=' . $this->sid);
-		$this->assertContainsLang('ACP_OPTIMIZE_REPAIR', $crawler->text());
-		$this->assertContainsLang('OPTIMIZE_REPAIR_OPTIONS', $crawler->text());
+		self::assertContainsLang('ACP_OPTIMIZE_REPAIR', $crawler->text());
+		self::assertContainsLang('OPTIMIZE_REPAIR_OPTIONS', $crawler->text());
 
 		return $crawler;
 	}
 
-	public static function operation_test_data()
+	public static function operation_test_data(): array
 	{
 		return [
 			['optimize', 'OPTIMIZE_SUCCESS'],
@@ -48,14 +51,14 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 	 * @depends      test_acp_pages
 	 * @dataProvider operation_test_data
 	 */
-	public function test_operation($operation, $expected, $crawler)
+	public function test_operation($operation, $expected, $crawler): void
 	{
-		$this->login();
-		$this->admin_login();
+		self::login();
+		self::admin_login();
 
-		$this->add_lang_ext('vse/dbtool', 'dbtool_acp');
+		self::add_lang_ext('vse/dbtool', 'dbtool_acp');
 
-		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
+		$form = $crawler->selectButton(self::lang('SUBMIT'))->form();
 		$form['disable_board']->select(1);
 		if ($operation !== 'error')
 		{
@@ -64,9 +67,9 @@ class dbtool_acp_test extends \phpbb_functional_test_case
 		}
 		$crawler = self::submit($form);
 
-		$form = $crawler->selectButton($this->lang('YES'))->form();
+		$form = $crawler->selectButton(self::lang('YES'))->form();
 		self::submit($form);
 
-		$this->assertContainsLang($expected, static::get_content());
+		self::assertContainsLang($expected, static::get_content());
 	}
 }

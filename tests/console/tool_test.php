@@ -10,32 +10,40 @@
 
 namespace vse\dbtool\tests\console;
 
+use phpbb\db\driver\driver_interface;
+use phpbb\db\tools\tools_interface;
 use phpbb\language\language;
 use phpbb\language\language_file_loader;
+use phpbb\lock\db;
 use phpbb\user;
+use phpbb_mock_extension_manager;
+use phpbb_test_case;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use vse\dbtool\console\command\db\tool;
+use vse\dbtool\tool\tool_interface;
+use phpbb\datetime;
 
-class tool_test extends \phpbb_test_case
+class tool_test extends phpbb_test_case
 {
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\db\driver\driver_interface */
-	protected $db;
+	/** @var MockObject|driver_interface */
+	protected MockObject|driver_interface $db;
 
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\db\tools\tools_interface */
-	protected $db_tools;
+	/** @var MockObject|tools_interface */
+	protected MockObject|tools_interface $db_tools;
 
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\vse\dbtool\tool\tool_interface */
-	protected $db_tool;
+	/** @var MockObject|tool_interface */
+	protected MockObject|tool_interface $db_tool;
 
-	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\lock\db */
-	protected $db_lock;
+	/** @var MockObject|db */
+	protected MockObject|db $db_lock;
 
 	/** @var language */
-	protected $language;
+	protected language $language;
 
 	/** @var user */
-	protected $user;
+	protected user $user;
 
 	protected function setUp(): void
 	{
@@ -44,20 +52,20 @@ class tool_test extends \phpbb_test_case
 		global $phpbb_root_path, $phpEx;
 
 		$lang_loader = new language_file_loader($phpbb_root_path, $phpEx);
-		$lang_loader->set_extension_manager(new \phpbb_mock_extension_manager($phpbb_root_path));
+		$lang_loader->set_extension_manager(new phpbb_mock_extension_manager($phpbb_root_path));
 		$this->language = new language($lang_loader);
 
-		$this->user     = new user($this->language, '\phpbb\datetime');
-		$this->db       = $this->createMock('\phpbb\db\driver\driver_interface');
-		$this->db_tools = $this->createMock('\phpbb\db\tools\tools_interface');
-		$this->db_tool  = $this->createMock('\vse\dbtool\tool\tool_interface');
-		$this->db_lock  = $this->createMock('\phpbb\lock\db');
+		$this->user     = new user($this->language, datetime::class);
+		$this->db       = $this->createMock(driver_interface::class);
+		$this->db_tools = $this->createMock(tools_interface::class);
+		$this->db_tool  = $this->createMock(tool_interface::class);
+		$this->db_lock  = $this->createMock(db::class);
 	}
 
 	protected function get_command_tester(): CommandTester
 	{
 		$application = new Application();
-		$application->add(new tool(
+		$application->addCommand(new tool(
 			$this->user,
 			$this->db,
 			$this->db_tools,
@@ -70,7 +78,7 @@ class tool_test extends \phpbb_test_case
 		return new CommandTester($command);
 	}
 
-	public function test_not_mysql()
+	public function test_not_mysql(): void
 	{
 		$this->db_tool->method('is_mysql')->willReturn(false);
 
@@ -81,7 +89,7 @@ class tool_test extends \phpbb_test_case
 		$this->assertSame(1, $exit_code);
 	}
 
-	public function test_user_declines()
+	public function test_user_declines(): void
 	{
 		$this->db_tool->method('is_mysql')->willReturn(true);
 
@@ -96,7 +104,7 @@ class tool_test extends \phpbb_test_case
 	 * Data for test_run_operation
 	 * Choice indices match [0 => OPTIMIZE, 1 => REPAIR, 2 => CHECK]
 	 */
-	public function run_operation_data()
+	public static function run_operation_data(): array
 	{
 		return [
 			['CHECK', '2', false],
@@ -109,7 +117,7 @@ class tool_test extends \phpbb_test_case
 	/**
 	 * @dataProvider run_operation_data
 	 */
-	public function test_run_operation(string $operation, string $choice, bool $disable_board)
+	public function test_run_operation(string $operation, string $choice, bool $disable_board): void
 	{
 		$tables = ['phpbb_users', 'phpbb_posts'];
 
@@ -137,7 +145,7 @@ class tool_test extends \phpbb_test_case
 		$this->assertStringContainsString($expected, $display);
 	}
 
-	public function test_run_operation_with_table_argument()
+	public function test_run_operation_with_table_argument(): void
 	{
 		$this->db_tool->method('is_mysql')->willReturn(true);
 		$this->db_tool->method('is_valid_operation')->willReturn(true);
@@ -152,7 +160,7 @@ class tool_test extends \phpbb_test_case
 		$this->assertSame(0, $exit_code);
 	}
 
-	public function test_lock_acquire_fails()
+	public function test_lock_acquire_fails(): void
 	{
 		$this->db_tool->method('is_mysql')->willReturn(true);
 		$this->db_tool->method('is_valid_operation')->willReturn(true);
@@ -168,7 +176,7 @@ class tool_test extends \phpbb_test_case
 		$this->assertSame(1, $exit_code);
 	}
 
-	public function test_invalid_operation_skips_run()
+	public function test_invalid_operation_skips_run(): void
 	{
 		$this->db_tool->method('is_mysql')->willReturn(true);
 		$this->db_tool->method('is_valid_operation')->willReturn(false);
