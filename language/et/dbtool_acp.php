@@ -25,7 +25,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_OPTIMIZE_REPAIR'			=> 'Optimeeri &amp; Paranda',
 	'ACP_OPTIMIZE_REPAIR_EXPLAIN'	=> 'Siin saate optimeerida või parandada oma phpBB-ga seotud tabeleid. Suurte andmebaaside puhul võib see aega võtta mitu minutit. <strong>OPTIMEERIMINE</strong> defragmenteerib teie andmebaasi ja pakub paremat andmebaasi jõudlust. <strong>PARANDUST</strong> tohib kasutada ainult siis, kui teil on põhjust uskuda, et teie andmebaasis on tabelid kokku kukkunud või rikutud. Märkus: <strong>InnoDB</strong> tabelid ei toeta parandust.',
-	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Database options',
+	'OPTIMIZE_REPAIR_OPTIONS'		=> 'Andmebaasi valikud',
 	'DISABLE_BOARD'					=> 'Keela foorum',
 	'DISABLE_BOARD_EXPLAIN'			=> 'Selle protsessi ajal võite foorumi keelata. Juhtpaneel on protsessi lõpus lubatud.',
 	'OPTIMIZE'			=> 'Optimeeri',
